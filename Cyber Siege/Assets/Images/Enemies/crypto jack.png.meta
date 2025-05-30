@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      crypto jack_0: 6708131182710439075
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

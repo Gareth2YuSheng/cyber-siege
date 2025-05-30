@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      computer-server-icon-png-19_0: 7678206005093214758
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ransomeware_0: 6685967289642897284
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      spyware_0: -4337220674714682651
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
