@@ -6,7 +6,9 @@ public class UIManager : MonoBehaviour
 {
     [Header("References")]
     public GameObject gameOverMenu;
+    public Button gameOverExitButton;
     public GameObject pauseMenu;
+    public Button pauseButton;
     public GameObject towerMenu;
     public Button startButton;
 
@@ -15,6 +17,8 @@ public class UIManager : MonoBehaviour
         if (!LevelManager.main.isServerAlive && !gameOverMenu.activeSelf)
         {
             gameOverMenu.SetActive(true);
+            SetAllSelectableChildrenFromTowerMenu(false);
+            pauseButton.interactable = false;
         }
 
         //Show/Hide Start Wave Button
@@ -41,7 +45,6 @@ public class UIManager : MonoBehaviour
 
     public void TowerMenuStartButtonOnClick()
     {
-        Debug.Log("Start Wave");
         EnemyManager.main.StartWave();
     }
 
@@ -65,5 +68,10 @@ public class UIManager : MonoBehaviour
     {
         //Change it later
         SceneManager.LoadSceneAsync(0);
+    }
+
+    public void GameOverMenuExitOnClick()
+    {
+        Application.Quit();
     }
 }
