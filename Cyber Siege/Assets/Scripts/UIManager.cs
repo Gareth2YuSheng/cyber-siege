@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     [Header("References")]
     public GameObject gameOverMenu;
+    public GameObject pauseMenu;
+    public GameObject towerMenu;
     public Button startButton;
 
     private void Update()
@@ -27,9 +30,40 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void SetAllSelectableChildrenFromTowerMenu(bool state)
+    {
+        Selectable[] uiElements = towerMenu.GetComponentsInChildren<Selectable>();
+        foreach (Selectable element in uiElements)
+        {
+            element.interactable = state;
+        }
+    }
+
     public void TowerMenuStartButtonOnClick()
     {
         Debug.Log("Start Wave");
         EnemyManager.main.StartWave();
+    }
+
+    public void PauseButtonOnClick()
+    {
+        pauseMenu.gameObject.SetActive(true);
+        Time.timeScale = 0;
+        //Disable Tower Menu
+        SetAllSelectableChildrenFromTowerMenu(false);
+    }
+
+    public void PauseMenuContinueButtonOnClick()
+    {
+        pauseMenu.gameObject.SetActive(false);
+        Time.timeScale = 1;
+        //Enable Tower Menu
+        SetAllSelectableChildrenFromTowerMenu(true);
+    }
+
+    public void PauseMenuExitLevelButtonOnClick()
+    {
+        //Change it later
+        SceneManager.LoadSceneAsync(0);
     }
 }

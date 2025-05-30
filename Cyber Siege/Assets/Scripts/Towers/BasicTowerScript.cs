@@ -95,7 +95,7 @@ public class BasicTowerScript : MonoBehaviour
         if (hits.Length > 0)
         {
             enemyTarget = hits[0].transform;
-            Debug.Log("Found a Target"); //remove later
+            // Debug.Log("Found a Target"); //remove later
         }
     }
 
