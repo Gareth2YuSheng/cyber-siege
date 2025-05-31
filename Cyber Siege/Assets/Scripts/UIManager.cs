@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     [Header("References")]
-    public GameObject gameOverMenu;
-    public Button gameOverExitButton;
-    public GameObject pauseMenu;
-    public Button pauseButton;
-    public GameObject towerMenu;
-    public Button startButton;
+    [SerializeField] private GameObject gameOverMenu;
+    [SerializeField] private Button gameOverExitButton;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private Button pauseButton;
+    [SerializeField] private GameObject towerMenu;
+    [SerializeField] private Button startButton;
 
     private void Update()
     {

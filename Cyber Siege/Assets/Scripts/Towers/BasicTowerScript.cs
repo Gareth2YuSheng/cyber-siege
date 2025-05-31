@@ -33,7 +33,7 @@ public class BasicTowerScript : MonoBehaviour
     private float timeUntilFire;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         towerName = tower.towerName;
         cost = tower.cost;
@@ -50,7 +50,7 @@ public class BasicTowerScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //If no target, look for one
         if (enemyTarget == null)
