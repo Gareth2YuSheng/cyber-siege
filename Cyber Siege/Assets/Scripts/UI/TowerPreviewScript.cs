@@ -29,8 +29,11 @@ public class TowerPreviewScript : MonoBehaviour
         if (!isBuilding) return;
 
         //If building mode activated, follow the player's mouse
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = mousePosition;
+        // Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // transform.position = mousePosition;
+
+        //If building mode activated, Follow the selected tile
+        transform.position = BuildManager.main.selectedTilePosition;
     }
 
     private void StartBuilding()

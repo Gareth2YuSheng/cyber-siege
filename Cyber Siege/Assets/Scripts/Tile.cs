@@ -10,12 +10,14 @@ public class Tile : MonoBehaviour
     private GameObject currentTower;
 
     private bool isBuilding = false;
+    private Vector3 centerPosition;
 
     private void Start()
     {
         sr = gameObject.GetComponentInChildren<SpriteRenderer>();
         initialColor = sr.color;
         sr.enabled = false;
+        centerPosition = sr.bounds.center;
 
         // Add Event Listeners
         BuildManager.main.onStartBuilding.AddListener(StartBuilding);
@@ -31,6 +33,8 @@ public class Tile : MonoBehaviour
     {
         // If not in building mode dont do anything
         if (!isBuilding) return;
+        // Set Selected Tile
+        BuildManager.main.SetSelectedTilePosition(centerPosition);
         // change hover colour if there is not tower
         if (currentTower == null)
         {

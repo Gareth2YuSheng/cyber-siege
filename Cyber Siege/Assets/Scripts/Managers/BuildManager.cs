@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,8 +13,8 @@ public class BuildManager : MonoBehaviour
     public UnityEvent onStartBuilding = new UnityEvent();
     public UnityEvent onStopBuilding = new UnityEvent();
 
-
     private int selectedTower = 0;
+    public Vector3 selectedTilePosition;
 
     private void Awake()
     {
@@ -63,5 +62,10 @@ public class BuildManager : MonoBehaviour
     {
         // isBuilding = false;
         onStopBuilding.Invoke();
+    }
+
+    public void SetSelectedTilePosition(Vector3 pos)
+    {
+        selectedTilePosition = pos;
     }
 }
