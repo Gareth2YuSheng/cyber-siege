@@ -6,6 +6,8 @@ public class TowerPreviewScript : MonoBehaviour
     [SerializeField] private Transform previewRangeTransform;
     [SerializeField] private SpriteRenderer previewRangeSR;
 
+    private SpriteRenderer mySR;
+    private Color initialSpriteColor;
     private bool isBuilding = false;
 
     [Header("Attributes")]
@@ -18,6 +20,7 @@ public class TowerPreviewScript : MonoBehaviour
     {
         // previewRangeSR = GetComponentInChildren<SpriteRenderer>(); 
         // previewRangeTransform = GetComponentInChildren<Transform>();
+        mySR = gameObject.GetComponent<SpriteRenderer>();
 
         // Add Event Listeners
         BuildManager.main.onStartBuilding.AddListener(StartBuilding);
@@ -28,12 +31,35 @@ public class TowerPreviewScript : MonoBehaviour
     {
         if (!isBuilding) return;
 
-        //If building mode activated, follow the player's mouse
+        // If building mode activated, follow the player's mouse
         // Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         // transform.position = mousePosition;
 
-        //If building mode activated, Follow the selected tile
-        transform.position = BuildManager.main.selectedTilePosition;
+        // If building mode activated, Follow the selected tile
+        // if (BuildManager.main.selectedTilePosition != Vector3.negativeInfinity)
+        // {
+        //     Debug.Log("Hi");
+        //     Debug.Log(BuildManager.main.selectedTilePosition);
+        if (BuildManager.main.isTileSelected)
+        {
+            transform.position = BuildManager.main.selectedTilePosition;
+        }
+        // }
+        // else
+        // {
+        //     transform.position = idlePosition;
+        // }
+
+
+        // If selected tile is restricted, turn sprite red
+        if (BuildManager.main.isSelectedTileRestricted)
+        {
+            mySR.color = Color.red;
+        }
+        else
+        {
+            mySR.color = initialSpriteColor;
+        }
     }
 
     private void StartBuilding()
@@ -44,6 +70,10 @@ public class TowerPreviewScript : MonoBehaviour
         //Set the preview range transform size <---- Fix this
         float rangeSize = BuildManager.main.GetSelectedTowerRange() * 5f;
         previewRangeTransform.localScale = new Vector3(rangeSize, rangeSize, rangeSize);
+        //Change the Tower Preview Sprite
+        mySR.sprite = BuildManager.main.GetSelectedTower().sprite;
+        initialSpriteColor = mySR.color;
+
     }
 
     private void StopBuilding()
@@ -53,5 +83,7 @@ public class TowerPreviewScript : MonoBehaviour
         transform.position = idlePosition;
         //Disable the range sprite renderer
         previewRangeSR.enabled = false;
+        // Clear the sprite
+        mySR.sprite = null;
     }
 }

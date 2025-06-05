@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,7 +15,13 @@ public class BuildManager : MonoBehaviour
     public UnityEvent onStopBuilding = new UnityEvent();
 
     private int selectedTower = 0;
-    public Vector3 selectedTilePosition;
+
+    // For Tower Preview
+    [NonSerialized] public bool isTileSelected = false;
+    [NonSerialized] public Vector3 selectedTilePosition;
+    // Defined here because currently cannot think of any better way to do this
+    // And don't want to spam events as this is a small thing
+    [NonSerialized] public bool isSelectedTileRestricted;
 
     private void Awake()
     {
@@ -64,8 +71,20 @@ public class BuildManager : MonoBehaviour
         onStopBuilding.Invoke();
     }
 
+    // For Tower Preview
     public void SetSelectedTilePosition(Vector3 pos)
     {
+        isTileSelected = true;
         selectedTilePosition = pos;
+    }
+
+    public void ClearSelectedTile()
+    {
+        isTileSelected = false;
+    }
+
+    public void SetSelectedTileRestricted(bool _isRestricted)
+    {
+        isSelectedTileRestricted = _isRestricted;
     }
 }

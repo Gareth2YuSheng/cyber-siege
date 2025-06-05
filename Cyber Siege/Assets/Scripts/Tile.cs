@@ -35,8 +35,15 @@ public class Tile : MonoBehaviour
         if (!isBuilding) return;
         // Set Selected Tile
         BuildManager.main.SetSelectedTilePosition(centerPosition);
+        // If selected tile already contains a tower,
+        // set it as restricted and do not change the hover color
+        BuildManager.main.SetSelectedTileRestricted(false);
+        if (currentTower != null)
+        {
+            BuildManager.main.SetSelectedTileRestricted(true);
+        }
         // change hover colour if there is not tower
-        if (currentTower == null)
+        else if (currentTower == null)
         {
             sr.color = hoverColor;
         }
@@ -46,8 +53,15 @@ public class Tile : MonoBehaviour
     {
         // If not in building mode dont do anything
         if (!isBuilding) return;
+        // Clear selected tile
+        BuildManager.main.ClearSelectedTile();
+        // Set selected tile restricted back to normal
+        if (currentTower != null)
+        {
+            // BuildManager.main.SetSelectedTileRestricted(false);
+        }
         // change hover colour if there is not tower
-        if (currentTower == null)
+        else if (currentTower == null)
         {
             sr.color = initialColor;
         }
@@ -68,9 +82,11 @@ public class Tile : MonoBehaviour
             //Disable building mode
             BuildManager.main.DisableBuilding();
             //Set tile colour back to initialColour
-            // sr.color = initialColor;
+            sr.color = initialColor;
+            // Clear selected tile
+            BuildManager.main.ClearSelectedTile();
         }
-        // Else if tower exists, upgrade the tower
+        // Else if tower exists, upgrade the tower or show error
         // else if (BuildManager.main.isBuilding && currentTower != null)
     }
 

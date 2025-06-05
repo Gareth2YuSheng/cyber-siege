@@ -27,21 +27,6 @@ public class TowerMenuScript : MonoBehaviour
 
     }
 
-    private void ActivateTowerPreview()
-    {
-        towerPreviewSR.enabled = true;
-        //Change the Tower Preview Sprite
-        towerPreviewSR.sprite = BuildManager.main.GetSelectedTower().sprite;
-        //Make the Tower Preview follow the mouse - Done in TowerPreviewScript
-    }
-
-    private void ResetTowerPreview()
-    {
-        towerPreviewSR.enabled = false;
-        towerPreviewSR.sprite = null;
-        //Move it out of the scene - Done in TowerPreviewScript
-    }
-
     private void UpdateCurrencyLabel()
     {
         moneyLabel.text = $"${LevelManager.main.currency}";
@@ -69,7 +54,8 @@ public class TowerMenuScript : MonoBehaviour
         if (BuildManager.main.CanAffordSelectedTower())
         {
             BuildManager.main.EnableBuilding();
-            ActivateTowerPreview();
+            // Show Tower Preview
+            towerPreviewSR.enabled = true;
         }
         else
         {
@@ -82,7 +68,8 @@ public class TowerMenuScript : MonoBehaviour
     {
         Debug.Log("Cancel Build Mode");
         BuildManager.main.DisableBuilding();
-        ResetTowerPreview();
+        // Hide Tower Preview
+        towerPreviewSR.enabled = false;
     }
 
 }
