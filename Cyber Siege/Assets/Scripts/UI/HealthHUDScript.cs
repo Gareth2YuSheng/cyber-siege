@@ -6,9 +6,19 @@ public class HealthHUDScript : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI healthLabel;
 
+    private void Start()
+    {
+        //Add Event Listener
+        LevelManager.main.onHealthChange.AddListener(UpdateHealthLabel);
+    }
+
     private void Update()
     {
-        //Health Label
+
+    }
+
+    private void UpdateHealthLabel()
+    {
         healthLabel.text = $"{LevelManager.main.serverHealth}";
     }
 }

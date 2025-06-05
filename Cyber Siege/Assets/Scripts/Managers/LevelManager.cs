@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
@@ -12,7 +13,12 @@ public class LevelManager : MonoBehaviour
     public int currency; //Set to non-serialised after finish testing
     public int serverHealth; //Set to non-serialised after finish testing
 
-    public bool isServerAlive = true;
+    private bool isServerAlive = true;
+
+    [Header("Events")]
+    public UnityEvent onCurrencyChange = new UnityEvent();
+    public UnityEvent onHealthChange = new UnityEvent();
+    public UnityEvent onServerDeath = new UnityEvent();
 
     private void Awake()
     {
@@ -21,14 +27,17 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        currency = 100;
-        serverHealth = 100;
+        // currency = 100;
+        IncreaseCurrency(100);
+        // serverHealth = 100;
+        HealServer(100);
     }
 
     //Currency Related Functions
     public void IncreaseCurrency(int amt)
     {
         currency += amt;
+        onCurrencyChange.Invoke();
     }
 
     public bool SpendCurrency(int amt)
@@ -37,6 +46,7 @@ public class LevelManager : MonoBehaviour
         {
             //Buy item
             currency -= amt;
+            onCurrencyChange.Invoke();
             return true;
         }
         else
@@ -51,6 +61,7 @@ public class LevelManager : MonoBehaviour
     public void HealServer(int amt)
     {
         serverHealth += amt;
+        onHealthChange.Invoke();
     }
 
     public void DamageServer(int amt)
@@ -58,9 +69,11 @@ public class LevelManager : MonoBehaviour
         if (isServerAlive)
         {
             serverHealth -= amt;
+            onHealthChange.Invoke();
             if (serverHealth <= 0)
             {
                 isServerAlive = false;
+                onServerDeath.Invoke();
             }
         }
     }

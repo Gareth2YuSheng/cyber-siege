@@ -15,24 +15,16 @@ public class TowerMenuScript : MonoBehaviour
         towerPreviewSR.enabled = false;
         //No need to edit the position as it should already be placed 
         //outside of the scene
+
+        // Add Event Listeners
+        LevelManager.main.onCurrencyChange.AddListener(UpdateCurrencyLabel);
+        BuildManager.main.onStartBuilding.AddListener(StartBuilding);
+        BuildManager.main.onStopBuilding.AddListener(StopBuilding);
     }
 
     private void Update()
     {
-        //Show/Hide Cancel Button
-        //If build mode is activated and button is currently hidden
-        if (BuildManager.main.isBuilding && !cancelButton.gameObject.activeSelf)
-        {
-            cancelButton.gameObject.SetActive(true);
-        }
-        //Else if the build mode has been deactivated and the button is still active
-        else if (!BuildManager.main.isBuilding && cancelButton.gameObject.activeSelf)
-        {
-            cancelButton.gameObject.SetActive(false);
-        }
 
-        //Money Label
-        moneyLabel.text = $"${LevelManager.main.currency}";
     }
 
     private void ActivateTowerPreview()
@@ -50,7 +42,24 @@ public class TowerMenuScript : MonoBehaviour
         //Move it out of the scene - Done in TowerPreviewScript
     }
 
+    private void UpdateCurrencyLabel()
+    {
+        moneyLabel.text = $"${LevelManager.main.currency}";
+    }
 
+    private void StartBuilding()
+    {
+        // Show Cancel Building Button
+        cancelButton.gameObject.SetActive(true);
+    }
+
+    private void StopBuilding()
+    {
+        // Hide Cancel Building Button
+        cancelButton.gameObject.SetActive(false);
+    }
+
+    // ON CLICK FUNCTIONS
 
     public void TowerMenuTowerSelectButtonOnClick(int towerIndex)
     {

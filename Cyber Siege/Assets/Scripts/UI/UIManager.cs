@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,26 +13,26 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject towerMenu;
     [SerializeField] private Button startButton;
 
+    private void Start()
+    {
+        // Add Event Listeners
+        LevelManager.main.onServerDeath.AddListener(GameOver);
+        EnemyManager.main.onWaveEnd.AddListener(WaveEnded);
+    }
+
     private void Update()
     {
-        if (!LevelManager.main.isServerAlive && !gameOverMenu.activeSelf)
-        {
-            gameOverMenu.SetActive(true);
-            SetAllSelectableChildrenFromTowerMenu(false);
-            pauseButton.interactable = false;
-        }
-
         //Show/Hide Start Wave Button
         //If the wave started and the butten is currently active
-        if ((EnemyManager.main.waveOngoing && startButton.gameObject.activeSelf) || gameOverMenu.activeSelf)
-        {
-            startButton.gameObject.SetActive(false);
-        }
-        //Else if the wave has ended and the button is still hidden
-        else if (!EnemyManager.main.waveOngoing && !startButton.gameObject.activeSelf)
-        {
-            startButton.gameObject.SetActive(true);
-        }
+        // if ((EnemyManager.main.waveOngoing && startButton.gameObject.activeSelf) || gameOverMenu.activeSelf)
+        // {
+        //     // startButton.gameObject.SetActive(false);
+        // }
+        // //Else if the wave has ended and the button is still hidden
+        // else if (!EnemyManager.main.waveOngoing && !startButton.gameObject.activeSelf)
+        // {
+        //     startButton.gameObject.SetActive(true);
+        // }
     }
 
     private void SetAllSelectableChildrenFromTowerMenu(bool state)
@@ -43,9 +44,25 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void TowerMenuStartButtonOnClick()
+    private void GameOver()
+    {
+        gameOverMenu.SetActive(true);
+        SetAllSelectableChildrenFromTowerMenu(false);
+        pauseButton.interactable = false;
+    }
+
+    private void WaveEnded()
+    {
+        startButton.gameObject.SetActive(true);
+    }
+
+    // ON CLICK METHODS
+
+    public void StartButtonOnClick()
     {
         EnemyManager.main.StartWave();
+        // Hide Start wave button
+        startButton.gameObject.SetActive(false);
     }
 
     public void PauseButtonOnClick()

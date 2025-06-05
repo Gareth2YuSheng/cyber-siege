@@ -9,30 +9,30 @@ public class Tile : MonoBehaviour
     private Color initialColor;
     private GameObject currentTower;
 
+    private bool isBuilding = false;
+
     private void Start()
     {
         sr = gameObject.GetComponentInChildren<SpriteRenderer>();
         initialColor = sr.color;
         sr.enabled = false;
+
+        // Add Event Listeners
+        BuildManager.main.onStartBuilding.AddListener(StartBuilding);
+        BuildManager.main.onStopBuilding.AddListener(StopBuilding);
     }
 
     private void Update()
     {
-        //If build mode is enabled, and tiles are hidden, show tiles
-        if (BuildManager.main.isBuilding && !sr.enabled)
-        {
-            sr.enabled = true;
-        }
-        //Else if build more is disabled, and tiles are shown, hide tiles
-        else if (!BuildManager.main.isBuilding && sr.enabled)
-        {
-            sr.enabled = false;
-        }
+
     }
 
     private void OnMouseEnter()
     {
-        if (BuildManager.main.isBuilding && currentTower == null)
+        // If not in building mode dont do anything
+        if (!isBuilding) return;
+        // change hover colour if there is not tower
+        if (currentTower == null)
         {
             sr.color = hoverColor;
         }
@@ -40,7 +40,10 @@ public class Tile : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (BuildManager.main.isBuilding && currentTower == null)
+        // If not in building mode dont do anything
+        if (!isBuilding) return;
+        // change hover colour if there is not tower
+        if (currentTower == null)
         {
             sr.color = initialColor;
         }
@@ -48,10 +51,12 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // If in building mode and tile currently has no tower
-        if (BuildManager.main.isBuilding && currentTower == null)
+        // If not in building mode dont do anything
+        if (!isBuilding) return;
+        // If tile currently has no tower
+        if (currentTower == null)
         {
-            // Debug.Log($"Build Selected Tower on {gameObject.name}");
+            Debug.Log($"Build Selected Tower on {gameObject.name}");
             //Build the Selected Tower on this tile
             Tower towerToBuild = BuildManager.main.GetSelectedTower();
             BuildManager.main.BuySelectedTower();
@@ -59,8 +64,23 @@ public class Tile : MonoBehaviour
             //Disable building mode
             BuildManager.main.DisableBuilding();
             //Set tile colour back to initialColour
-            sr.color = initialColor;
+            // sr.color = initialColor;
         }
+        // Else if tower exists, upgrade the tower
         // else if (BuildManager.main.isBuilding && currentTower != null)
+    }
+
+    private void StartBuilding()
+    {
+        isBuilding = true;
+        // Show tile
+        sr.enabled = true;
+    }
+
+    private void StopBuilding()
+    {
+        isBuilding = false;
+        // Hide tile
+        sr.enabled = false;
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BuildManager : MonoBehaviour
 {
@@ -7,7 +8,12 @@ public class BuildManager : MonoBehaviour
 
     [SerializeField] private Tower[] towers;
 
-    [NonSerialized] public bool isBuilding = false;
+    // [NonSerialized] public bool isBuilding = false;
+
+    [Header("Events")]
+    public UnityEvent onStartBuilding = new UnityEvent();
+    public UnityEvent onStopBuilding = new UnityEvent();
+
 
     private int selectedTower = 0;
 
@@ -49,11 +55,13 @@ public class BuildManager : MonoBehaviour
 
     public void EnableBuilding()
     {
-        isBuilding = true;
+        // isBuilding = true;
+        onStartBuilding.Invoke();
     }
 
     public void DisableBuilding()
     {
-        isBuilding = false;
+        // isBuilding = false;
+        onStopBuilding.Invoke();
     }
 }

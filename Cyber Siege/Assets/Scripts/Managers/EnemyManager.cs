@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -15,7 +16,11 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float difficultyScalingFactor = 0.75f;
     [SerializeField] private float enemiesPerSecondCap = 15f;
 
-    [NonSerialized] public bool waveOngoing = false;
+    [Header("Events")]
+    // public UnityEvent onWaveStart = new UnityEvent();
+    public UnityEvent onWaveEnd = new UnityEvent();
+
+    private bool waveOngoing = false;
     private int currentWave = 1;
     private float timeSinceLastSpawn;
     private int enemiesAlive;
@@ -31,6 +36,7 @@ public class EnemyManager : MonoBehaviour
     {
         // StartCoroutine(StartWave());
         //Start wave from start wave button instead
+
     }
 
     // Update is called once per frame
@@ -73,7 +79,7 @@ public class EnemyManager : MonoBehaviour
         waveOngoing = false;
         timeSinceLastSpawn = 0f;
         currentWave++;
-        // StartCoroutine(StartWave());
+        onWaveEnd.Invoke();
     }
 
     private void SpawnEnemy()
