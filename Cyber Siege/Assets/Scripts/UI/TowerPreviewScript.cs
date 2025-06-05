@@ -35,22 +35,10 @@ public class TowerPreviewScript : MonoBehaviour
         // Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         // transform.position = mousePosition;
 
-        // If building mode activated, Follow the selected tile
-        // if (BuildManager.main.selectedTilePosition != Vector3.negativeInfinity)
-        // {
-        //     Debug.Log("Hi");
-        //     Debug.Log(BuildManager.main.selectedTilePosition);
         if (BuildManager.main.isTileSelected)
         {
             transform.position = BuildManager.main.selectedTilePosition;
         }
-        // }
-        // else
-        // {
-        //     transform.position = idlePosition;
-        // }
-
-
         // If selected tile is restricted, turn sprite red
         if (BuildManager.main.isSelectedTileRestricted)
         {

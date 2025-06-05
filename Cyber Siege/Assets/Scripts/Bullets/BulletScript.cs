@@ -33,16 +33,12 @@ public class BulletScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        BasicEnemyScript enemy = collision.gameObject.GetComponent<BasicEnemyScript>();
-        // if (enemy != null)
-        // {
-        //     Debug.Log("Pew aw");
-        enemy.TakeDamage(damage);
-        // }
-        // else
-        // {
-        //     Debug.Log("No Enemy Found");
-        // }
-        Destroy(gameObject);
+        // If collision object is an tagged as an enemy
+        if (collision.gameObject.tag == "Enemy")
+        {
+            BasicEnemyScript enemy = collision.gameObject.GetComponent<BasicEnemyScript>();
+            enemy.TakeDamage(damage);
+            Destroy(gameObject);
+        }
     }
 }
