@@ -21,7 +21,7 @@ public class EnemyManager : MonoBehaviour
     public UnityEvent onWaveEnd = new UnityEvent();
 
     private bool waveOngoing = false;
-    private int currentWave = 1;
+    public int currentWave = 1; // Public to allow access
     private float timeSinceLastSpawn;
     private int enemiesAlive;
     private int enemiesLeftToSpawn;
@@ -36,7 +36,7 @@ public class EnemyManager : MonoBehaviour
     {
         // StartCoroutine(StartWave());
         //Start wave from start wave button instead
-
+        onWaveEnd.Invoke();
     }
 
     // Update is called once per frame

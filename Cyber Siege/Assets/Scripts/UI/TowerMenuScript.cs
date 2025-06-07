@@ -8,6 +8,8 @@ public class TowerMenuScript : MonoBehaviour
     [SerializeField] private Button cancelButton;
     [SerializeField] private SpriteRenderer towerPreviewSR;
     [SerializeField] private TextMeshProUGUI moneyLabel;
+    [SerializeField] private TextMeshProUGUI waveLabel;
+
 
     private void Start()
     {
@@ -17,7 +19,10 @@ public class TowerMenuScript : MonoBehaviour
         //outside of the scene
 
         // Add Event Listeners
+
         LevelManager.main.onCurrencyChange.AddListener(UpdateCurrencyLabel);
+        EnemyManager.main.onWaveEnd.AddListener(UpdateWaveLabel);
+
         BuildManager.main.onStartBuilding.AddListener(StartBuilding);
         BuildManager.main.onStopBuilding.AddListener(StopBuilding);
     }
@@ -26,6 +31,12 @@ public class TowerMenuScript : MonoBehaviour
     {
 
     }
+
+    private void UpdateWaveLabel()
+    {
+        waveLabel.text = $"Wave: {EnemyManager.main.currentWave}";
+    }
+
 
     private void UpdateCurrencyLabel()
     {
