@@ -2,9 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using System.Collections;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager main;
+
     [Header("References")]
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private Button gameOverExitButton;
@@ -12,7 +16,26 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button pauseButton;
     [SerializeField] private GameObject towerMenu;
     [SerializeField] private Button startButton;
+    [SerializeField] private GameObject errorPrompt;
+    [SerializeField] private TextMeshProUGUI errorPromptLabel;
 
+    // Coroutine to simulate a timeout after a specified duration
+    private bool isTimedOut = false;
+
+    IEnumerator SetPromptTimeout(float timeoutDuration)
+    {
+        yield return new WaitForSeconds(timeoutDuration);
+
+        // Code after timeout
+        isTimedOut = true;
+        Debug.Log("Hide Prompt!");
+        errorPrompt.gameObject.SetActive(false);
+        // You can add additional logic here if you need to perform actions when the timeout occurs
+    }
+    private void Awake()
+    {
+        main = this;
+    }
     private void Start()
     {
         // Add Event Listeners
@@ -68,6 +91,7 @@ public class UIManager : MonoBehaviour
     public void PauseButtonOnClick()
     {
         pauseMenu.gameObject.SetActive(true);
+
         Time.timeScale = 0;
         //Disable Tower Menu
         SetAllSelectableChildrenFromTowerMenu(false);
@@ -90,5 +114,14 @@ public class UIManager : MonoBehaviour
     public void GameOverMenuExitOnClick()
     {
         Application.Quit();
+    }
+
+    // Error prompt implementation
+    // Shows for specific number of seconds and prompt given.
+    public void ShowErrorPrompt(string prompt)
+    {
+        errorPromptLabel.text = prompt;
+        errorPrompt.gameObject.SetActive(true);
+        StartCoroutine(SetPromptTimeout(3f));  // Timeout set to 3 seconds
     }
 }

@@ -86,6 +86,12 @@ public class Tile : MonoBehaviour
             // Clear selected tile
             BuildManager.main.ClearSelectedTile();
         }
+        else
+        {
+            // Prompt error
+            UIManager.main.ShowErrorPrompt("You cannot build ontop of a Tower!");
+
+        }
         // Else if tower exists, upgrade the tower or show error
         // else if (BuildManager.main.isBuilding && currentTower != null)
     }

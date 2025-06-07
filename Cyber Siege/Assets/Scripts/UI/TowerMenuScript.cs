@@ -72,11 +72,14 @@ public class TowerMenuScript : MonoBehaviour
         {
             //Error Message Here
             Debug.Log("Cannot Afford This Tower!");
+
+            // Fire Prompt
+            UIManager.main.ShowErrorPrompt("Cannot Afford This Tower!");
         }
     }
 
     public void TowerMenuBuildCancelButtonOnClick()
-    {
+    {   
         Debug.Log("Cancel Build Mode");
         BuildManager.main.DisableBuilding();
         // Hide Tower Preview
