@@ -1,9 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BasicEnemyScript : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private ScriptableEnemy enemy;
+
+    [Header("Events")]
+    public UnityEvent onEnemyDeath = new UnityEvent();
 
     //Attributes
     private int health;
@@ -101,6 +105,8 @@ public class BasicEnemyScript : MonoBehaviour
 
         if (health <= 0 && !isDestroyed)
         {
+            // Invoke the Event
+            onEnemyDeath.Invoke();
             // Increase player money
             LevelManager.main.IncreaseCurrency(currencyValue);
             // Destroy Game Object

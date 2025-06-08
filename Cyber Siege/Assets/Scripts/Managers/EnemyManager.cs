@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -62,9 +62,9 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public void EnemySpawned()
+    public void EnemySpawned(int numOfEnemies)
     {
-        enemiesAlive++;
+        enemiesAlive += numOfEnemies;
     }
 
     public void EnemyDestroyed()
@@ -81,6 +81,7 @@ public class EnemyManager : MonoBehaviour
 
     private void EndWave()
     {
+        Debug.Log("Wave Ended");
         waveOngoing = false;
         timeSinceLastSpawn = 0f;
         currentWave++;
@@ -93,6 +94,23 @@ public class EnemyManager : MonoBehaviour
         // int index = Random.Range(0, enemyPrefabs.Length);
         // GameObject prefabToSpawn = enemyPrefabs[index];
         Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
+    }
+
+    public void SpawnEnemies(int count, Vector3 position, int pathIndex, GameObject prefab)
+    {
+        StartCoroutine(SpawnCoroutine(count, position, pathIndex, prefab));
+    }
+
+    private IEnumerator SpawnCoroutine(int count, Vector3 position, int pathIndex, GameObject prefab)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            GameObject enemy = Instantiate(prefab, position, Quaternion.identity);
+            BasicEnemyScript script = enemy.GetComponent<BasicEnemyScript>();
+            script.UpdatePathIndex(pathIndex);
+            enemiesAlive++;
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     private int EnemiesPerWave()

@@ -7,7 +7,7 @@ public class DoSScript : MonoBehaviour
     [SerializeField] private GameObject DDoSBotPrefab;
 
     [Header("Attributes")]
-    [SerializeField] private float botnetSpawnCount;
+    [SerializeField] private int botnetSpawnCount;
     [SerializeField] private float botnetSpawnRate;
     //Spawns {botnetSpawnCount} bots every {botnetSpawnRate} seconds
 
@@ -28,23 +28,10 @@ public class DoSScript : MonoBehaviour
 
         if (timeSinceLastSpawn >= botnetSpawnRate)
         {
-            StartCoroutine(SpawnBotNet());
+            // StartCoroutine(SpawnBotNet());
+            EnemyManager.main.SpawnEnemies(botnetSpawnCount, myTransform.position,
+                myBEScript.GetCurrentPathIndex(), DDoSBotPrefab);
             timeSinceLastSpawn = 0f;
-        }
-    }
-
-    private IEnumerator SpawnBotNet()
-    {
-        for (int i = 0; i < botnetSpawnCount; i++)
-        {
-            GameObject bot = Instantiate(DDoSBotPrefab, myTransform.position, Quaternion.identity);
-            BasicEnemyScript botScript = bot.GetComponent<BasicEnemyScript>();
-            // Update bot's movement target to same as DoS
-            botScript.UpdatePathIndex(myBEScript.GetCurrentPathIndex());
-            // Update Enemy Manager
-            EnemyManager.main.EnemySpawned();
-            // Delay before spawning next bot
-            yield return new WaitForSeconds(0.1f); // slight delay between each bot
         }
     }
 }
