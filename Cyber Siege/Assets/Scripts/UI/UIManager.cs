@@ -32,10 +32,12 @@ public class UIManager : MonoBehaviour
         errorPrompt.gameObject.SetActive(false);
         // You can add additional logic here if you need to perform actions when the timeout occurs
     }
+
     private void Awake()
     {
         main = this;
     }
+
     private void Start()
     {
         // Add Event Listeners
@@ -45,17 +47,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        //Show/Hide Start Wave Button
-        //If the wave started and the butten is currently active
-        // if ((EnemyManager.main.waveOngoing && startButton.gameObject.activeSelf) || gameOverMenu.activeSelf)
-        // {
-        //     // startButton.gameObject.SetActive(false);
-        // }
-        // //Else if the wave has ended and the button is still hidden
-        // else if (!EnemyManager.main.waveOngoing && !startButton.gameObject.activeSelf)
-        // {
-        //     startButton.gameObject.SetActive(true);
-        // }
+
     }
 
     private void SetAllSelectableChildrenFromTowerMenu(bool state)

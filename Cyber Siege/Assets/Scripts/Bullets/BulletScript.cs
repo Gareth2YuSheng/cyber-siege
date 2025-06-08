@@ -33,8 +33,9 @@ public class BulletScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // If collision object is an tagged as an enemy
-        if (collision.gameObject.tag == "Enemy")
+        // Debug.Log($"Collided with {collision.gameObject.name}");
+        // If collision object is an tagged as an enemy or is in the enemy layer (enemy layer is 8)
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.layer == 8)
         {
             BasicEnemyScript enemy = collision.gameObject.GetComponent<BasicEnemyScript>();
             enemy.TakeDamage(damage);

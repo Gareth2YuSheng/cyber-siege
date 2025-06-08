@@ -80,7 +80,6 @@ public class BasicTowerScript : MonoBehaviour
 
     private void Shoot()
     {
-        // Debug.Log("Pew");
         GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
         BulletScript bulletScript = bulletObj.GetComponent<BulletScript>();
         bulletScript.SetTarget(enemyTarget);
