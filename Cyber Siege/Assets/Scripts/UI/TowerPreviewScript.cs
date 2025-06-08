@@ -39,6 +39,10 @@ public class TowerPreviewScript : MonoBehaviour
         {
             transform.position = BuildManager.main.selectedTilePosition;
         }
+        else
+        {
+            transform.position = idlePosition;
+        }
         // If selected tile is restricted, turn sprite red
         if (BuildManager.main.isSelectedTileRestricted)
         {

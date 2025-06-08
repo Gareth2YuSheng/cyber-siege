@@ -3,10 +3,7 @@ using UnityEngine.UI;
 
 public class GameOverMenuScript : MonoBehaviour
 {
-    [Header("References")]
-    public Button exit;
-
-    public void exitButtonOnClick()
+    public void ExitButtonOnClick()
     {
         Application.Quit();
     }

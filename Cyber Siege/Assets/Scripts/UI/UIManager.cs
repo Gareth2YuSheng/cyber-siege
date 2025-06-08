@@ -11,7 +11,6 @@ public class UIManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject gameOverMenu;
-    [SerializeField] private Button gameOverExitButton;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private Button pauseButton;
     [SerializeField] private GameObject towerMenu;
