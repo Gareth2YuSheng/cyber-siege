@@ -22,7 +22,7 @@ public class EnemyManager : MonoBehaviour
 
     private bool waveOngoing = false;
     public int currentWave = 1; // Public to allow access
-    private float timeSinceLastSpawn;
+    private float timeSinceLastSpawn = 0f;
     private int enemiesAlive;
     private int enemiesLeftToSpawn;
     private float eps; //enemies per second
@@ -60,6 +60,11 @@ public class EnemyManager : MonoBehaviour
         {
             EndWave();
         }
+    }
+
+    public void EnemySpawned()
+    {
+        enemiesAlive++;
     }
 
     public void EnemyDestroyed()

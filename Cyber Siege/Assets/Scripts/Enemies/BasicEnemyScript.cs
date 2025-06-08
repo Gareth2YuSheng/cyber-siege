@@ -74,6 +74,16 @@ public class BasicEnemyScript : MonoBehaviour
         movementTarget = LevelManager.main.enemyPath[pathIndex];
     }
 
+    public void UpdatePathIndex(int _pathIndex)
+    {
+        pathIndex = _pathIndex;
+    }
+
+    public int GetCurrentPathIndex()
+    {
+        return pathIndex;
+    }
+
     public void UpdateMovementSpeed(float newMoveSpeed)
     {
         moveSpeed = newMoveSpeed;

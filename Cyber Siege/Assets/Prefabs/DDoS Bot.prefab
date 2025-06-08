@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 5715585359178516932}
   - component: {fileID: 4280977001666433137}
   - component: {fileID: 168088474027712116}
-  - component: {fileID: 7671792488831027704}
   - component: {fileID: 4798159098121115316}
-  - component: {fileID: 7663599442732647662}
+  - component: {fileID: 3337781205188786260}
+  - component: {fileID: 8710127342871891443}
   m_Layer: 8
-  m_Name: DoS
+  m_Name: DDoS Bot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.6936808, y: 0.5228215, z: -0.039494354}
-  m_LocalScale: {x: 0.065, y: 0.065, z: 0.065}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7877142841118543673, guid: 83f3ba74f45e64f44a31410798b63256, type: 3}
+  m_Sprite: {fileID: 8828270710777343304, guid: 711f952458141d7448882792a4203e36, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,22 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa06e9cd1ea5174c9ef110f0aeaf4a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 11400000, guid: 4dfea74117e5987429f6b68c912ed67e, type: 2}
---- !u!114 &7671792488831027704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710481652798878408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6478900a726ed8f46a061d3dfbf9d252, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DDoSBotPrefab: {fileID: 5710481652798878408, guid: 33a09d18ddfb33341b6fc7500a8bdff2, type: 3}
-  botnetSpawnCount: 5
-  botnetSpawnRate: 3
+  enemy: {fileID: 11400000, guid: c32dd86cd96c8c2418750b4f582417de, type: 2}
 --- !u!50 &4798159098121115316
 Rigidbody2D:
   serializedVersion: 5
@@ -146,7 +131,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!61 &7663599442732647662
+--- !u!61 &3337781205188786260
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,11 +169,23 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 18.22, y: 13.33}
+    oldSize: {x: 1.88, y: 2.6}
     newSize: {x: 18.22, y: 13.33}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 18.22, y: 13.33}
+  m_Size: {x: 1.88, y: 2.6}
   m_EdgeRadius: 0
+--- !u!114 &8710127342871891443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5710481652798878408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19c38a6795f6e245992f0ee002fc666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Events;
 using System.Collections;
 using TMPro;
 
@@ -19,14 +18,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI errorPromptLabel;
 
     // Coroutine to simulate a timeout after a specified duration
-    private bool isTimedOut = false;
+    // private bool isTimedOut = false;
 
     IEnumerator SetPromptTimeout(float timeoutDuration)
     {
         yield return new WaitForSeconds(timeoutDuration);
 
         // Code after timeout
-        isTimedOut = true;
+        // isTimedOut = true;
         Debug.Log("Hide Prompt!");
         errorPrompt.gameObject.SetActive(false);
         // You can add additional logic here if you need to perform actions when the timeout occurs

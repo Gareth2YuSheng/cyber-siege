@@ -9,6 +9,7 @@ public class BulletScript : MonoBehaviour
     private Transform target;
     private float speed;
     private int damage;
+    private bool hasCollided = false;
 
     private void Start()
     {
@@ -35,8 +36,10 @@ public class BulletScript : MonoBehaviour
     {
         // Debug.Log($"Collided with {collision.gameObject.name}");
         // If collision object is an tagged as an enemy or is in the enemy layer (enemy layer is 8)
-        if (collision.gameObject.tag == "Enemy" || collision.gameObject.layer == 8)
+        // and bullet has not collided with any other enemy (only 1 enemy per bullet)
+        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.layer == 8) && !hasCollided)
         {
+            hasCollided = true;
             BasicEnemyScript enemy = collision.gameObject.GetComponent<BasicEnemyScript>();
             enemy.TakeDamage(damage);
             Destroy(gameObject);
