@@ -17,6 +17,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject errorPrompt;
     [SerializeField] private TextMeshProUGUI errorPromptLabel;
 
+    // For Scam Message
+    [SerializeField] private GameObject susMessageAlertPrefab;
+    // [SerializeField] private GameObject susMessageAlert;
+    // [SerializeField] private TextMeshProUGUI susMessageTitle;
+    // [SerializeField] private TextMeshProUGUI susMessageBody;
+    // [SerializeField] private TextMeshProUGUI susMessageActionButtonText;
+    // [SerializeField] private Button susMessageCloseButton;
+
     // Coroutine to simulate a timeout after a specified duration
     // private bool isTimedOut = false;
 
@@ -69,6 +77,34 @@ public class UIManager : MonoBehaviour
         startButton.gameObject.SetActive(true);
     }
 
+    // Error prompt implementation
+    // Shows for specific number of seconds and prompt given.
+    public void ShowErrorPrompt(string prompt)
+    {
+        errorPromptLabel.text = prompt;
+        errorPrompt.gameObject.SetActive(true);
+        StartCoroutine(SetPromptTimeout(3f));  // Timeout set to 3 seconds
+    }
+
+    // For Scam Message
+    public void ShowScamMessage()
+    {
+        // Create new alert
+        GameObject susMessageAlert = Instantiate(susMessageAlertPrefab, gameObject.transform);
+        // Set the position
+        susMessageAlert.transform.position = GetRandomScreenPosition();
+        // Populate the content
+        SusMessageAlertScript msgScript = susMessageAlert.GetComponent<SusMessageAlertScript>();
+        msgScript.PopulateMessage();
+    }
+
+    private Vector3 GetRandomScreenPosition()
+    {
+        float x = Random.Range(100f, Screen.width - 300f);
+        float y = Random.Range(100f, Screen.height - 200f);
+        return new Vector3(x, y, 0f);
+    }
+
     // ON CLICK METHODS
 
     public void StartButtonOnClick()
@@ -106,12 +142,13 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
-    // Error prompt implementation
-    // Shows for specific number of seconds and prompt given.
-    public void ShowErrorPrompt(string prompt)
+    public void SusMessageFakeActionButtonOnClick()
     {
-        errorPromptLabel.text = prompt;
-        errorPrompt.gameObject.SetActive(true);
-        StartCoroutine(SetPromptTimeout(3f));  // Timeout set to 3 seconds
+
     }
+
+    //     public void SusMessageCloseButtonOnClick()
+    //     {
+    //         susMessageAlert.SetActive(false);
+    //     }
 }
