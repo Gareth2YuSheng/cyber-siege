@@ -6,6 +6,9 @@ public class BasicEnemyScript : MonoBehaviour
     [Header("References")]
     [SerializeField] private ScriptableEnemy enemy;
 
+    [Header("Attributes")]
+    public bool isHidden = false;
+
     [Header("Events")]
     public UnityEvent onEnemyDeath = new UnityEvent();
 
@@ -119,5 +122,16 @@ public class BasicEnemyScript : MonoBehaviour
         isDestroyed = true;
         Destroy(gameObject);
         EnemyManager.main.EnemyDestroyed();
+    }
+
+    // Hidden Enemy Related Functions
+    public void Reveal()
+    {
+        isHidden = false;
+    }
+
+    public void Hide()
+    {
+        isHidden = true;
     }
 }

@@ -78,6 +78,7 @@ public class BasicTowerScript : MonoBehaviour
         }
     }
 
+    // Change for each Tower
     private void Shoot()
     {
         GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
@@ -85,16 +86,26 @@ public class BasicTowerScript : MonoBehaviour
         bulletScript.SetTarget(enemyTarget);
     }
 
+    // Change for each Tower
     private void FindEnemyTarget()
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, range, (Vector2)transform.position, 0f, enemyMask);
 
-        //If there is a target in range, set the target to the 
-        //first enemy in its range
+        //If there is a target in range
         if (hits.Length > 0)
         {
-            enemyTarget = hits[0].transform;
-            // Debug.Log("Found a Target"); //remove later
+            // enemyTarget = hits[0].transform;
+            // Only target non-hidden enemies
+            foreach (RaycastHit2D hit in hits)
+            {
+                // Check if target is hidden
+                BasicEnemyScript enemyScript = hit.transform.GetComponentInParent<BasicEnemyScript>();
+                if (enemyScript != null && !enemyScript.isHidden)
+                {
+                    enemyTarget = hit.transform;
+                    return; // Return so only assignes the first one
+                }
+            }
         }
     }
 
