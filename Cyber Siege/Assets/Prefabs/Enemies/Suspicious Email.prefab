@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3494404433945052327}
   m_Layer: 8
   m_Name: Suspicious Email
-  m_TagString: Untagged
+  m_TagString: Phishing Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

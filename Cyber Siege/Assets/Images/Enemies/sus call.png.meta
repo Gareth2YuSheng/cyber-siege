@@ -145,12 +145,12 @@ TextureImporter:
       name: sus call_0
       rect:
         serializedVersion: 2
-        x: 386
-        y: 862
-        width: 131
-        height: 100
+        x: 378
+        y: 131
+        width: 1165
+        height: 1832
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -167,12 +167,12 @@ TextureImporter:
       name: sus call_1
       rect:
         serializedVersion: 2
-        x: 464
+        x: 377
         y: 135
-        width: 1076
+        width: 1163
         height: 1827
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -189,7 +189,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 8bdf552ce3239f4429b75813006b9471
     internalID: 0
     vertices: []
     indices: 

@@ -91,6 +91,11 @@ public class BasicEnemyScript : MonoBehaviour
         return pathIndex;
     }
 
+    public float GetBaseSpeed()
+    {
+        return baseMoveSpeed;
+    }
+
     public void UpdateMovementSpeed(float newMoveSpeed)
     {
         moveSpeed = newMoveSpeed;
