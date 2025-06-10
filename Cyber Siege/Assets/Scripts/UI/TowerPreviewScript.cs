@@ -61,7 +61,8 @@ public class TowerPreviewScript : MonoBehaviour
         previewRangeSR.enabled = true;
         //Set the preview range transform size <---- Fix this
         float rangeSize = BuildManager.main.GetSelectedTowerRange() * 5f;
-        previewRangeTransform.localScale = new Vector3(rangeSize, rangeSize, rangeSize);
+        // Range (Radius) is to be multiplied by 2 as X, Y and Z are length variables.
+        previewRangeTransform.localScale = new Vector3(rangeSize * 2, rangeSize * 2, rangeSize * 2);
         //Change the Tower Preview Sprite
         mySR.sprite = BuildManager.main.GetSelectedTower().sprite;
         initialSpriteColor = mySR.color;

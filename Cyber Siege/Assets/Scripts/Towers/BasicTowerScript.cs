@@ -17,7 +17,7 @@ public class BasicTowerScript : MonoBehaviour
     //Attributes
     private string towerName;
     private int cost;
-    private float range;
+    private float range; // Radius
     private float rotationSpeed;
     private float bps;
     private int level = 1;
@@ -158,7 +158,8 @@ public class BasicTowerScript : MonoBehaviour
 
     private void UpdateTowerRangeTransform()
     {
-        towerRangeTransform.localScale = new Vector3(range, range, range);
+        // Range (Radius) is to be multiplied by 2 as X, Y and Z are length variables.
+        towerRangeTransform.localScale = new Vector3(range * 2, range * 2, range * 2); 
     }
 
     // private void OnDrawGizmosSelected()
