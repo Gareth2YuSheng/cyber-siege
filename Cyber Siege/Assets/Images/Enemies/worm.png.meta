@@ -145,12 +145,12 @@ TextureImporter:
       name: worm (2)_0
       rect:
         serializedVersion: 2
-        x: 34
+        x: 0
         y: 0
-        width: 1588
+        width: 1622
         height: 2024
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -172,7 +172,7 @@ TextureImporter:
         width: 142
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -189,7 +189,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 67942f76897e141be8b026ef32b71344
     internalID: 0
     vertices: []
     indices: 

@@ -10,7 +10,10 @@ public class BasicEnemyScript : MonoBehaviour
     public bool isHidden = false;
 
     [Header("Events")]
+    public UnityEvent onTakeDamage = new UnityEvent();
+
     public UnityEvent onEnemyDeath = new UnityEvent();
+    public UnityEvent onEnemyReveal = new UnityEvent();
 
     //Attributes
     private int health;
@@ -110,6 +113,7 @@ public class BasicEnemyScript : MonoBehaviour
     public void TakeDamage(int dmg)
     {
         health -= dmg;
+        onTakeDamage.Invoke();
 
         if (health <= 0 && !isDestroyed)
         {
@@ -133,6 +137,7 @@ public class BasicEnemyScript : MonoBehaviour
     public void Reveal()
     {
         isHidden = false;
+        onEnemyReveal.Invoke();
     }
 
     public void Hide()

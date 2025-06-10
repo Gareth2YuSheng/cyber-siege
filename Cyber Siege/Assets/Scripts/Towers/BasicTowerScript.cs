@@ -102,6 +102,10 @@ public class BasicTowerScript : MonoBehaviour
                 BasicEnemyScript enemyScript = hit.transform.GetComponentInParent<BasicEnemyScript>();
                 if (enemyScript != null && !enemyScript.isHidden)
                 {
+                    // Invoke to un-disguise Trojans. (For select towers)
+                    Debug.Log("HIDDEN FOUND!");
+                    enemyScript.Reveal();
+
                     enemyTarget = hit.transform;
                     return; // Return so only assignes the first one
                 }
