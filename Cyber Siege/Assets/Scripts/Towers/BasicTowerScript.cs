@@ -103,8 +103,9 @@ public class BasicTowerScript : MonoBehaviour
                 if (enemyScript != null && !enemyScript.isHidden)
                 {
                     // Invoke to un-disguise Trojans. (For select towers)
-                    Debug.Log("HIDDEN FOUND!");
-                    enemyScript.Reveal();
+                    // Move logic to specific towers
+                    // Debug.Log("HIDDEN FOUND!");
+                    // enemyScript.Reveal();
 
                     enemyTarget = hit.transform;
                     return; // Return so only assignes the first one
@@ -163,7 +164,7 @@ public class BasicTowerScript : MonoBehaviour
     private void UpdateTowerRangeTransform()
     {
         // Range (Radius) is to be multiplied by 2 as X, Y and Z are length variables.
-        towerRangeTransform.localScale = new Vector3(range * 2, range * 2, range * 2); 
+        towerRangeTransform.localScale = new Vector3(range * 2, range * 2, range * 2);
     }
 
     // private void OnDrawGizmosSelected()

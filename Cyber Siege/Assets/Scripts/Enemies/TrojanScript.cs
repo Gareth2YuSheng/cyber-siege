@@ -4,25 +4,14 @@ using System.Collections;
 public class TrojanScript : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Sprite DisguiseRevealedSprite;
+    [SerializeField] private Sprite revealedSprite;
 
-    [Header("Attributes")]
-    // [SerializeField] private int WormSpawnCount;
-    // [SerializeField] private float WormSpawnRate;
-    //Spawns {botnetSpawnCount} bots every {botnetSpawnRate} seconds
     private SpriteRenderer spriteRenderer;
-
-    private Transform myTransform;
     private BasicEnemyScript myBEScript;
-    private float timeSinceLastSpawn = 0f;
 
-    private void Awake()
-    {
-        // Get reference of SpriteRenderer
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
     private void Start()
     {
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         myBEScript = gameObject.GetComponent<BasicEnemyScript>();
         myBEScript.onEnemyReveal.AddListener(RevealSelf);
     }
@@ -31,6 +20,6 @@ public class TrojanScript : MonoBehaviour
     private void RevealSelf()
     {
         // On first hit, change sprite.
-        spriteRenderer.sprite = DisguiseRevealedSprite;
+        spriteRenderer.sprite = revealedSprite;
     }
 }

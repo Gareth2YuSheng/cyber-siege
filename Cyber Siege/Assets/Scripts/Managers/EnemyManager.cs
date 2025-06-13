@@ -98,11 +98,21 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnEnemies(int count, Vector3 position, int pathIndex, GameObject prefab)
     {
-        StartCoroutine(SpawnCoroutine(count, position, pathIndex, prefab));
+        StartCoroutine(SpawnCoroutine(count, position, pathIndex, prefab, 0f));
     }
 
-    private IEnumerator SpawnCoroutine(int count, Vector3 position, int pathIndex, GameObject prefab)
+    public void SpawnEnemies(int count, Vector3 position, int pathIndex, GameObject prefab, float delay)
     {
+        StartCoroutine(SpawnCoroutine(count, position, pathIndex, prefab, delay));
+    }
+
+    private IEnumerator SpawnCoroutine(int count, Vector3 position, int pathIndex, GameObject prefab, float initialSpawnDelay)
+    {
+        if (initialSpawnDelay > 0f)
+        {
+            yield return new WaitForSeconds(initialSpawnDelay);
+        }
+
         for (int i = 0; i < count; i++)
         {
             GameObject enemy = Instantiate(prefab, position, Quaternion.identity);

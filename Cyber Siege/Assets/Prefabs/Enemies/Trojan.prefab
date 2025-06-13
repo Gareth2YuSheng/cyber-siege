@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7776543347787043342}
   - component: {fileID: -8687917671217422280}
   m_Layer: 8
-  m_Name: Disguised
+  m_Name: Trojan
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,10 +80,10 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3961157338269725724, guid: c008ebeb1ad8fee4ab39421ca679cabb, type: 3}
+  m_Sprite: {fileID: 7713258603630434020, guid: f333f08ab46d6e24a87db2b6a7b16efa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 1
+  m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
@@ -179,7 +179,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 16.22, y: 20.24}
+    oldSize: {x: 13.62, y: 13.64}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -199,4 +199,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa04bbf28bdd84b648745c083f7925c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisguiseRevealedSprite: {fileID: 3466569857076887318, guid: 2dfe64560421583478e92256a87ec82f, type: 3}
+  revealedSprite: {fileID: -9134971732639938234, guid: dc6f8366dcb213c4981176acc065efad, type: 3}

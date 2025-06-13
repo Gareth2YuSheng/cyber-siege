@@ -14,7 +14,7 @@ public class VirusScript : MonoBehaviour
 
     private Transform myTransform;
     private BasicEnemyScript myBEScript;
-    private float timeSinceLastSpawn = 0f;
+    // private float timeSinceLastSpawn = 0f;
     private Vector3 lastPosition;
     private Boolean spawnCheck = false;
 

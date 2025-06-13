@@ -11,7 +11,6 @@ public class BasicEnemyScript : MonoBehaviour
 
     [Header("Events")]
     public UnityEvent onTakeDamage = new UnityEvent();
-
     public UnityEvent onEnemyDeath = new UnityEvent();
     public UnityEvent onEnemyReveal = new UnityEvent();
 
@@ -107,6 +106,23 @@ public class BasicEnemyScript : MonoBehaviour
     public void ResetMovementSpeed()
     {
         moveSpeed = baseMoveSpeed;
+    }
+
+    public Vector3 GetMovementDirection()
+    {
+        // If pathIndex is 0, meaning we shld take enemyPath[0] - startPoint
+        if (pathIndex == 0)
+        {
+            Vector3 firstTarget = LevelManager.main.enemyPath[0].position;
+            Vector3 startPoint = LevelManager.main.startPoint.position;
+            return (firstTarget - startPoint).normalized;
+        }
+
+        // Else, Calculate direction moving based on current and previous pathIndex points
+        Vector3 currentMovementTarget = LevelManager.main.enemyPath[pathIndex].position;
+        Vector3 prevMovementTarget = LevelManager.main.enemyPath[pathIndex - 1].position;
+
+        return (currentMovementTarget - prevMovementTarget).normalized;
     }
 
     // Health Related Functions
