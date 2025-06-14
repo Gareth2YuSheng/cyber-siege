@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEditor;
 
 public class BasicTowerScript : MonoBehaviour
 {
@@ -164,7 +163,7 @@ public class BasicTowerScript : MonoBehaviour
     private void UpdateTowerRangeTransform()
     {
         // Range (Radius) is to be multiplied by 2 as X, Y and Z are length variables.
-        towerRangeTransform.localScale = new Vector3(range * 2, range * 2, range * 2);
+        towerRangeTransform.localScale = new Vector3(range * 2f, range * 2f, range * 2f);
     }
 
     // private void OnDrawGizmosSelected()

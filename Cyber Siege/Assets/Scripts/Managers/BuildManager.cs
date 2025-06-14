@@ -6,7 +6,7 @@ public class BuildManager : MonoBehaviour
 {
     public static BuildManager main;
 
-    [SerializeField] private Tower[] towers;
+    [SerializeField] public Tower[] towers;
 
     // [NonSerialized] public bool isBuilding = false;
 

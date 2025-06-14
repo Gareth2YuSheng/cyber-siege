@@ -10,7 +10,6 @@ public class TowerMenuScript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI moneyLabel;
     [SerializeField] private TextMeshProUGUI waveLabel;
 
-
     private void Start()
     {
         //Hide tower preview first
@@ -19,7 +18,6 @@ public class TowerMenuScript : MonoBehaviour
         //outside of the scene
 
         // Add Event Listeners
-
         LevelManager.main.onCurrencyChange.AddListener(UpdateCurrencyLabel);
         EnemyManager.main.onWaveEnd.AddListener(UpdateWaveLabel);
 
@@ -57,29 +55,29 @@ public class TowerMenuScript : MonoBehaviour
 
     // ON CLICK FUNCTIONS
 
-    public void TowerMenuTowerSelectButtonOnClick(int towerIndex)
-    {
-        Debug.Log($"Selected Tower {towerIndex}");
-        BuildManager.main.SetSelectedTower(towerIndex);
-        //Check if player can afford the tower
-        if (BuildManager.main.CanAffordSelectedTower())
-        {
-            BuildManager.main.EnableBuilding();
-            // Show Tower Preview
-            towerPreviewSR.enabled = true;
-        }
-        else
-        {
-            //Error Message Here
-            Debug.Log("Cannot Afford This Tower!");
+    // public void TowerMenuTowerSelectButtonOnClick(int towerIndex)
+    // {
+    //     Debug.Log($"Selected Tower {towerIndex}");
+    //     BuildManager.main.SetSelectedTower(towerIndex);
+    //     //Check if player can afford the tower
+    //     if (BuildManager.main.CanAffordSelectedTower())
+    //     {
+    //         BuildManager.main.EnableBuilding();
+    //         // Show Tower Preview
+    //         towerPreviewSR.enabled = true;
+    //     }
+    //     else
+    //     {
+    //         //Error Message Here
+    //         Debug.Log("Cannot Afford This Tower!");
 
-            // Fire Prompt
-            UIManager.main.ShowErrorPrompt("Cannot Afford This Tower!");
-        }
-    }
+    //         // Fire Prompt
+    //         UIManager.main.ShowErrorPrompt("Cannot Afford This Tower!");
+    //     }
+    // }
 
     public void TowerMenuBuildCancelButtonOnClick()
-    {   
+    {
         Debug.Log("Cancel Build Mode");
         BuildManager.main.DisableBuilding();
         // Hide Tower Preview
