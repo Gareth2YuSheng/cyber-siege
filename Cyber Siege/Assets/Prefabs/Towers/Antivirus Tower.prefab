@@ -317,7 +317,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   turretRotationPart: {fileID: 4257627478970964647}
-  bulletPrefab: {fileID: 9067777257794173421, guid: 1692ec94da8d9b14aa8cd43ff8a158d2, type: 3}
+  bulletPrefab: {fileID: 9067777257794173421, guid: 6a4ca83943bb09a44b12e2a9a1d43893, type: 3}
   firingPoint: {fileID: 2706843766656116215}
 --- !u!1 &3278032483873518707
 GameObject:

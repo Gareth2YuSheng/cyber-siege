@@ -1,8 +1,6 @@
 using UnityEngine;
-using System.Collections;
-using System;
 
-public class VirusScript : MonoBehaviour
+public class VirusScript : BasicEnemyScript
 {
     [Header("References")]
     [SerializeField] private GameObject VirusPrefab;
@@ -12,85 +10,43 @@ public class VirusScript : MonoBehaviour
     // [SerializeField] private float VirusSpawnRate;
     //Spawns {botnetSpawnCount} bots every {botnetSpawnRate} seconds
 
-    private Transform myTransform;
-    private BasicEnemyScript myBEScript;
-    // private float timeSinceLastSpawn = 0f;
-    private Vector3 lastPosition;
-    private Boolean spawnCheck = false;
-
-    private void Awake()
+    // This function will be called by normal towers and will trigger virus spawns
+    public override void TakeDamage(int damage)
     {
-        // initial value for lastPosition
-        lastPosition = transform.position;
-    }
-    private void Start()
-    {
-        myTransform = gameObject.GetComponent<Transform>();
-        myBEScript = gameObject.GetComponent<BasicEnemyScript>();
-        myBEScript.onTakeDamage.AddListener(Spawn);
+        Spawn();
+        base.TakeDamage(damage);
     }
 
-    // Update is called once per frame
-    private void Update()
+    // This function will be called by specialised virus killing objects
+    public void TakeSpecialisedDamage(int damage)
     {
-        Vector3 currentPosition = transform.position;
-        // Current position
-
-        // Get Direction
-
-        if (spawnCheck) // <- Add additional check for tower.
-        {
-            if (currentPosition != lastPosition)
-            {
-
-                Vector3 direction = GetMovementDirection(currentPosition, lastPosition);
-
-                if (direction != Vector3.zero)
-                {
-                    Vector3 spawnPosition = currentPosition - (direction * 1f);
-                    EnemyManager.main.SpawnEnemies(
-                        VirusSpawnCount,
-                        spawnPosition,
-                        myBEScript.GetCurrentPathIndex(),
-                        VirusPrefab
-                    );
-                }
-                // Modify position
-                //myTransform.position
-            }
-            spawnCheck = false;
-        }
-        // Get Direction
-
-
-        // set last to current
-        lastPosition = transform.position;
-    }
-
-    private Vector3 GetMovementDirection(Vector3 current, Vector3 last)
-    {
-        Debug.Log(current);
-        Debug.Log(last);
-        Vector3 movement = current - last;
-
-        // If no movement, return zero vector
-        if (movement == Vector3.zero)
-            return Vector3.zero;
-
-        // Get primary movement direction (either x or y axis)
-        if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
-        {
-            return new Vector3(Mathf.Sign(movement.x), 0, 0);
-        }
-        else
-        {
-            return new Vector3(0, Mathf.Sign(movement.y), 0);
-        }
+        base.TakeDamage(damage);
     }
 
     private void Spawn()
     {
-        spawnCheck = true;
+        Vector3 currDirection = GetMovementDirection();
+        Vector3 offset = new Vector3(0f, 0f, 0f);
+        // check if going in y direction
+        if (currDirection.x == 0f)
+        {
+            // Vary the y coord
+            offset.y = Random.Range(-0.3f, 0.3f);
+        }
+        // check if going in x direction
+        else if (currDirection.y == 0f)
+        {
+            // Vary the x coord
+            offset.x = Random.Range(-0.3f, 0.3f);
+        }
+        Vector3 spawnPosition = transform.position + offset;
+        EnemyManager.main.SpawnEnemies(
+            VirusSpawnCount,
+            spawnPosition,
+            GetCurrentPathIndex(),
+            VirusPrefab,
+            0.5f
+        );
     }
 }
 

@@ -360,7 +360,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8902548957978172073}
   - component: {fileID: 1407966395980578391}
-  - component: {fileID: 4112424432902296956}
   m_Layer: 0
   m_Name: Test Turret
   m_TagString: Untagged
@@ -399,24 +398,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3ed0e59c849534b99027b5b7ec3ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4112424432902296956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3198532911862591802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05b24dbcd251a34478fff68df256b488, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   tower: {fileID: 11400000, guid: eb342e8971f2aff448477361367969cf, type: 2}
   towerRangeTransform: {fileID: 4009835246018383585}
   enemyMask:
     serializedVersion: 2
     m_Bits: 256
   turretRotationPart: {fileID: 4257627478970964647}
+  bulletPrefab: {fileID: 9067777257794173421, guid: 1692ec94da8d9b14aa8cd43ff8a158d2, type: 3}
+  firingPoint: {fileID: 2706843766656116215}
 --- !u!1 &3278032483873518707
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4438821444525476795}
   - component: {fileID: 6653144703774377068}
   - component: {fileID: 4661326746327342660}
-  - component: {fileID: 4595896896910372911}
   - component: {fileID: 7853526223196434942}
   - component: {fileID: 7776543347787043342}
   m_Layer: 8
@@ -118,7 +117,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &4595896896910372911
+--- !u!114 &7853526223196434942
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,7 +126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1699728895133875648}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa06e9cd1ea5174c9ef110f0aeaf4a7, type: 3}
+  m_Script: {fileID: 11500000, guid: aa9791991394f45389de5f4c55f9fc84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 11400000, guid: f2376b34bca604f51be6a734dd1df872, type: 2}
@@ -141,18 +140,6 @@ MonoBehaviour:
   onEnemyReveal:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7853526223196434942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699728895133875648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa9791991394f45389de5f4c55f9fc84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   WormPrefab: {fileID: 1699728895133875648}
   WormSpawnCount: 1
   WormSpawnRate: 5

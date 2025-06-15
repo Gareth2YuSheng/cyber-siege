@@ -77,10 +77,10 @@ public class BasicTowerScript : MonoBehaviour
     }
 
     // Change for each Tower
-    public virtual void Action() { }
+    protected virtual void Action() { }
 
     // Change for each Tower
-    public void FindEnemyTarget()
+    protected void FindEnemyTarget()
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, range, (Vector2)transform.position, 0f, enemyMask);
 
@@ -107,7 +107,7 @@ public class BasicTowerScript : MonoBehaviour
         }
     }
 
-    public bool CheckTargetIsInRange()
+    protected bool CheckTargetIsInRange()
     {
         return Vector2.Distance(enemyTarget.position, transform.position) <= range;
     }

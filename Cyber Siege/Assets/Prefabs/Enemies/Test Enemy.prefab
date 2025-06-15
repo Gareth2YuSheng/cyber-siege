@@ -179,3 +179,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 11400000, guid: dae4b2ef95eef544aaaf060fccc9a285, type: 2}
+  isHidden: 0
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyReveal:
+    m_PersistentCalls:
+      m_Calls: []

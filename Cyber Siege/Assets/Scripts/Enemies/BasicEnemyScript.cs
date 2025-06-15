@@ -3,32 +3,32 @@ using UnityEngine.Events;
 
 public class BasicEnemyScript : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private ScriptableEnemy enemy;
+    [Header("Base References")]
+    [SerializeField] protected ScriptableEnemy enemy;
 
-    [Header("Attributes")]
+    [Header("Base Attributes")]
     public bool isHidden = false;
 
-    [Header("Events")]
+    [Header("Base Events")]
     public UnityEvent onTakeDamage = new UnityEvent();
     public UnityEvent onEnemyDeath = new UnityEvent();
     public UnityEvent onEnemyReveal = new UnityEvent();
 
     //Attributes
-    private int health;
-    private float moveSpeed;
-    private int currencyValue;
-    private int damageDealtToServer;
-    private bool isDestroyed = false;
+    protected int health;
+    protected float moveSpeed;
+    protected int currencyValue;
+    protected int damageDealtToServer;
+    protected bool isDestroyed = false;
 
     //For Pathing
-    private int pathIndex = 0;
-    private Transform movementTarget;
-    private Rigidbody2D rb;
+    protected int pathIndex = 0;
+    protected Transform movementTarget;
+    protected Rigidbody2D rb;
 
     //For Modifiers
-    private float baseMoveSpeed;
-    private float baseHealth;
+    protected float baseMoveSpeed;
+    protected float baseHealth;
 
     private void Start()
     {
@@ -46,7 +46,8 @@ public class BasicEnemyScript : MonoBehaviour
         UpdateMovementTarget();
     }
 
-    private void Update()
+    // Allow Update to be overridable by children to add logic and behavior
+    protected virtual void Update()
     {
         //For Basic Movement
         //Check if enemy is close to target
@@ -78,7 +79,7 @@ public class BasicEnemyScript : MonoBehaviour
     }
 
     //Movement Related Functions
-    private void UpdateMovementTarget()
+    protected void UpdateMovementTarget()
     {
         movementTarget = LevelManager.main.enemyPath[pathIndex];
     }
@@ -126,7 +127,7 @@ public class BasicEnemyScript : MonoBehaviour
     }
 
     // Health Related Functions
-    public void TakeDamage(int dmg)
+    public virtual void TakeDamage(int dmg)
     {
         health -= dmg;
         onTakeDamage.Invoke();
@@ -142,7 +143,7 @@ public class BasicEnemyScript : MonoBehaviour
         }
     }
 
-    private void DestroySelf()
+    protected void DestroySelf()
     {
         isDestroyed = true;
         Destroy(gameObject);

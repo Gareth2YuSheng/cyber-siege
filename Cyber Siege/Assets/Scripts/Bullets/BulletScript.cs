@@ -3,13 +3,13 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private ScriptableBullet bullet;
+    [SerializeField] protected ScriptableBullet bullet;
 
-    private Rigidbody2D rb;
-    private Transform target;
-    private float speed;
-    private int damage = 0;
-    private bool hasCollided = false;
+    protected Rigidbody2D rb;
+    protected Transform target;
+    protected float speed;
+    protected int damage = 0;
+    protected bool hasCollided = false;
 
     private void Start()
     {
@@ -23,7 +23,11 @@ public class BulletScript : MonoBehaviour
 
         // Allows bullets to home on target
         Vector2 direction = (target.position - transform.position).normalized;
-        rb.linearVelocity = direction * speed; //Alternatively use Transform translate method?
+        rb.linearVelocity = direction * speed;
+
+        // Rotate bullet to face target
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
     }
 
     public void SetTarget(Transform _target)
@@ -36,12 +40,12 @@ public class BulletScript : MonoBehaviour
         damage = _damage;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         // Debug.Log($"Collided with {collision.gameObject.name}");
         // If collision object is an tagged as an enemy or is in the enemy layer (enemy layer is 8)
         // and bullet has not collided with any other enemy (only 1 enemy per bullet)
-        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.layer == 8) && !hasCollided)
+        if (collision.gameObject.layer == 8 && !hasCollided)
         {
             hasCollided = true;
             BasicEnemyScript enemy = collision.gameObject.GetComponent<BasicEnemyScript>();

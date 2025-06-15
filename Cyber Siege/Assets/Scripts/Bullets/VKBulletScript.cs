@@ -1,0 +1,21 @@
+using UnityEngine;
+
+public class VKBulletScript : BulletScript
+{
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        // If enemy is virus enemy do double damage
+        if (collision.gameObject.tag == "Virus Enemy" && collision.gameObject.layer == 8 && !hasCollided)
+        {
+            hasCollided = true;
+            VirusScript virus = collision.gameObject.GetComponent<VirusScript>();
+            virus.TakeSpecialisedDamage(damage * 2);
+            Destroy(gameObject);
+        }
+        // Else If enemy is normal enemy do normal damage
+        else if (collision.gameObject.layer == 8 && !hasCollided)
+        {
+            base.OnCollisionEnter2D(collision); // Let parent logic handle
+        }
+    }
+}

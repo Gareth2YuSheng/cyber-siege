@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Phishing Enemy
+  - Virus Enemy
   layers:
   - Default
   - TransparentFX
