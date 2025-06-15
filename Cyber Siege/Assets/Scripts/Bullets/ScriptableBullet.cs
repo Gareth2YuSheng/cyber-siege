@@ -4,5 +4,4 @@ using UnityEngine;
 public class ScriptableBullet : ScriptableObject
 {
     public float bulletSpeed = 5f;
-    public int bulletDamage = 1;
 }

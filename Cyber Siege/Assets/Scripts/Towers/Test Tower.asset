@@ -19,3 +19,4 @@ MonoBehaviour:
   bps: 2
   baseUpgradeCost: 10
   isRotatable: 1
+  damage: 1

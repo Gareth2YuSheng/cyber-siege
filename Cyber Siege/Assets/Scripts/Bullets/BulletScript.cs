@@ -8,13 +8,12 @@ public class BulletScript : MonoBehaviour
     private Rigidbody2D rb;
     private Transform target;
     private float speed;
-    private int damage;
+    private int damage = 0;
     private bool hasCollided = false;
 
     private void Start()
     {
         speed = bullet.bulletSpeed;
-        damage = bullet.bulletDamage;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -30,6 +29,11 @@ public class BulletScript : MonoBehaviour
     public void SetTarget(Transform _target)
     {
         target = _target;
+    }
+
+    public void SetBulletDamage(int _damage)
+    {
+        damage = _damage;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

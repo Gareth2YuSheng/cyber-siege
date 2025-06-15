@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8357552402064196848}
   - component: {fileID: 5456107066911968092}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4009835246018383585}
   - component: {fileID: 7495676910470516373}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7395454072031511706}
   - component: {fileID: 8365887825371547587}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,9 +272,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8902548957978172073}
-  - component: {fileID: 4112424432902296956}
-  - component: {fileID: 3666973965099512313}
-  m_Layer: 4
+  - component: {fileID: -1688346018647747440}
+  m_Layer: 0
   m_Name: Antivirus Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,27 +299,7 @@ Transform:
   - {fileID: 4009835246018383585}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4112424432902296956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3198532911862591802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05b24dbcd251a34478fff68df256b488, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tower: {fileID: 11400000, guid: a91e2b8ce6e07cd4c8c087f8276f9fc0, type: 2}
-  towerRangeTransform: {fileID: 4009835246018383585}
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 256
-  turretRotationPart: {fileID: 4257627478970964647}
-  bulletPrefab: {fileID: 9067777257794173421, guid: 1692ec94da8d9b14aa8cd43ff8a158d2, type: 3}
-  firingPoint: {fileID: 2706843766656116215}
---- !u!114 &3666973965099512313
+--- !u!114 &-1688346018647747440
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -332,6 +311,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e25e5760132688548ae7dc74220364e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tower: {fileID: 11400000, guid: a91e2b8ce6e07cd4c8c087f8276f9fc0, type: 2}
+  towerRangeTransform: {fileID: 4009835246018383585}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 256
+  turretRotationPart: {fileID: 4257627478970964647}
+  bulletPrefab: {fileID: 9067777257794173421, guid: 1692ec94da8d9b14aa8cd43ff8a158d2, type: 3}
+  firingPoint: {fileID: 2706843766656116215}
 --- !u!1 &3278032483873518707
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6395692598915923703}
   - component: {fileID: 2921927982173090826}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 190645893251926209}
   - component: {fileID: 4355256331641525817}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -515,7 +502,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4257627478970964647}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: RotationalPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -547,7 +534,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2273343325139513096}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +655,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2706843766656116215}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Firing Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -700,7 +687,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5173520128938047808}
   - component: {fileID: 9078568637207396267}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

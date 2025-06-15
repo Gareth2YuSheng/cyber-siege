@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
@@ -27,17 +28,6 @@ public class UIManager : MonoBehaviour
 
     // Coroutine to simulate a timeout after a specified duration
     // private bool isTimedOut = false;
-
-    IEnumerator SetPromptTimeout(float timeoutDuration)
-    {
-        yield return new WaitForSeconds(timeoutDuration);
-
-        // Code after timeout
-        // isTimedOut = true;
-        Debug.Log("Hide Prompt!");
-        errorPrompt.gameObject.SetActive(false);
-        // You can add additional logic here if you need to perform actions when the timeout occurs
-    }
 
     private void Awake()
     {
@@ -77,12 +67,34 @@ public class UIManager : MonoBehaviour
         startButton.gameObject.SetActive(true);
     }
 
+    IEnumerator SetPromptTimeout(float timeoutDuration)
+    {
+        yield return new WaitForSeconds(timeoutDuration);
+
+        // Code after timeout
+        // isTimedOut = true;
+        FadeErrorPrompt(0f, 1f, () =>
+        {
+            errorPrompt.SetActive(false);
+        });
+        // You can add additional logic here if you need to perform actions when the timeout occurs
+    }
+
+    private void FadeErrorPrompt(float endVal, float duration, TweenCallback onEnd)
+    {
+        errorPrompt.GetComponent<Image>().DOFade(endVal, duration).onComplete += onEnd;
+        errorPromptLabel.DOFade(endVal, duration);
+    }
+
     // Error prompt implementation
     // Shows for specific number of seconds and prompt given.
     public void ShowErrorPrompt(string prompt)
     {
         errorPromptLabel.text = prompt;
-        errorPrompt.gameObject.SetActive(true);
+        FadeErrorPrompt(1f, 0f, () =>
+        {
+            errorPrompt.SetActive(true);
+        });
         StartCoroutine(SetPromptTimeout(3f));  // Timeout set to 3 seconds
     }
 

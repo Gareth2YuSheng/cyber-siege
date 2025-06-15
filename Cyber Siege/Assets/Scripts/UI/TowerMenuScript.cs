@@ -55,27 +55,6 @@ public class TowerMenuScript : MonoBehaviour
 
     // ON CLICK FUNCTIONS
 
-    // public void TowerMenuTowerSelectButtonOnClick(int towerIndex)
-    // {
-    //     Debug.Log($"Selected Tower {towerIndex}");
-    //     BuildManager.main.SetSelectedTower(towerIndex);
-    //     //Check if player can afford the tower
-    //     if (BuildManager.main.CanAffordSelectedTower())
-    //     {
-    //         BuildManager.main.EnableBuilding();
-    //         // Show Tower Preview
-    //         towerPreviewSR.enabled = true;
-    //     }
-    //     else
-    //     {
-    //         //Error Message Here
-    //         Debug.Log("Cannot Afford This Tower!");
-
-    //         // Fire Prompt
-    //         UIManager.main.ShowErrorPrompt("Cannot Afford This Tower!");
-    //     }
-    // }
-
     public void TowerMenuBuildCancelButtonOnClick()
     {
         Debug.Log("Cancel Build Mode");

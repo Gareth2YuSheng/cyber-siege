@@ -1,16 +1,15 @@
 using UnityEngine;
 
-public class AntivirusTowerScript : MonoBehaviour
+public class AntivirusTowerScript : BasicTowerScript
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform firingPoint;
 
-    // Update is called once per frame
-    void Update()
+    public override void Action()
     {
-        
+        GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
+        BulletScript bulletScript = bulletObj.GetComponent<BulletScript>();
+        bulletScript.SetBulletDamage(1);
+        bulletScript.SetTarget(enemyTarget);
     }
 }

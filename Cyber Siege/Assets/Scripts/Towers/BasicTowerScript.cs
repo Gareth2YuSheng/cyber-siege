@@ -3,39 +3,39 @@ using UnityEngine;
 public class BasicTowerScript : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private ScriptableTower tower;
-    [SerializeField] private Transform towerRangeTransform;
-    [SerializeField] private LayerMask enemyMask;
-    [SerializeField] private Transform turretRotationPart;
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform firingPoint;
+    [SerializeField] protected ScriptableTower tower;
+    [SerializeField] protected Transform towerRangeTransform;
+    [SerializeField] protected LayerMask enemyMask;
+    [SerializeField] protected Transform turretRotationPart;
+    // [SerializeField] private GameObject bulletPrefab;
+    // [SerializeField] private Transform firingPoint;
 
     // [SerializeField] private GameObject upgradeUI;
     // [SerializeField] private Button upgradeButton;
 
     //Attributes
-    private string towerName;
-    private int cost;
-    private float range; // Radius
-    private float rotationSpeed;
-    private float bps;
-    private int level = 1;
-    private bool isRotatable;
+    // private string towerName;
+    // private int cost;
+    protected float range; // Radius
+    protected float rotationSpeed;
+    protected float bps;
+    protected int level = 1;
+    protected bool isRotatable;
 
     //For Modification (Upgrades)
-    private int baseUpgradeCost;
-    private float baseBPS;
-    private float baseRange;
+    protected int baseUpgradeCost;
+    protected float baseBPS;
+    protected float baseRange;
 
     //For Shooting
-    private Transform enemyTarget;
-    private float timeUntilFire;
+    protected Transform enemyTarget;
+    protected float timeUntilFire;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        towerName = tower.towerName;
-        cost = tower.cost;
+        // towerName = tower.towerName;
+        // cost = tower.cost;
         range = tower.range;
         rotationSpeed = tower.rotationSpeed;
         bps = tower.bps;
@@ -48,10 +48,9 @@ public class BasicTowerScript : MonoBehaviour
         UpdateTowerRangeTransform();
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        //If no target, look for one
+        // If no target, look for one
         if (enemyTarget == null)
         {
             FindEnemyTarget();
@@ -71,22 +70,17 @@ public class BasicTowerScript : MonoBehaviour
             timeUntilFire += Time.deltaTime;
             if (timeUntilFire >= (1f / bps))
             {
-                Shoot();
+                Action();
                 timeUntilFire = 0f;
             }
         }
     }
 
     // Change for each Tower
-    private void Shoot()
-    {
-        GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
-        BulletScript bulletScript = bulletObj.GetComponent<BulletScript>();
-        bulletScript.SetTarget(enemyTarget);
-    }
+    public virtual void Action() { }
 
     // Change for each Tower
-    private void FindEnemyTarget()
+    public void FindEnemyTarget()
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, range, (Vector2)transform.position, 0f, enemyMask);
 
@@ -113,7 +107,7 @@ public class BasicTowerScript : MonoBehaviour
         }
     }
 
-    private bool CheckTargetIsInRange()
+    public bool CheckTargetIsInRange()
     {
         return Vector2.Distance(enemyTarget.position, transform.position) <= range;
     }
@@ -129,22 +123,22 @@ public class BasicTowerScript : MonoBehaviour
         turretRotationPart.rotation = Quaternion.RotateTowards(turretRotationPart.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    private int CalculateUpgradeCost()
+    public int CalculateUpgradeCost()
     {
         return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
     }
 
-    private float CalculateBPS()
+    public float CalculateBPS()
     {
         return baseBPS * Mathf.Pow(level, 0.6f);
     }
 
-    private float CalculateTargetingRange()
+    public float CalculateTargetingRange()
     {
         return range * Mathf.Pow(level, 0.4f);
     }
 
-    private void Upgrade()
+    public void Upgrade()
     {
         if (CalculateUpgradeCost() > LevelManager.main.currency) return;
 
@@ -165,11 +159,4 @@ public class BasicTowerScript : MonoBehaviour
         // Range (Radius) is to be multiplied by 2 as X, Y and Z are length variables.
         towerRangeTransform.localScale = new Vector3(range * 2f, range * 2f, range * 2f);
     }
-
-    // private void OnDrawGizmosSelected()
-    // {
-    //     // To show range only to developer
-    //     Handles.color = Color.red;
-    //     Handles.DrawWireDisc(transform.position, transform.forward, range);
-    // }
 }
