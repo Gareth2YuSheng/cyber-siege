@@ -21,8 +21,10 @@ public class TowerMenuScript : MonoBehaviour
         LevelManager.main.onCurrencyChange.AddListener(UpdateCurrencyLabel);
         EnemyManager.main.onWaveEnd.AddListener(UpdateWaveLabel);
 
-        BuildManager.main.onStartBuilding.AddListener(StartBuilding);
-        BuildManager.main.onStopBuilding.AddListener(StopBuilding);
+        BuildManager.main.onStartGroundBuilding.AddListener(StartBuilding);
+        BuildManager.main.onStartPathBuilding.AddListener(StartBuilding);
+        BuildManager.main.onStopGroundBuilding.AddListener(StopBuilding);
+        BuildManager.main.onStopPathBuilding.AddListener(StopBuilding);
     }
 
     private void Update()

@@ -23,8 +23,10 @@ public class TowerPreviewScript : MonoBehaviour
         mySR = gameObject.GetComponent<SpriteRenderer>();
 
         // Add Event Listeners
-        BuildManager.main.onStartBuilding.AddListener(StartBuilding);
-        BuildManager.main.onStopBuilding.AddListener(StopBuilding);
+        BuildManager.main.onStartGroundBuilding.AddListener(StartBuilding);
+        BuildManager.main.onStartPathBuilding.AddListener(StartBuilding);
+        BuildManager.main.onStopGroundBuilding.AddListener(StopBuilding);
+        BuildManager.main.onStopPathBuilding.AddListener(StopBuilding);
     }
 
     private void Update()

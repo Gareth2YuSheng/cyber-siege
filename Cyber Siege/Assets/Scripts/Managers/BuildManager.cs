@@ -11,10 +11,14 @@ public class BuildManager : MonoBehaviour
     // [NonSerialized] public bool isBuilding = false;
 
     [Header("Events")]
-    public UnityEvent onStartBuilding = new UnityEvent();
-    public UnityEvent onStopBuilding = new UnityEvent();
+    public UnityEvent onStartGroundBuilding = new UnityEvent();
+    public UnityEvent onStopGroundBuilding = new UnityEvent();
+    public UnityEvent onStartPathBuilding = new UnityEvent();
+    public UnityEvent onStopPathBuilding = new UnityEvent();
 
     private int selectedTower = 0;
+    private bool isGroundBuilding = false;
+    private bool isPathBuilding = false;
 
     // For Tower Preview
     [NonSerialized] public bool isTileSelected = false;
@@ -59,16 +63,48 @@ public class BuildManager : MonoBehaviour
         selectedTower = _selectedTower;
     }
 
-    public void EnableBuilding()
+    // public void EnableBuilding()
+    // {
+    //     // isBuilding = true;
+    //     // onStartGroundBuilding.Invoke();
+    // }
+
+    public void EnableGroundBuilding()
     {
-        // isBuilding = true;
-        onStartBuilding.Invoke();
+        onStartGroundBuilding.Invoke();
+        isGroundBuilding = true;
+    }
+
+    public void EnablePathBuilding()
+    {
+        onStartPathBuilding.Invoke();
+        isPathBuilding = true;
     }
 
     public void DisableBuilding()
     {
         // isBuilding = false;
-        onStopBuilding.Invoke();
+        // onStopGroundBuilding.Invoke();
+        if (isGroundBuilding)
+        {
+            DisableGroundBuilding();
+        }
+        else if (isPathBuilding)
+        {
+            DisablePathBuilding();
+        }
+    }
+
+    public void DisableGroundBuilding()
+    {
+        onStopGroundBuilding.Invoke();
+        isGroundBuilding = false;
+    }
+
+    public void DisablePathBuilding()
+    {
+        onStopPathBuilding.Invoke();
+        isPathBuilding = false;
     }
 
     // For Tower Preview

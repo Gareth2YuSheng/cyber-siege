@@ -9,7 +9,7 @@ public class TestTowerScript : BasicTowerScript
     {
         GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
         BulletScript bulletScript = bulletObj.GetComponent<BulletScript>();
-        bulletScript.SetBulletDamage(1);
+        bulletScript.SetBulletDamage(damage);
         bulletScript.SetTarget(enemyTarget);
     }
 }

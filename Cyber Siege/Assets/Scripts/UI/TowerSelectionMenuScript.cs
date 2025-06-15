@@ -45,7 +45,16 @@ public class TowerSelectionMenuScript : MonoBehaviour
         //Check if player can afford the tower
         if (BuildManager.main.CanAffordSelectedTower())
         {
-            BuildManager.main.EnableBuilding();
+            // Enable Building based on the tower type
+            TowerPlacementType type = BuildManager.main.GetSelectedTower().towerSObj.placementType;
+            if (type == TowerPlacementType.GroundOnly)
+            {
+                BuildManager.main.EnableGroundBuilding();
+            }
+            else if (type == TowerPlacementType.PathOnly)
+            {
+                BuildManager.main.EnablePathBuilding();
+            }
             // Show Tower Preview
             towerPreviewSR.enabled = true;
         }

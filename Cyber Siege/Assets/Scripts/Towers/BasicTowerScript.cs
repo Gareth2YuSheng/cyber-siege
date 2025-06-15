@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BasicTowerScript : MonoBehaviour
 {
-    [Header("References")]
+    [Header("Base References")]
     [SerializeField] protected ScriptableTower tower;
     [SerializeField] protected Transform towerRangeTransform;
     [SerializeField] protected LayerMask enemyMask;
@@ -17,6 +17,7 @@ public class BasicTowerScript : MonoBehaviour
     // private string towerName;
     // private int cost;
     protected float range; // Radius
+    protected int damage;
     protected float rotationSpeed;
     protected float bps;
     protected int level = 1;
@@ -32,7 +33,7 @@ public class BasicTowerScript : MonoBehaviour
     protected float timeUntilFire;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
+    protected virtual void Start()
     {
         // towerName = tower.towerName;
         // cost = tower.cost;
@@ -41,6 +42,7 @@ public class BasicTowerScript : MonoBehaviour
         bps = tower.bps;
         baseUpgradeCost = tower.baseUpgradeCost;
         isRotatable = tower.isRotatable;
+        damage = tower.damage;
 
         baseBPS = bps;
         baseRange = range;
@@ -48,7 +50,7 @@ public class BasicTowerScript : MonoBehaviour
         UpdateTowerRangeTransform();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         // If no target, look for one
         if (enemyTarget == null)

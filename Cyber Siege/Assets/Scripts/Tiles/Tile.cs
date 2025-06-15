@@ -3,33 +3,24 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     [Header("Attributes")]
-    [SerializeField] private Color hoverColor;
+    [SerializeField] protected Color hoverColor;
 
-    private SpriteRenderer sr;
-    private Color initialColor;
-    private GameObject currentTower;
+    protected SpriteRenderer sr;
+    protected Color initialColor;
+    protected GameObject currentTower;
 
-    private bool isBuilding = false;
-    private Vector3 centerPosition;
+    protected bool isBuilding = false;
+    protected Vector3 centerPosition;
 
-    private void Start()
+    protected virtual void Start()
     {
         sr = gameObject.GetComponentInChildren<SpriteRenderer>();
         initialColor = sr.color;
         sr.enabled = false;
         centerPosition = sr.bounds.center;
-
-        // Add Event Listeners
-        BuildManager.main.onStartBuilding.AddListener(StartBuilding);
-        BuildManager.main.onStopBuilding.AddListener(StopBuilding);
     }
 
-    private void Update()
-    {
-
-    }
-
-    private void OnMouseEnter()
+    protected void OnMouseEnter()
     {
         // If not in building mode dont do anything
         if (!isBuilding) return;
@@ -49,7 +40,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    private void OnMouseExit()
+    protected void OnMouseExit()
     {
         // If not in building mode dont do anything
         if (!isBuilding) return;
@@ -67,7 +58,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    protected void OnMouseDown()
     {
         // If not in building mode dont do anything
         if (!isBuilding) return;
@@ -96,14 +87,14 @@ public class Tile : MonoBehaviour
         // else if (BuildManager.main.isBuilding && currentTower != null)
     }
 
-    private void StartBuilding()
+    protected void StartBuilding()
     {
         isBuilding = true;
         // Show tile
         sr.enabled = true;
     }
 
-    private void StopBuilding()
+    protected void StopBuilding()
     {
         isBuilding = false;
         // Hide tile
