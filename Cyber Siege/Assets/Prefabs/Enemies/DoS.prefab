@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5715585359178516932}
   - component: {fileID: 4280977001666433137}
-  - component: {fileID: 168088474027712116}
   - component: {fileID: 7671792488831027704}
   - component: {fileID: 4798159098121115316}
   - component: {fileID: 7663599442732647662}
@@ -91,19 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &168088474027712116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710481652798878408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa06e9cd1ea5174c9ef110f0aeaf4a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 11400000, guid: 4dfea74117e5987429f6b68c912ed67e, type: 2}
 --- !u!114 &7671792488831027704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +102,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6478900a726ed8f46a061d3dfbf9d252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 11400000, guid: 4dfea74117e5987429f6b68c912ed67e, type: 2}
+  isHidden: 0
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyReveal:
+    m_PersistentCalls:
+      m_Calls: []
   DDoSBotPrefab: {fileID: 5710481652798878408, guid: 33a09d18ddfb33341b6fc7500a8bdff2, type: 3}
   botnetSpawnCount: 5
   botnetSpawnRate: 3

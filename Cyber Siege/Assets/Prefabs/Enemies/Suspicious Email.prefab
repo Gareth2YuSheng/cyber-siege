@@ -10,11 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5715585359178516932}
   - component: {fileID: 4280977001666433137}
-  - component: {fileID: 168088474027712116}
   - component: {fileID: 2669937556934734232}
   - component: {fileID: 4798159098121115316}
   - component: {fileID: 215260713491139}
-  - component: {fileID: 3494404433945052327}
   m_Layer: 8
   m_Name: Suspicious Email
   m_TagString: Phishing Enemy
@@ -92,23 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &168088474027712116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710481652798878408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa06e9cd1ea5174c9ef110f0aeaf4a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 11400000, guid: 233a8c9606b6d79409c311d988210763, type: 2}
-  isHidden: 1
-  onEnemyDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &2669937556934734232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +102,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b51daa586996d2949bbe73790f5be82c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 11400000, guid: 233a8c9606b6d79409c311d988210763, type: 2}
+  isHidden: 0
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyReveal:
+    m_PersistentCalls:
+      m_Calls: []
   enemyPrefabs:
   - {fileID: 5710481652798878408, guid: 33a09d18ddfb33341b6fc7500a8bdff2, type: 3}
   onDeathSpawnCount: 3
@@ -197,15 +189,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 15, y: 10.3}
   m_EdgeRadius: 0
---- !u!114 &3494404433945052327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710481652798878408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ba581ca320bf1f4cabf8638b2bd7377, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

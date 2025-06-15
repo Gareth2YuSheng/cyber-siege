@@ -1,23 +1,16 @@
 using UnityEngine;
 
-public class SuspiciousEnemyScript : MonoBehaviour
+public class SuspiciousEnemyScript : BasicEnemyScript
 {
-    private BasicEnemyScript myBEScript;
-
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         // Hide phishing enemies first
-        myBEScript = gameObject.GetComponent<BasicEnemyScript>();
-        myBEScript.Hide();
+        Hide();
     }
 
-    private void Update()
+    protected override void Update()
     {
-
-    }
-
-    public void Reveal()
-    {
-        myBEScript.Reveal();
+        base.Update();
     }
 }

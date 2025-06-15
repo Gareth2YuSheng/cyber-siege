@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4438821444525476795}
   - component: {fileID: 6653144703774377068}
-  - component: {fileID: 4661326746327342660}
-  - component: {fileID: 4595896896910372911}
-  - component: {fileID: 7776543347787043342}
   - component: {fileID: -8687917671217422280}
+  - component: {fileID: 4661326746327342660}
+  - component: {fileID: 7776543347787043342}
   m_Layer: 8
   m_Name: Trojan
   m_TagString: Enemy
@@ -91,6 +90,30 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-8687917671217422280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699728895133875648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa04bbf28bdd84b648745c083f7925c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 11400000, guid: cdcc9fd320ae34908bbe810e544fe8ed, type: 2}
+  isHidden: 1
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyReveal:
+    m_PersistentCalls:
+      m_Calls: []
+  revealedSprite: {fileID: -9134971732639938234, guid: dc6f8366dcb213c4981176acc065efad, type: 3}
 --- !u!50 &4661326746327342660
 Rigidbody2D:
   serializedVersion: 5
@@ -118,29 +141,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &4595896896910372911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699728895133875648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa06e9cd1ea5174c9ef110f0aeaf4a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 11400000, guid: cdcc9fd320ae34908bbe810e544fe8ed, type: 2}
-  isHidden: 1
-  onTakeDamage:
-    m_PersistentCalls:
-      m_Calls: []
-  onEnemyDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  onEnemyReveal:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!61 &7776543347787043342
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -187,16 +187,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 15.88, y: 20.24}
   m_EdgeRadius: 0
---- !u!114 &-8687917671217422280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699728895133875648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa04bbf28bdd84b648745c083f7925c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  revealedSprite: {fileID: -9134971732639938234, guid: dc6f8366dcb213c4981176acc065efad, type: 3}

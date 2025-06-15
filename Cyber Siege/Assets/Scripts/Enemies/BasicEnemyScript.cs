@@ -30,7 +30,7 @@ public class BasicEnemyScript : MonoBehaviour
     protected float baseMoveSpeed;
     protected float baseHealth;
 
-    private void Start()
+    protected virtual void Start()
     {
         health = enemy.health;
         moveSpeed = enemy.moveSpeed;

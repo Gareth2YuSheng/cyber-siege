@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SuspiciousEmailScript : MonoBehaviour
+public class SuspiciousEmailScript : SuspiciousEnemyScript
 {
     [Header("References")]
     [SerializeField] private GameObject[] enemyPrefabs;
@@ -8,20 +8,11 @@ public class SuspiciousEmailScript : MonoBehaviour
     [Header("Attributes")]
     [SerializeField] private int onDeathSpawnCount;
 
-    private Transform myTransform;
-    private BasicEnemyScript myBEScript;
-
-    private void Start()
+    protected override void Start()
     {
-        myTransform = gameObject.GetComponent<Transform>();
-        myBEScript = gameObject.GetComponent<BasicEnemyScript>();
+        base.Start();
         // Add Event Listenter
-        gameObject.GetComponent<BasicEnemyScript>().onEnemyDeath.AddListener(SpawnEnemiesOnDeath);
-    }
-
-    private void Update()
-    {
-
+        onEnemyDeath.AddListener(SpawnEnemiesOnDeath);
     }
 
     // Cannot directly spawn the enemies in here as the gameObject 
@@ -32,7 +23,10 @@ public class SuspiciousEmailScript : MonoBehaviour
         GameObject prefabToSpawn = enemyPrefabs[0];
         // int index = Random.Range(0, enemyPrefabs.Length);
         // GameObject prefabToSpawn = enemyPrefabs[index];
-        EnemyManager.main.SpawnEnemies(onDeathSpawnCount, myTransform.position,
-            myBEScript.GetCurrentPathIndex(), prefabToSpawn);
+        EnemyManager.main.SpawnEnemies(
+            onDeathSpawnCount,
+            transform.position,
+            GetCurrentPathIndex(),
+            prefabToSpawn);
     }
 }

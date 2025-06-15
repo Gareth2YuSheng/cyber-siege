@@ -1,19 +1,18 @@
 using UnityEngine;
-using System.Collections;
 
-public class TrojanScript : MonoBehaviour
+public class TrojanScript : BasicEnemyScript
 {
     [Header("References")]
     [SerializeField] private Sprite revealedSprite;
 
     private SpriteRenderer spriteRenderer;
-    private BasicEnemyScript myBEScript;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+        Hide();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        myBEScript = gameObject.GetComponent<BasicEnemyScript>();
-        myBEScript.onEnemyReveal.AddListener(RevealSelf);
+        onEnemyReveal.AddListener(RevealSelf);
     }
 
     // Update is called once per frame

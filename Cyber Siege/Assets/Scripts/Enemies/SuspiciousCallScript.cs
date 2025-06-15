@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class SuspiciousCallScript : MonoBehaviour
+public class SuspiciousCallScript : SuspiciousEnemyScript
 {
     [SerializeField] private float buffRange;
     [SerializeField] private float buffAmount;
@@ -11,16 +11,12 @@ public class SuspiciousCallScript : MonoBehaviour
 
     private List<BasicEnemyScript> buffedEnemies = new List<BasicEnemyScript>();
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         // Set the circle collider radius
         buffRangeCollider = gameObject.GetComponent<CircleCollider2D>();
         buffRangeCollider.radius = buffRange * 10;
-    }
-
-    private void Update()
-    {
-
     }
 
     private void OnDestroy()

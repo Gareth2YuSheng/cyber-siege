@@ -1,16 +1,6 @@
 using UnityEngine;
 
-public class DDoSBotScript : MonoBehaviour
+public class DDoSBotScript : BasicEnemyScript
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

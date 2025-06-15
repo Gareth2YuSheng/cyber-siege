@@ -10,10 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5715585359178516932}
   - component: {fileID: 4280977001666433137}
-  - component: {fileID: 168088474027712116}
   - component: {fileID: 4798159098121115316}
   - component: {fileID: 215260713491139}
-  - component: {fileID: 3494404433945052327}
   - component: {fileID: -8675189053154239622}
   m_Layer: 8
   m_Name: Suspicious Message
@@ -92,23 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &168088474027712116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710481652798878408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa06e9cd1ea5174c9ef110f0aeaf4a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 11400000, guid: 37b99ebec8471cd43a3380942182b87e, type: 2}
-  isHidden: 1
-  onEnemyDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!50 &4798159098121115316
 Rigidbody2D:
   serializedVersion: 5
@@ -182,18 +163,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 17.7, y: 11.3}
   m_EdgeRadius: 0
---- !u!114 &3494404433945052327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710481652798878408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ba581ca320bf1f4cabf8638b2bd7377, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-8675189053154239622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,4 +175,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37ff812e2d5cd54cbfaa64a877b16eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 11400000, guid: 37b99ebec8471cd43a3380942182b87e, type: 2}
+  isHidden: 0
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyReveal:
+    m_PersistentCalls:
+      m_Calls: []
   alertSpawnRate: 5
