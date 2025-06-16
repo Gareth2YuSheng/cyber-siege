@@ -187,8 +187,8 @@ MonoBehaviour:
   onEnemyReveal:
     m_PersistentCalls:
       m_Calls: []
-  buffRange: 0
-  buffAmount: 0
+  buffRange: 2
+  buffAmount: 1.5
 --- !u!58 &6579756674289149860
 CircleCollider2D:
   m_ObjectHideFlags: 0
