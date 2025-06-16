@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7713258603630434020, guid: f333f08ab46d6e24a87db2b6a7b16efa, type: 3}
+  m_Sprite: {fileID: -6223010274085304667, guid: a724f24ea1b61f9488bcd114963baf67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
   onEnemyReveal:
     m_PersistentCalls:
       m_Calls: []
-  revealedSprite: {fileID: -9134971732639938234, guid: dc6f8366dcb213c4981176acc065efad, type: 3}
+  revealedSprite: {fileID: 1965859600184778311, guid: 1e22c4810a0dc2049a1e4ba2d0cff493, type: 3}
 --- !u!50 &4661326746327342660
 Rigidbody2D:
   serializedVersion: 5
@@ -179,7 +179,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 13.62, y: 13.64}
+    oldSize: {x: 9.21, y: 15.39}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
