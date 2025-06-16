@@ -16,7 +16,7 @@ MonoBehaviour:
   cost: 30
   range: 0
   rotationSpeed: 0
-  bps: 1.5
+  bps: 0.8
   baseUpgradeCost: 0
   isRotatable: 0
   damage: 1

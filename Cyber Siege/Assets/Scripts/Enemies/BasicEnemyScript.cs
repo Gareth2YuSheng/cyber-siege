@@ -199,4 +199,9 @@ public class BasicEnemyScript : MonoBehaviour
     {
         isHidden = true;
     }
+
+    public int GetDamageDealtToServer()
+    {
+        return damageDealtToServer;
+    }
 }

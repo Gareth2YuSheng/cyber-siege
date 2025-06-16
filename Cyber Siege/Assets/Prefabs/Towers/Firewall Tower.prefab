@@ -142,7 +142,9 @@ MonoBehaviour:
     m_Bits: 256
   turretRotationPart: {fileID: 0}
   damagedSprite: {fileID: 2387782019540734844, guid: 4e6f4973ade01e34ea9716d1c8ac348b, type: 3}
-  health: 50
+  mySR: {fileID: 8425233725850598387}
+  maxHealth: 20
+  damageInterval: 2
 --- !u!61 &-2974319952229688954
 BoxCollider2D:
   m_ObjectHideFlags: 0
