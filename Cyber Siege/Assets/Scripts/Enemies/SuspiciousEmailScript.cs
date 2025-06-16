@@ -18,7 +18,7 @@ public class SuspiciousEmailScript : SuspiciousEnemyScript
     // Cannot directly spawn the enemies in here as the gameObject 
     // is being destroyed before spawnning the rest of the enemies 
     // Logic moved to EnemyManager
-    private void SpawnEnemiesOnDeath()
+    private void SpawnEnemiesOnDeath(BasicEnemyScript enemy)
     {
         GameObject prefabToSpawn = enemyPrefabs[0];
         // int index = Random.Range(0, enemyPrefabs.Length);

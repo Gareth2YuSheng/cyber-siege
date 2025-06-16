@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Phishing Enemy
   - Virus Enemy
+  - Path Obstacle
   layers:
   - Default
   - TransparentFX

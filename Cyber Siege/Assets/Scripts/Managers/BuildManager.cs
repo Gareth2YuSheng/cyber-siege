@@ -65,26 +65,33 @@ public class BuildManager : MonoBehaviour
 
     // public void EnableBuilding()
     // {
-    //     // isBuilding = true;
-    //     // onStartGroundBuilding.Invoke();
     // }
 
+    // Only 1 type of building mode can be enabled at a time
     public void EnableGroundBuilding()
     {
+        // If was previously path building, disable it 
+        if (isPathBuilding)
+        {
+            DisablePathBuilding();
+        }
         onStartGroundBuilding.Invoke();
         isGroundBuilding = true;
     }
 
     public void EnablePathBuilding()
     {
+        // If was previously ground building, disable it
+        if (isGroundBuilding)
+        {
+            DisableGroundBuilding();
+        }
         onStartPathBuilding.Invoke();
         isPathBuilding = true;
     }
 
     public void DisableBuilding()
     {
-        // isBuilding = false;
-        // onStopGroundBuilding.Invoke();
         if (isGroundBuilding)
         {
             DisableGroundBuilding();

@@ -45,7 +45,7 @@ public class BulletScript : MonoBehaviour
         // Debug.Log($"Collided with {collision.gameObject.name}");
         // If collision object is an tagged as an enemy or is in the enemy layer (enemy layer is 8)
         // and bullet has not collided with any other enemy (only 1 enemy per bullet)
-        if (collision.gameObject.layer == 8 && !hasCollided)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && !hasCollided)
         {
             hasCollided = true;
             BasicEnemyScript enemy = collision.gameObject.GetComponent<BasicEnemyScript>();

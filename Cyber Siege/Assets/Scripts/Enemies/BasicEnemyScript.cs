@@ -11,7 +11,7 @@ public class BasicEnemyScript : MonoBehaviour
 
     [Header("Base Events")]
     public UnityEvent onTakeDamage = new UnityEvent();
-    public UnityEvent onEnemyDeath = new UnityEvent();
+    public UnityEvent<BasicEnemyScript> onEnemyDeath = new UnityEvent<BasicEnemyScript>();
     public UnityEvent onEnemyReveal = new UnityEvent();
 
     //Attributes
@@ -25,6 +25,7 @@ public class BasicEnemyScript : MonoBehaviour
     protected int pathIndex = 0;
     protected Transform movementTarget;
     protected Rigidbody2D rb;
+    protected bool isBlocked = false;
 
     //For Modifiers
     protected float baseMoveSpeed;
@@ -73,9 +74,36 @@ public class BasicEnemyScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //For Movement
+        // If Enemy is currently blocked, stop moving
+        if (isBlocked)
+        {
+            // Reset linearVelocity if havent
+            if (rb.linearVelocity.sqrMagnitude > 0.001f)
+            {
+                rb.linearVelocity = Vector2.zero;
+            }
+            return;
+        }
+        // For Movement
         Vector2 direction = (movementTarget.position - transform.position).normalized;
         rb.linearVelocity = direction * moveSpeed;
+    }
+
+    // Stopping when collide with obstacle behavior
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Path Obstacle"))
+        {
+            isBlocked = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Path Obstacle"))
+        {
+            isBlocked = false;
+        }
     }
 
     //Movement Related Functions
@@ -126,6 +154,16 @@ public class BasicEnemyScript : MonoBehaviour
         return (currentMovementTarget - prevMovementTarget).normalized;
     }
 
+    // public void Blocked()
+    // {
+    //     isBlocked = true;
+    // }
+
+    // public void Unblocked()
+    // {
+    //     isBlocked = false;
+    // }
+
     // Health Related Functions
     public virtual void TakeDamage(int dmg)
     {
@@ -135,7 +173,7 @@ public class BasicEnemyScript : MonoBehaviour
         if (health <= 0 && !isDestroyed)
         {
             // Invoke the Event
-            onEnemyDeath.Invoke();
+            onEnemyDeath.Invoke(this);
             // Increase player money
             LevelManager.main.IncreaseCurrency(currencyValue);
             // Destroy Game Object
