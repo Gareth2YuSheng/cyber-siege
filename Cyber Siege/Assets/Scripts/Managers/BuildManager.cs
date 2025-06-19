@@ -138,6 +138,7 @@ public class BuildManager : MonoBehaviour
     // For Tower Upgrading
     public void SetSelectedTowerToUpgrade(BasicTowerScript _tower)
     {
+        Debug.Log("New Tower Selected for Upgrade");
         selectedTowerToUpgrade = _tower;
         // Open tower upgrade menu
         onTowerSelectedForUpgrading.Invoke();

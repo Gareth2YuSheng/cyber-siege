@@ -109,6 +109,7 @@ MonoBehaviour:
   towerNameLabel: {fileID: 8089014689762915437}
   towerUpgradeSelectionButtonPrefab: {fileID: 1140376241356553904, guid: bca837b634f25ae409e6d0048b2d2db4, type: 3}
   towerUpgradeButtonSection: {fileID: 3502445359458639847}
+  upgradePurchasedColor: {r: 0, g: 1, b: 0.14507627, a: 0.78431374}
   upgradeButton1: {fileID: 263068648393157897}
   upgradeButton2: {fileID: 5903136514818871231}
   upgradeButton1Script: {fileID: 593727446769929010}

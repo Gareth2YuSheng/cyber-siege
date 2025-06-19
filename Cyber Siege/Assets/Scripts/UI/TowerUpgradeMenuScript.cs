@@ -8,6 +8,7 @@ public class TowerUpgradeMenuScript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI towerNameLabel;
     [SerializeField] private GameObject towerUpgradeSelectionButtonPrefab;
     [SerializeField] private GameObject towerUpgradeButtonSection;
+    [SerializeField] private Color upgradePurchasedColor;
 
     // Comment these references to go back to dynamic population of buttons
     [SerializeField] private Button upgradeButton1;
@@ -15,11 +16,15 @@ public class TowerUpgradeMenuScript : MonoBehaviour
     [SerializeField] private TowerUpgradeSelectionButtonScript upgradeButton1Script;
     [SerializeField] private TowerUpgradeSelectionButtonScript upgradeButton2Script;
 
+    private Color initialDisabledColor;
+
     private void Start()
     {
         // Add Event Listeners
         BuildManager.main.onTowerSelectedForUpgrading.AddListener(UpdateTowerDetails);
         LevelManager.main.onCurrencyChange.AddListener(CheckUpgradesAffordable);
+
+        initialDisabledColor = upgradeButton1.colors.disabledColor;
     }
 
     public void UpdateTowerDetails()
@@ -62,9 +67,6 @@ public class TowerUpgradeMenuScript : MonoBehaviour
             tower.upgrades[1].cost.ToString()
         );
 
-        // If not enough currency for upgrade, make button red
-        CheckUpgradesAffordable();
-
         // Set OnClick Listeners
         upgradeButton1.onClick.RemoveAllListeners();
         upgradeButton1.onClick.AddListener(() =>
@@ -84,8 +86,8 @@ public class TowerUpgradeMenuScript : MonoBehaviour
             }
         });
 
-        // Force Rebuild Upgrade Button Section
-        LayoutRebuilder.ForceRebuildLayoutImmediate(towerUpgradeButtonSection.GetComponent<RectTransform>());
+        // If not enough currency for upgrade, make button red
+        CheckUpgradesAffordable();
     }
 
     private void CheckUpgradesAffordable()
@@ -95,29 +97,42 @@ public class TowerUpgradeMenuScript : MonoBehaviour
         if (tower == null) return;
 
         Debug.Log($"Checking if Upgrades are Affordable for {tower.towerName}");
-        int currency = LevelManager.main.currency;
-        // Check first upgrade
-        if (tower.upgrades[0].cost > currency)
-        {
-            // Disable button
-            upgradeButton1.interactable = false;
-            // Make button red?
-        }
-        else
-        {
-            // Enable button
-            upgradeButton1.interactable = true;
-        }
+        // // Check first upgrade
+        UpdateUpgradeButton(
+            upgradeButton1,
+            tower.upgrades[0].purchased,
+            tower.upgrades[0].cost,
+            LevelManager.main.currency
+        );
+
         // Check second upgrade 
-        if (tower.upgrades[1].cost > currency)
+        UpdateUpgradeButton(
+            upgradeButton2,
+            tower.upgrades[1].purchased,
+            tower.upgrades[1].cost,
+            LevelManager.main.currency
+        );
+
+        // Force Rebuild Upgrade Button Section
+        LayoutRebuilder.ForceRebuildLayoutImmediate(towerUpgradeButtonSection.GetComponent<RectTransform>());
+    }
+
+    private void UpdateUpgradeButton(Button _button, bool _purchased, int _cost, int _currency)
+    {
+        // If upgrade has not been purchased and we CAN afford it
+        if (!_purchased && _cost <= _currency)
         {
-            // Disable button
-            upgradeButton2.interactable = false;
+            // Enable button
+            _button.interactable = true;
         }
         else
         {
-            // Enable button
-            upgradeButton2.interactable = true;
+            // Disable button with green
+            ColorBlock colors = _button.colors;
+            // Disable the button based on if purchased - green, else if not purchased and cannot afford - red
+            colors.disabledColor = _purchased ? upgradePurchasedColor : initialDisabledColor;
+            _button.colors = colors;
+            _button.interactable = false;
         }
     }
 
