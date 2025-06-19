@@ -8,6 +8,7 @@ public class Tile : MonoBehaviour
     protected SpriteRenderer sr;
     protected Color initialColor;
     protected GameObject currentTower;
+    protected BasicTowerScript currentTowerScript;
 
     protected bool isBuilding = false;
     protected Vector3 centerPosition;
@@ -61,15 +62,26 @@ public class Tile : MonoBehaviour
     protected void OnMouseDown()
     {
         // If not in building mode dont do anything
-        if (!isBuilding) return;
-        // If tile currently has no tower
-        if (currentTower == null)
+        // if (!isBuilding) return;
+
+        // If we are not in building mode AND tile currently has no tower
+        if (!isBuilding && currentTower == null) return;
+        // Else if we are in building mode AND tile already has a tower
+        if (isBuilding && currentTower != null)
+        {
+            // Prompt error
+            UIManager.main.ShowErrorPrompt("You cannot build on top of a Tower!");
+            return;
+        }
+        // Else If we are in building mode AND tile currently has no tower 
+        if (isBuilding && currentTower == null)
         {
             Debug.Log($"Build Selected Tower on {gameObject.name}");
             //Build the Selected Tower on this tile
             Tower towerToBuild = BuildManager.main.GetSelectedTower();
             BuildManager.main.BuySelectedTower();
             currentTower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
+            currentTowerScript = currentTower.GetComponent<BasicTowerScript>();
             //Disable building mode
             BuildManager.main.DisableBuilding();
             //Set tile colour back to initialColour
@@ -77,14 +89,19 @@ public class Tile : MonoBehaviour
             // Clear selected tile
             BuildManager.main.ClearSelectedTile();
         }
+        // Else if we are not in building mode AND tile already has a tower
         else
         {
-            // Prompt error
-            UIManager.main.ShowErrorPrompt("You cannot build ontop of a Tower!");
-
+            // Set selected Tower to upgrade and Open the Upgrade menu
+            BuildManager.main.SetSelectedTowerToUpgrade(currentTowerScript);
         }
-        // Else if tower exists, upgrade the tower or show error
-        // else if (BuildManager.main.isBuilding && currentTower != null)
+
+    }
+
+    // For BuildManager to call tile clicking logic
+    public void OnTileClickedExternally()
+    {
+        OnMouseDown();
     }
 
     protected void StartBuilding()

@@ -10,8 +10,8 @@ public class LevelManager : MonoBehaviour
 
     [Header("Attributes")]
     public Transform[] enemyPath;
-    public int currency; //Set to non-serialised after finish testing
-    public int serverHealth; //Set to non-serialised after finish testing
+    public int currency;
+    public int serverHealth;
 
     private bool isServerAlive = true;
 

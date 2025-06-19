@@ -13,8 +13,13 @@ public class BasicTowerScript : MonoBehaviour
     // [SerializeField] private GameObject upgradeUI;
     // [SerializeField] private Button upgradeButton;
 
+    [SerializeField] public TowerUpgrade[] upgrades;
+    // [SerializeField] protected virtual TowerUpgrade[] upgrades { get; } = new TowerUpgrade[] { };
+    // public virtual string[] upgradeNames { get; } = new string[] { "Upgrade 1", "Upgrade 2" };
+    // public virtual string[] upgradeDescriptions { get; } = new string[] { "Desc 1", "Desc 2" };
+
     //Attributes
-    // private string towerName;
+    public string towerName;
     // private int cost;
     protected float range; // Radius
     protected int damage;
@@ -35,7 +40,7 @@ public class BasicTowerScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
-        // towerName = tower.towerName;
+        towerName = tower.towerName;
         // cost = tower.cost;
         range = tower.range;
         rotationSpeed = tower.rotationSpeed;
@@ -125,6 +130,14 @@ public class BasicTowerScript : MonoBehaviour
         turretRotationPart.rotation = Quaternion.RotateTowards(turretRotationPart.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
+    private void UpdateTowerRangeTransform()
+    {
+        // Range (Radius) is to be multiplied by 2 as X, Y and Z are length variables.
+        towerRangeTransform.localScale = new Vector3(range * 2f, range * 2f, range * 2f);
+    }
+
+    // For stat upgrades
+
     public int CalculateUpgradeCost()
     {
         return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
@@ -140,7 +153,7 @@ public class BasicTowerScript : MonoBehaviour
         return range * Mathf.Pow(level, 0.4f);
     }
 
-    public void Upgrade()
+    public void UpgradeStats()
     {
         if (CalculateUpgradeCost() > LevelManager.main.currency) return;
 
@@ -156,9 +169,10 @@ public class BasicTowerScript : MonoBehaviour
         Debug.Log("New Cost: " + CalculateUpgradeCost());
     }
 
-    private void UpdateTowerRangeTransform()
-    {
-        // Range (Radius) is to be multiplied by 2 as X, Y and Z are length variables.
-        towerRangeTransform.localScale = new Vector3(range * 2f, range * 2f, range * 2f);
-    }
+    // For Behavioral Upgrades
+
+    public virtual void Upgrade1() { }
+
+    public virtual void Upgrade2() { }
+
 }

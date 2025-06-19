@@ -17,17 +17,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button startButton;
     [SerializeField] private GameObject errorPrompt;
     [SerializeField] private TextMeshProUGUI errorPromptLabel;
-
+    [SerializeField] private GameObject towerUpgradeMenu;
     // For Scam Message
     [SerializeField] private GameObject susMessageAlertPrefab;
-    // [SerializeField] private GameObject susMessageAlert;
-    // [SerializeField] private TextMeshProUGUI susMessageTitle;
-    // [SerializeField] private TextMeshProUGUI susMessageBody;
-    // [SerializeField] private TextMeshProUGUI susMessageActionButtonText;
-    // [SerializeField] private Button susMessageCloseButton;
 
-    // Coroutine to simulate a timeout after a specified duration
-    // private bool isTimedOut = false;
+    // private TowerUpgradeMenuScript upgradeMenuScript;
 
     private void Awake()
     {
@@ -36,9 +30,15 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        // upgradeMenuScript = towerUpgradeMenu.GetComponent<TowerUpgradeMenuScript>();
         // Add Event Listeners
         LevelManager.main.onServerDeath.AddListener(GameOver);
         EnemyManager.main.onWaveEnd.AddListener(WaveEnded);
+        // For tower upgrade menu
+        BuildManager.main.onTowerSelectedForUpgrading.AddListener(ShowTowerUpgradeMenu);
+        BuildManager.main.onCancelTowerUpgrading.AddListener(HideTowerUpgradeMenu);
+        // Hide Tower Upgrade Menu
+        HideTowerUpgradeMenu();
     }
 
     private void Update()
@@ -70,14 +70,10 @@ public class UIManager : MonoBehaviour
     IEnumerator SetPromptTimeout(float timeoutDuration)
     {
         yield return new WaitForSeconds(timeoutDuration);
-
-        // Code after timeout
-        // isTimedOut = true;
         FadeErrorPrompt(0f, 1f, () =>
         {
             errorPrompt.SetActive(false);
         });
-        // You can add additional logic here if you need to perform actions when the timeout occurs
     }
 
     private void FadeErrorPrompt(float endVal, float duration, TweenCallback onEnd)
@@ -117,6 +113,19 @@ public class UIManager : MonoBehaviour
         return new Vector3(x, y, 0f);
     }
 
+    // For Tower Upgrade Menu
+    private void ShowTowerUpgradeMenu()
+    {
+        // Update tower menu content
+        // upgradeMenuScript.UpdateTowerDetails();
+        towerUpgradeMenu.SetActive(true);
+    }
+
+    private void HideTowerUpgradeMenu()
+    {
+        towerUpgradeMenu.SetActive(false);
+    }
+
     // ON CLICK METHODS
 
     public void StartButtonOnClick()
@@ -153,14 +162,4 @@ public class UIManager : MonoBehaviour
     {
         Application.Quit();
     }
-
-    public void SusMessageFakeActionButtonOnClick()
-    {
-
-    }
-
-    //     public void SusMessageCloseButtonOnClick()
-    //     {
-    //         susMessageAlert.SetActive(false);
-    //     }
 }

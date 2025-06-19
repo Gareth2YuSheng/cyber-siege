@@ -15,10 +15,14 @@ public class BuildManager : MonoBehaviour
     public UnityEvent onStopGroundBuilding = new UnityEvent();
     public UnityEvent onStartPathBuilding = new UnityEvent();
     public UnityEvent onStopPathBuilding = new UnityEvent();
+    public UnityEvent onTowerSelectedForUpgrading = new UnityEvent();
+    public UnityEvent onCancelTowerUpgrading = new UnityEvent();
 
     private int selectedTower = 0;
     private bool isGroundBuilding = false;
     private bool isPathBuilding = false;
+
+    private BasicTowerScript selectedTowerToUpgrade;
 
     // For Tower Preview
     [NonSerialized] public bool isTileSelected = false;
@@ -129,5 +133,29 @@ public class BuildManager : MonoBehaviour
     public void SetSelectedTileRestricted(bool _isRestricted)
     {
         isSelectedTileRestricted = _isRestricted;
+    }
+
+    // For Tower Upgrading
+    public void SetSelectedTowerToUpgrade(BasicTowerScript _tower)
+    {
+        selectedTowerToUpgrade = _tower;
+        // Open tower upgrade menu
+        onTowerSelectedForUpgrading.Invoke();
+    }
+
+    public BasicTowerScript GetSelectedTowerToUpgrade()
+    {
+        return selectedTowerToUpgrade;
+    }
+
+    // public void ClearSelectedTowerToUpgrade()
+    // {
+    //     selectedTowerToUpgrade = null;
+    // }
+
+    public void CloseTowerUpgradeMenu()
+    {
+        selectedTowerToUpgrade = null;
+        onCancelTowerUpgrading.Invoke();
     }
 }
