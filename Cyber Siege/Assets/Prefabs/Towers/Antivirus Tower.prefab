@@ -321,12 +321,18 @@ MonoBehaviour:
   - upgradeName: Quarantine Protocol
     description: Virus enemies hit are slowed
     cost: 15
+    purchased: 0
   - upgradeName: Rapid Scan Protocol
     description: Upgrades rate of fire to burst mode
     cost: 15
-  towerName: 
+    purchased: 0
   bulletPrefab: {fileID: 9067777257794173421, guid: 6a4ca83943bb09a44b12e2a9a1d43893, type: 3}
+  upgradedBulletPrefab: {fileID: 9067777257794173421, guid: b7a328f0c9be5054b8925d379eba3ef0, type: 3}
   firingPoint: {fileID: 2706843766656116215}
+  burstCount: 3
+  burstCoolDown: 0.1
+  slowingFactor: 0.4
+  slowingDuration: 2
 --- !u!1 &3278032483873518707
 GameObject:
   m_ObjectHideFlags: 0

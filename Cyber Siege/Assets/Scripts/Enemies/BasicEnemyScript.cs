@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -130,6 +131,13 @@ public class BasicEnemyScript : MonoBehaviour
     public void UpdateMovementSpeed(float newMoveSpeed)
     {
         moveSpeed = newMoveSpeed;
+    }
+
+    public IEnumerator UpdateMovementSpeed(float newMoveSpeed, float duration)
+    {
+        UpdateMovementSpeed(newMoveSpeed);
+        yield return new WaitForSeconds(duration);
+        ResetMovementSpeed();
     }
 
     public void ResetMovementSpeed()

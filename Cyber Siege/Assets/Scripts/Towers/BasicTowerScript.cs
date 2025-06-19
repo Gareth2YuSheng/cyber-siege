@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BasicTowerScript : MonoBehaviour
@@ -16,7 +17,7 @@ public class BasicTowerScript : MonoBehaviour
     // public virtual string[] upgradeDescriptions { get; } = new string[] { "Desc 1", "Desc 2" };
 
     //Attributes
-    public string towerName;
+    [NonSerialized] public string towerName;
     // private int cost;
     protected float range; // Radius
     protected int damage;

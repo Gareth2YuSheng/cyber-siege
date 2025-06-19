@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerName: Antivirus
   cost: 50
-  range: 1.5
+  range: 1.8
   rotationSpeed: 200
   bps: 4
   baseUpgradeCost: 10
   isRotatable: 1
   damage: 1
+  placementType: 0

@@ -12,11 +12,10 @@ GameObject:
   - component: {fileID: 6653144703774377068}
   - component: {fileID: 4661326746327342660}
   - component: {fileID: 6471056848229334426}
-  - component: {fileID: 6502242287672804244}
   - component: {fileID: 4595896896910372911}
   m_Layer: 8
   m_Name: Test Enemy
-  m_TagString: Enemy
+  m_TagString: Virus Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,18 +153,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 7
---- !u!114 &6502242287672804244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699728895133875648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b2373418e81f94e94401cf9c5e0835, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4595896896910372911
 MonoBehaviour:
   m_ObjectHideFlags: 0

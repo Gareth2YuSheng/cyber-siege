@@ -19,7 +19,12 @@ public class BulletScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!target) return;
+        // If target dies, destroy self as cleanup
+        if (target == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         // Allows bullets to home on target
         Vector2 direction = (target.position - transform.position).normalized;

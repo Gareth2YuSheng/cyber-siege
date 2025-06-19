@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject errorPrompt;
     [SerializeField] private TextMeshProUGUI errorPromptLabel;
     [SerializeField] private GameObject towerUpgradeMenu;
+    [SerializeField] private RectTransform towerUpgradeMenuTransform;
     // For Scam Message
     [SerializeField] private GameObject susMessageAlertPrefab;
 
@@ -38,12 +39,7 @@ public class UIManager : MonoBehaviour
         BuildManager.main.onTowerSelectedForUpgrading.AddListener(ShowTowerUpgradeMenu);
         BuildManager.main.onCancelTowerUpgrading.AddListener(HideTowerUpgradeMenu);
         // Hide Tower Upgrade Menu
-        HideTowerUpgradeMenu();
-    }
-
-    private void Update()
-    {
-
+        // HideTowerUpgradeMenu();
     }
 
     private void SetAllSelectableChildrenFromTowerMenu(bool state)
@@ -116,14 +112,25 @@ public class UIManager : MonoBehaviour
     // For Tower Upgrade Menu
     private void ShowTowerUpgradeMenu()
     {
-        // Update tower menu content
-        // upgradeMenuScript.UpdateTowerDetails();
+        // Activate before tweening if not animation wont play
         towerUpgradeMenu.SetActive(true);
+        MoveTowerUpgradeMenu(-762f, 0.4f, () =>
+        {
+
+        });
     }
 
     private void HideTowerUpgradeMenu()
     {
-        towerUpgradeMenu.SetActive(false);
+        MoveTowerUpgradeMenu(-1222f, 0.4f, () =>
+        {
+            towerUpgradeMenu.SetActive(false);
+        });
+    }
+
+    private void MoveTowerUpgradeMenu(float endVal, float duration, TweenCallback onEnd)
+    {
+        towerUpgradeMenuTransform.DOAnchorPosX(endVal, duration).onComplete += onEnd;
     }
 
     // ON CLICK METHODS
