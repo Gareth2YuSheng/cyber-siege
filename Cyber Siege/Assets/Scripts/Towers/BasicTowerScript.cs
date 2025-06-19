@@ -10,9 +10,6 @@ public class BasicTowerScript : MonoBehaviour
     // [SerializeField] private GameObject bulletPrefab;
     // [SerializeField] private Transform firingPoint;
 
-    // [SerializeField] private GameObject upgradeUI;
-    // [SerializeField] private Button upgradeButton;
-
     [SerializeField] public TowerUpgrade[] upgrades;
     // [SerializeField] protected virtual TowerUpgrade[] upgrades { get; } = new TowerUpgrade[] { };
     // public virtual string[] upgradeNames { get; } = new string[] { "Upgrade 1", "Upgrade 2" };
@@ -53,6 +50,22 @@ public class BasicTowerScript : MonoBehaviour
         baseRange = range;
 
         UpdateTowerRangeTransform();
+
+        // Populate tower upgrades if empty
+        if (upgrades.Length == 0)
+        {
+            upgrades = new TowerUpgrade[2];
+            for (int i = 0; i < upgrades.Length; i++)
+            {
+                upgrades[i] = new TowerUpgrade
+                {
+                    upgradeName = "N/A",
+                    description = "",
+                    cost = 0,
+                    purchased = false
+                };
+            }
+        }
     }
 
     protected virtual void Update()
@@ -170,9 +183,22 @@ public class BasicTowerScript : MonoBehaviour
     }
 
     // For Behavioral Upgrades
+    public virtual void Upgrade1()
+    {
+        PurchaseUpgrade(upgrades[0]);
+    }
 
-    public virtual void Upgrade1() { }
+    public virtual void Upgrade2()
+    {
+        PurchaseUpgrade(upgrades[1]);
+    }
 
-    public virtual void Upgrade2() { }
-
+    protected void PurchaseUpgrade(TowerUpgrade _upgrade)
+    {
+        Debug.Log("Selected Upgrade: " + _upgrade.upgradeName);
+        // Mark Upgrade as purchased
+        _upgrade.purchased = true;
+        // Assume we checked that we can afford the upgrade
+        LevelManager.main.SpendCurrency(_upgrade.cost);
+    }
 }

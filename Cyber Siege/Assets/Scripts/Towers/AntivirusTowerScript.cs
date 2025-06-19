@@ -19,20 +19,12 @@ public class AntivirusTowerScript : BasicTowerScript
     public override void Upgrade1()
     {
         TowerUpgrade upgrade = upgrades[0];
-        Debug.Log("Selected Upgrade: " + upgrade.upgradeName);
-        // Mark Upgrade as purchased
-        upgrade.purchased = true;
-        // Assume we checked that we can afford the upgrade
-        LevelManager.main.SpendCurrency(upgrade.cost);
+        base.Upgrade1();
     }
 
     public override void Upgrade2()
     {
         TowerUpgrade upgrade = upgrades[1];
-        Debug.Log("Selected Upgrade: " + upgrade.upgradeName);
-        // Mark Upgrade as purchased
-        upgrade.purchased = true;
-        // Assume we checked that we can afford the upgrade
-        LevelManager.main.SpendCurrency(upgrade.cost);
+        base.Upgrade2();
     }
 }

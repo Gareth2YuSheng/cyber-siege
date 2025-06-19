@@ -56,16 +56,7 @@ public class TowerUpgradeMenuScript : MonoBehaviour
 
         // Assuming we are never going to have more than 2 upgrades on a tower at a time
         // Set Upgrade button labels
-        upgradeButton1Script.SetButtonLabels(
-            tower.upgrades[0].upgradeName,
-            tower.upgrades[0].description,
-            tower.upgrades[0].cost.ToString()
-        );
-        upgradeButton2Script.SetButtonLabels(
-            tower.upgrades[1].upgradeName,
-            tower.upgrades[1].description,
-            tower.upgrades[1].cost.ToString()
-        );
+        UpdateUpgradeButtonLabels(tower);
 
         // Set OnClick Listeners
         upgradeButton1.onClick.RemoveAllListeners();
@@ -90,11 +81,39 @@ public class TowerUpgradeMenuScript : MonoBehaviour
         CheckUpgradesAffordable();
     }
 
+    private void UpdateUpgradeButtonLabels(BasicTowerScript tower)
+    {
+        upgradeButton1Script.SetButtonLabels(
+            tower.upgrades[0].upgradeName,
+            tower.upgrades[0].description,
+            tower.upgrades[0].cost,
+            tower.upgrades[0].purchased
+        );
+        upgradeButton2Script.SetButtonLabels(
+            tower.upgrades[1].upgradeName,
+            tower.upgrades[1].description,
+            tower.upgrades[1].cost,
+            tower.upgrades[1].purchased
+        );
+    }
+
+    private void UpdateUpgradeButtonPurchasedLabel(BasicTowerScript tower)
+    {
+        upgradeButton1Script.SetButtonCostLabel(
+            tower.upgrades[0].cost,
+            tower.upgrades[0].purchased);
+        upgradeButton2Script.SetButtonCostLabel(
+            tower.upgrades[1].cost,
+            tower.upgrades[1].purchased);
+    }
+
     private void CheckUpgradesAffordable()
     {
         BasicTowerScript tower = BuildManager.main.GetSelectedTowerToUpgrade();
         // If no tower has been selected, return
         if (tower == null) return;
+
+        UpdateUpgradeButtonPurchasedLabel(tower);
 
         Debug.Log($"Checking if Upgrades are Affordable for {tower.towerName}");
         // // Check first upgrade
@@ -117,22 +136,22 @@ public class TowerUpgradeMenuScript : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(towerUpgradeButtonSection.GetComponent<RectTransform>());
     }
 
-    private void UpdateUpgradeButton(Button _button, bool _purchased, int _cost, int _currency)
+    private void UpdateUpgradeButton(Button button, bool purchased, int cost, int currency)
     {
         // If upgrade has not been purchased and we CAN afford it
-        if (!_purchased && _cost <= _currency)
+        if (!purchased && cost <= currency)
         {
             // Enable button
-            _button.interactable = true;
+            button.interactable = true;
         }
         else
         {
             // Disable button with green
-            ColorBlock colors = _button.colors;
+            ColorBlock colors = button.colors;
             // Disable the button based on if purchased - green, else if not purchased and cannot afford - red
-            colors.disabledColor = _purchased ? upgradePurchasedColor : initialDisabledColor;
-            _button.colors = colors;
-            _button.interactable = false;
+            colors.disabledColor = purchased ? upgradePurchasedColor : initialDisabledColor;
+            button.colors = colors;
+            button.interactable = false;
         }
     }
 
