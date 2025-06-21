@@ -192,7 +192,6 @@ public class FirewallTowerScript : BasicPathTowerScript
         // Dont run if no enemies
         if (enemiesInContact.Count < 1) return;
 
-        // Debug.Log("Ouch");
         foreach (var enemyWithTime in enemiesInContact.ToList())
         {
             BasicEnemyScript enemy = enemyWithTime.Key;

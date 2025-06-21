@@ -16,22 +16,25 @@ public class BasicEnemyScript : MonoBehaviour
     public UnityEvent<BasicEnemyScript> onEnemyDeath = new UnityEvent<BasicEnemyScript>();
     public UnityEvent onEnemyReveal = new UnityEvent();
 
-    //Attributes
+    // Attributes
     protected int health;
     protected float moveSpeed;
     protected int currencyValue;
     protected int damageDealtToServer;
     protected bool isDestroyed = false;
 
-    //For Pathing
+    // For Pathing
     protected int pathIndex = 0;
     protected Transform movementTarget;
     protected Rigidbody2D rb;
     protected bool isBlocked = false;
 
-    //For Modifiers
+    // For Modifiers
     protected float baseMoveSpeed;
     protected float baseHealth;
+
+    // For Debuffs
+    protected float damageTakenMultiplier = 1f;
 
     protected virtual void Start()
     {
@@ -173,10 +176,19 @@ public class BasicEnemyScript : MonoBehaviour
     //     isBlocked = false;
     // }
 
+    public IEnumerator Stun(float duration)
+    {
+        isBlocked = true;
+        yield return new WaitForSeconds(duration);
+        isBlocked = false;
+    }
+
     // Health Related Functions
     public virtual void TakeDamage(int dmg)
     {
-        health -= dmg;
+        // If damage multiplier applied, include in damage calculation
+        health -= (int)(dmg * damageTakenMultiplier);
+        Debug.Log($"Damage taken {dmg * damageTakenMultiplier}");
         onTakeDamage.Invoke();
 
         if (health <= 0 && !isDestroyed)
@@ -212,5 +224,16 @@ public class BasicEnemyScript : MonoBehaviour
     public int GetDamageDealtToServer()
     {
         return damageDealtToServer;
+    }
+
+    // Debuff Related Functions
+    public void SetTakenDamageMultiplier(float multiplier)
+    {
+        damageTakenMultiplier = multiplier;
+    }
+
+    public void ResetTakenDamageMultiplier()
+    {
+        damageTakenMultiplier = 1f;
     }
 }

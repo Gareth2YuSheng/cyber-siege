@@ -142,8 +142,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   turretRotationPart: {fileID: 0}
-  upgrades: []
+  upgrades:
+  - upgradeName: Secondary Verification
+    description: Enemies staying inside the gate too long are periodically stunned.
+    cost: 15
+    purchased: 0
+  - upgradeName: Security Audit
+    description: Enemies passing through are flagged, taking increased damage from
+      all sources for a short duration.
+    cost: 20
+    purchased: 0
   slowingFactor: 0.4
+  stunInterval: 5
+  stunDuration: 1
 --- !u!61 &-2974319952229688954
 BoxCollider2D:
   m_ObjectHideFlags: 0
