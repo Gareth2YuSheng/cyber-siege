@@ -169,13 +169,7 @@ public class FirewallTowerScript : BasicPathTowerScript
 
         For example: +500 shield HP, regenerates 50 HP/sec after 
         3 seconds without taking damage.
-
     */
-
-    public override void Upgrade1()
-    {
-        base.Upgrade1();
-    }
 
     // Resilience Module
     public override void Upgrade2()
