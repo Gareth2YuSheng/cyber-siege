@@ -8,6 +8,7 @@ TagManager:
   - Phishing Enemy
   - Virus Enemy
   - Path Obstacle
+  - TowerHittable
   layers:
   - Default
   - TransparentFX

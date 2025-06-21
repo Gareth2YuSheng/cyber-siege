@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      firewall_tower_0: -7622034568194753814
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -248,7 +248,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      trojan_revealed_0: 1965859600184778311
+      trojan_revealed_1: 1748732418917198603
+      trojan_revealed_2: -3435761566442477022
+      trojan_revealed_3: -4596629683230606399
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

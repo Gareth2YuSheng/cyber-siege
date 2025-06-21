@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class BasicTowerScript : MonoBehaviour
@@ -34,6 +35,12 @@ public class BasicTowerScript : MonoBehaviour
     //For Shooting
     protected Transform enemyTarget;
     protected float timeUntilFire;
+
+    // For Ransomware
+    public RansomwareScript ransomwareScript; // Reference to RansomwareScript
+    protected RansomwareScript ransomware; // For caching
+    public bool disabled = false;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
@@ -71,28 +78,33 @@ public class BasicTowerScript : MonoBehaviour
 
     protected virtual void Update()
     {
-        // If no target, look for one
-        if (enemyTarget == null)
+        // Ransomware handling
+        FindRansomwareScript();
+        if (!disabled)
         {
-            FindEnemyTarget();
-            return;
-        }
-        //If target goes out of range, reset target
-        if (!CheckTargetIsInRange())
-        {
-            enemyTarget = null;
-        }
-        //Else Shoot at it
-        else
-        {
-            //If tower is rotatable, rotate towards target
-            if (isRotatable) RotateTowardsTarget();
-            //Shoot
-            timeUntilFire += Time.deltaTime;
-            if (timeUntilFire >= (1f / bps))
+            // If no target, look for one
+            if (enemyTarget == null)
             {
-                Action();
-                timeUntilFire = 0f;
+                FindEnemyTarget();
+                return;
+            }
+            //If target goes out of range, reset target
+            if (!CheckTargetIsInRange())
+            {
+                enemyTarget = null;
+            }
+            //Else Shoot at it
+            else
+            {
+                //If tower is rotatable, rotate towards target
+                if (isRotatable) RotateTowardsTarget();
+                //Shoot
+                timeUntilFire += Time.deltaTime;
+                if (timeUntilFire >= (1f / bps))
+                {
+                    Action();
+                    timeUntilFire = 0f;
+                }
             }
         }
     }
@@ -202,4 +214,44 @@ public class BasicTowerScript : MonoBehaviour
         // Assume we checked that we can afford the upgrade
         LevelManager.main.SpendCurrency(_upgrade.cost);
     }
+
+    public virtual void FindRansomwareScript()
+    {
+        Debug.Log("Running");
+        // Dynamically find and update the reference to the RansomwareScript each frame
+        ransomwareScript = FindFirstObjectByType<RansomwareScript>();
+
+        if (ransomwareScript != null && ransomware == null)
+        {
+            ransomware = ransomwareScript;
+            // Subscribe to an event or start logic based on ransomwareScript
+            ransomwareScript.onDisable.AddListener(DisableTower); // Example of adding a listener
+        }
+    }
+
+    protected void DisableTower()
+    {
+        if (!disabled)
+        {
+            Debug.Log("DISABLE TOWER!");
+            disabled = true;
+            // Start couroutine to enable after fixed amount of time
+            StartCoroutine(EnableTower());
+        }
+    }
+
+    protected IEnumerator EnableTower()
+    {
+        // Wait for 5 seconds
+        yield return new WaitForSeconds(5f);
+
+        // Code to execute after 5 seconds
+        Debug.Log("5 seconds have passed! Enabling tower...");
+
+        // You can place any logic you want to perform after the 5 seconds here
+        // Example:
+        // PerformAction();
+        disabled = false;
+    }
+
 }

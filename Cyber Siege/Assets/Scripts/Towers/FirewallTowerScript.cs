@@ -38,54 +38,61 @@ public class FirewallTowerScript : BasicPathTowerScript
         // Dont do things if the wave is not ongoing
         if (!EnemyManager.main.waveOngoing) return; //Should be ok since this is not UI related
 
+        // Ransomware handling - Derived from BasicTowerScript
+
+        FindRansomwareScript();
         // Reason for not combining both into 1 action is for more
         // customisable behavior
-        timeUntilFire += Time.deltaTime;
-        timeUntilDamaged += Time.deltaTime;
-        // Deal Damage
-        if (timeUntilFire >= (1f / bps))
+        if (!disabled)
         {
-            Action();
-            timeUntilFire = 0f;
-        }
-        // Absorb Damage
-        if (timeUntilDamaged >= damageInterval)
-        {
-            TakeDamageFromEnemiesInContact();
-            timeUntilDamaged = 0f;
-        }
+            timeUntilFire += Time.deltaTime;
+            timeUntilDamaged += Time.deltaTime;
+            // Deal Damage
+            if (timeUntilFire >= (1f / bps))
+            {
+                Action();
+                timeUntilFire = 0f;
+            }
+            // Absorb Damage
+            if (timeUntilDamaged >= damageInterval)
+            {
+                TakeDamageFromEnemiesInContact();
+                timeUntilDamaged = 0f;
+            }
 
-        // To keep track how long each enemy has been in contact with this
-        foreach (var enemyAndTime in enemiesInContact.ToList())
-        {
-            enemiesInContact[enemyAndTime.Key] += Time.deltaTime;
-        }
+            // To keep track how long each enemy has been in contact with this
+            foreach (var enemyAndTime in enemiesInContact.ToList())
+            {
+                enemiesInContact[enemyAndTime.Key] += Time.deltaTime;
+            }
 
-        // Regen HP
-        // If upgrade has not been purchased, dont heal
-        if (!upgrades[1].purchased) return;
-        timeUntilHeal += Time.deltaTime;
-        if (regenEnabled && timeUntilHeal >= shieldRegenInterval)
-        {
-            // Heal only if not max hp
-            if (currHealth < maxHealth) RestoreHealth(regenAmount);
-            timeUntilHeal = 0f;
-            return;
-        }
-        // Wait for firewall to not be attacked for X seconds before enabling regen
-        if (!regenEnabled && timeUntilHeal >= shieldRegenAfterDuration)
-        {
-            regenEnabled = true;
-            timeUntilHeal = 0f;
+            // Regen HP
+            // If upgrade has not been purchased, dont heal
+            if (!upgrades[1].purchased) return;
+            timeUntilHeal += Time.deltaTime;
+            if (regenEnabled && timeUntilHeal >= shieldRegenInterval)
+            {
+                // Heal only if not max hp
+                if (currHealth < maxHealth) RestoreHealth(regenAmount);
+                timeUntilHeal = 0f;
+                return;
+            }
+            // Wait for firewall to not be attacked for X seconds before enabling regen
+            if (!regenEnabled && timeUntilHeal >= shieldRegenAfterDuration)
+            {
+                regenEnabled = true;
+                timeUntilHeal = 0f;
+            }
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // Debug.Log("Oncollisionenter");
         // check if collision object is in the enemy layer
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (!disabled && collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            // Debug.Log("Stop");
+            Debug.Log("Stop");
             BasicEnemyScript enemy = collision.gameObject.GetComponent<BasicEnemyScript>();
             // Add enemy to hashset to track
             if (enemy != null)
@@ -103,7 +110,8 @@ public class FirewallTowerScript : BasicPathTowerScript
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        Debug.Log("OnCollisionExit");
+        if (!disabled && collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             BasicEnemyScript enemy = collision.gameObject.GetComponent<BasicEnemyScript>();
             if (enemy != null)
@@ -113,7 +121,11 @@ public class FirewallTowerScript : BasicPathTowerScript
                 // We use the event to remove dead enemies
                 enemy.onEnemyDeath.RemoveListener(HandleEnemyDeath);
             }
+        } else if (disabled && collision.gameObject.layer == LayerMask.NameToLayer("Enemy")) { 
+            BasicEnemyScript enemy = collision.gameObject.GetComponent<BasicEnemyScript>();
+            enemy.isBlocked = false;
         }
+        
     }
 
     // This is for constant DoT against the enemies

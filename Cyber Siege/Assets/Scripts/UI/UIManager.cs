@@ -21,6 +21,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RectTransform towerUpgradeMenuTransform;
     // For Scam Message
     [SerializeField] private GameObject susMessageAlertPrefab;
+    // For Ransomare
+    [SerializeField] private GameObject ransomwarePrompt;
+
 
     // private TowerUpgradeMenuScript upgradeMenuScript;
 
@@ -38,6 +41,10 @@ public class UIManager : MonoBehaviour
         // For tower upgrade menu
         BuildManager.main.onTowerSelectedForUpgrading.AddListener(ShowTowerUpgradeMenu);
         BuildManager.main.onCancelTowerUpgrading.AddListener(HideTowerUpgradeMenu);
+
+        // For RansomarePrompt
+        EnemyManager.main.onRansomwareClick.AddListener(ShowRansomwarePrompt);
+
         // Hide Tower Upgrade Menu
         // HideTowerUpgradeMenu();
     }
@@ -133,6 +140,18 @@ public class UIManager : MonoBehaviour
         towerUpgradeMenuTransform.DOAnchorPosX(endVal, duration).onComplete += onEnd;
     }
 
+    // For Ransomware
+    public void ShowRansomwarePrompt()
+    {
+        ransomwarePrompt.SetActive(true);
+    }
+
+        public void CloseRansomwarePrompt()
+    {
+        ransomwarePrompt.SetActive(false);
+    }
+
+
     // ON CLICK METHODS
 
     public void StartButtonOnClick()
@@ -169,4 +188,5 @@ public class UIManager : MonoBehaviour
     {
         Application.Quit();
     }
+
 }

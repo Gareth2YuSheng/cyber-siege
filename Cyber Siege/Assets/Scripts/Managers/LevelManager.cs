@@ -52,6 +52,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             //Do some error prompt
+            UIManager.main.ShowErrorPrompt("Not enuf money");
             Debug.Log("Not enuf money");
             return false;
         }

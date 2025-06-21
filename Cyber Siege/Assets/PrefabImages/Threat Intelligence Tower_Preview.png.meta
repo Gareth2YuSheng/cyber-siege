@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Threat Intelligence Tower_Preview_0: 2545660968052194755
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

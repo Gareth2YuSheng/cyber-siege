@@ -223,7 +223,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      trojan_undetected_0: -6223010274085304667
+      trojan_undetected_1: -5657084690454853918
+      trojan_undetected_2: -8796600813006358274
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

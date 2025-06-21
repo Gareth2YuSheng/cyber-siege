@@ -19,6 +19,7 @@ public class EnemyManager : MonoBehaviour
     [Header("Events")]
     // public UnityEvent onWaveStart = new UnityEvent();
     public UnityEvent onWaveEnd = new UnityEvent();
+    public UnityEvent onRansomwareClick = new UnityEvent();
 
     public bool waveOngoing = false;
     public int currentWave = 1; // Public to allow access
@@ -26,6 +27,7 @@ public class EnemyManager : MonoBehaviour
     private int enemiesAlive;
     private int enemiesLeftToSpawn;
     private float eps; //enemies per second
+    public RansomwareScript selectedRansomwareScript;
 
     private void Awake()
     {
@@ -43,6 +45,7 @@ public class EnemyManager : MonoBehaviour
     private void Update()
     {
         if (!waveOngoing) return;
+
 
         timeSinceLastSpawn += Time.deltaTime;
 
@@ -135,4 +138,18 @@ public class EnemyManager : MonoBehaviour
             Mathf.Pow(currentWave, difficultyScalingFactor),
             0f, enemiesPerSecondCap);
     }
+
+    public void SetSelectedRansomware(RansomwareScript _ransomwareScript)
+    {
+        selectedRansomwareScript = _ransomwareScript;
+        // Open tower upgrade menu
+        onRansomwareClick.Invoke();
+    }
+
+
+    public RansomwareScript GetRansomwareScript()
+    {
+        return selectedRansomwareScript;
+    }
+
 }

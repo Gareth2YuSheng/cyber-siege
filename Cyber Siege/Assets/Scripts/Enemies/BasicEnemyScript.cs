@@ -27,7 +27,7 @@ public class BasicEnemyScript : MonoBehaviour
     protected int pathIndex = 0;
     protected Transform movementTarget;
     protected Rigidbody2D rb;
-    protected bool isBlocked = false;
+    public bool isBlocked = false;
 
     // For Modifiers
     protected float baseMoveSpeed;
@@ -99,7 +99,11 @@ public class BasicEnemyScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Path Obstacle"))
         {
-            isBlocked = true;
+            BasicTowerScript towerScript = collision.gameObject.GetComponent<BasicTowerScript>();
+            if (!towerScript.disabled)
+            {
+                isBlocked = true;
+            }
         }
     }
 
@@ -202,7 +206,7 @@ public class BasicEnemyScript : MonoBehaviour
         }
     }
 
-    protected void DestroySelf()
+    public void DestroySelf()
     {
         isDestroyed = true;
         Destroy(gameObject);
