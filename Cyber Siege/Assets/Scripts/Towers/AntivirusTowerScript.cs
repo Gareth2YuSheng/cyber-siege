@@ -48,7 +48,7 @@ public class AntivirusTowerScript : BasicTowerScript
         {
             GameObject bulletObj = Instantiate(upgradedBulletPrefab, firingPoint.position, Quaternion.identity);
             VKSlowBulletScript bulletScript = bulletObj.GetComponent<VKSlowBulletScript>();
-            bulletScript.SetBulletDamage(damage);
+            bulletScript.SetBulletDamage(towerDamage);
             bulletScript.SetTarget(enemyTarget);
             bulletScript.SetSlowingDuration(slowingDuration);
             bulletScript.SetSlowingFactor(slowingFactor);
@@ -58,7 +58,7 @@ public class AntivirusTowerScript : BasicTowerScript
         {
             GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
             BulletScript bulletScript = bulletObj.GetComponent<BulletScript>();
-            bulletScript.SetBulletDamage(damage);
+            bulletScript.SetBulletDamage(towerDamage);
             bulletScript.SetTarget(enemyTarget);
         }
     }

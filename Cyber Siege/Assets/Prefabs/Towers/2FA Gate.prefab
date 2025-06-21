@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4009835246018383585}
   - component: {fileID: 7495676910470516373}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: -2974319952229688954}
   - component: {fileID: -7647892740620506158}
   - component: {fileID: 1098557818237840832}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 2FA Gate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,6 +142,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   turretRotationPart: {fileID: 0}
+  upgrades: []
   slowingFactor: 0.4
 --- !u!61 &-2974319952229688954
 BoxCollider2D:
@@ -262,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8548610728014653028}
   - component: {fileID: 8425233725850598387}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

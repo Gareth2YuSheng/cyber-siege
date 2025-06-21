@@ -7,7 +7,6 @@ public class VKBulletScript : BulletScript
         // If enemy is virus enemy do double damage
         if (collision.gameObject.tag == "Virus Enemy" && collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && !hasCollided)
         {
-            Debug.Log("Hehh");
             hasCollided = true;
             VirusScript virus = collision.gameObject.GetComponent<VirusScript>();
             SpecialEffect(virus);

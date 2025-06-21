@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8357552402064196848}
   - component: {fileID: 5456107066911968092}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4009835246018383585}
   - component: {fileID: 7495676910470516373}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4148097598436355852}
   - component: {fileID: 4787635727515975688}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7395454072031511706}
   - component: {fileID: 8365887825371547587}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,7 +360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8902548957978172073}
   - component: {fileID: 1407966395980578391}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Test Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,7 +405,6 @@ MonoBehaviour:
     m_Bits: 256
   turretRotationPart: {fileID: 4257627478970964647}
   upgrades: []
-  towerName: Testing Tower
   bulletPrefab: {fileID: 9067777257794173421, guid: 1692ec94da8d9b14aa8cd43ff8a158d2, type: 3}
   firingPoint: {fileID: 2706843766656116215}
 --- !u!1 &3278032483873518707
@@ -418,7 +417,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6395692598915923703}
   - component: {fileID: 2921927982173090826}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,7 +504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 190645893251926209}
   - component: {fileID: 4355256331641525817}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,7 +590,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4257627478970964647}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RotationalPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -623,7 +622,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2273343325139513096}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -657,7 +656,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2706843766656116215}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Firing Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -689,7 +688,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5173520128938047808}
   - component: {fileID: 9078568637207396267}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

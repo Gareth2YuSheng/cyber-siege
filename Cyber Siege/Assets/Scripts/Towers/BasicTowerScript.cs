@@ -20,7 +20,7 @@ public class BasicTowerScript : MonoBehaviour
     [NonSerialized] public string towerName;
     // private int cost;
     protected float range; // Radius
-    protected int damage;
+    protected int towerDamage;
     protected float rotationSpeed;
     protected float bps;
     protected int level = 1;
@@ -45,7 +45,7 @@ public class BasicTowerScript : MonoBehaviour
         bps = tower.bps;
         baseUpgradeCost = tower.baseUpgradeCost;
         isRotatable = tower.isRotatable;
-        damage = tower.damage;
+        towerDamage = tower.damage;
 
         baseBPS = bps;
         baseRange = range;

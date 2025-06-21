@@ -20,7 +20,7 @@ public class EnemyManager : MonoBehaviour
     // public UnityEvent onWaveStart = new UnityEvent();
     public UnityEvent onWaveEnd = new UnityEvent();
 
-    private bool waveOngoing = false;
+    public bool waveOngoing = false;
     public int currentWave = 1; // Public to allow access
     private float timeSinceLastSpawn = 0f;
     private int enemiesAlive;

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4009835246018383585}
   - component: {fileID: 7495676910470516373}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: -4919669745379147851}
   - component: {fileID: -2974319952229688954}
   - component: {fileID: -7647892740620506158}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Firewall Tower
   m_TagString: Path Obstacle
   m_Icon: {fileID: 0}
@@ -141,10 +141,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   turretRotationPart: {fileID: 0}
+  upgrades:
+  - upgradeName: Adaptive Burn
+    description: The longer an enemy remains in contact with the Firewall, the more
+      damage it takes
+    cost: 15
+    purchased: 0
+  - upgradeName: Resilience Module
+    description: Firewall gains an additional shield that regenerates slowly over
+      time if not attacked for 3 seconds
+    cost: 15
+    purchased: 0
   damagedSprite: {fileID: 2387782019540734844, guid: 4e6f4973ade01e34ea9716d1c8ac348b, type: 3}
   mySR: {fileID: 8425233725850598387}
   maxHealth: 20
   damageInterval: 2
+  shieldHealth: 20
+  shieldRegenAfterDuration: 3
+  shieldRegenInterval: 2
 --- !u!61 &-2974319952229688954
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -228,7 +242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8548610728014653028}
   - component: {fileID: 8425233725850598387}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -2,28 +2,42 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class FirewallTowerScript : BasicTowerScript
+public class FirewallTowerScript : BasicPathTowerScript
 {
     [Header("References")]
     [SerializeField] private Sprite damagedSprite;
     [SerializeField] private SpriteRenderer mySR;
 
     [Header("Attributes")]
-    [SerializeField] private int maxHealth;
-    [SerializeField] private float damageInterval; //takes damage every X seconds
+    [SerializeField] private int maxHealth = 20;
+    [SerializeField] private float damageInterval = 2f; //takes damage every X seconds
+    [SerializeField] private int shieldHealth = 20;
+    [SerializeField] private float shieldRegenAfterDuration = 3f; //Starts healing after X seconds
+    [SerializeField] private float shieldRegenInterval = 2f; //Regens every X second interval
+    [SerializeField] private int regenAmount = 1; //Regens X amount of hp
+    [SerializeField] private int burnAmplificationRate = 2;
+
+    private Sprite healthySprite;
     private float timeUntilDamaged;
+    private float timeUntilHeal;
+    private bool regenEnabled = false;
     private int currHealth;
 
-    private HashSet<BasicEnemyScript> enemiesInContact = new HashSet<BasicEnemyScript>();
+    // private HashSet<BasicEnemyScript> enemiesInContact = new HashSet<BasicEnemyScript>();
+    private Dictionary<BasicEnemyScript, float> enemiesInContact = new Dictionary<BasicEnemyScript, float>();
 
     protected override void Start()
     {
         base.Start();
         currHealth = maxHealth;
+        healthySprite = mySR.sprite;
     }
 
     protected override void Update()
     {
+        // Dont do things if the wave is not ongoing
+        if (!EnemyManager.main.waveOngoing) return; //Should be ok since this is not UI related
+
         // Reason for not combining both into 1 action is for more
         // customisable behavior
         timeUntilFire += Time.deltaTime;
@@ -40,6 +54,30 @@ public class FirewallTowerScript : BasicTowerScript
             TakeDamageFromEnemiesInContact();
             timeUntilDamaged = 0f;
         }
+
+        // To keep track how long each enemy has been in contact with this
+        foreach (var enemyAndTime in enemiesInContact.ToList())
+        {
+            enemiesInContact[enemyAndTime.Key] += Time.deltaTime;
+        }
+
+        // Regen HP
+        // If upgrade has not been purchased, dont heal
+        if (!upgrades[1].purchased) return;
+        timeUntilHeal += Time.deltaTime;
+        if (regenEnabled && timeUntilHeal >= shieldRegenInterval)
+        {
+            // Heal only if not max hp
+            if (currHealth < maxHealth) RestoreHealth(regenAmount);
+            timeUntilHeal = 0f;
+            return;
+        }
+        // Wait for firewall to not be attacked for X seconds before enabling regen
+        if (!regenEnabled && timeUntilHeal >= shieldRegenAfterDuration)
+        {
+            regenEnabled = true;
+            timeUntilHeal = 0f;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -54,7 +92,11 @@ public class FirewallTowerScript : BasicTowerScript
             {
                 // Add the listener before adding to hashset
                 enemy.onEnemyDeath.AddListener(HandleEnemyDeath);
-                enemiesInContact.Add(enemy);
+                // enemiesInContact.Add(enemy);
+                if (!enemiesInContact.ContainsKey(enemy))
+                {
+                    enemiesInContact.Add(enemy, 0f);
+                }
             }
         }
     }
@@ -74,7 +116,7 @@ public class FirewallTowerScript : BasicTowerScript
         }
     }
 
-    // This is for constant DoT
+    // This is for constant DoT against the enemies
     // private void OnCollisionStay2D(Collision2D collision)
     // {
     //     // check if collision object is in the enemy layer
@@ -95,13 +137,52 @@ public class FirewallTowerScript : BasicTowerScript
         // using .ToList() we enumerate through a copy of the hashset instead
         // this prevents C# from throwing errors of doing removal while enumerating
         // through the hashset
-        foreach (BasicEnemyScript enemy in enemiesInContact.ToList())
+        foreach (var enemyWithTime in enemiesInContact.ToList())
         {
+            BasicEnemyScript enemy = enemyWithTime.Key;
+            float timeInContact = enemyWithTime.Value;
             if (enemy != null) // In case the enemy was destroyed
             {
-                enemy.TakeDamage(damage);
+                // If Upgrade 1 was purchased, do the amplified dmg
+                if (upgrades[0].purchased)
+                {
+                    int amplifiedDamage = towerDamage + Mathf.FloorToInt(timeInContact * burnAmplificationRate);
+                    enemy.TakeDamage(amplifiedDamage);
+                }
+                // Else do standard tower damage
+                else
+                {
+                    enemy.TakeDamage(towerDamage);
+                }
             }
         }
+    }
+
+    /* Upgrades
+        Upgrade 1 - Adaptive Burn
+        The longer an enemy remains in contact with the Firewall, 
+        the more damage it takes (stacking DoT).
+
+        Upgrade 2 - Resilience Module
+        The Firewall gains an additional shield or armor layer that 
+        regenerates slowly over time if not attacked for X seconds.
+
+        For example: +500 shield HP, regenerates 50 HP/sec after 
+        3 seconds without taking damage.
+
+    */
+
+    public override void Upgrade1()
+    {
+        base.Upgrade1();
+    }
+
+    // Resilience Module
+    public override void Upgrade2()
+    {
+        base.Upgrade2();
+        maxHealth += shieldHealth;
+        currHealth += shieldHealth;
     }
 
     // This function will be used to listen for enemy deaths and 
@@ -118,8 +199,9 @@ public class FirewallTowerScript : BasicTowerScript
         if (enemiesInContact.Count < 1) return;
 
         // Debug.Log("Ouch");
-        foreach (BasicEnemyScript enemy in enemiesInContact.ToList())
+        foreach (var enemyWithTime in enemiesInContact.ToList())
         {
+            BasicEnemyScript enemy = enemyWithTime.Key;
             if (enemy != null) // In case the enemy was destroyed
             {
                 TakeDamage(enemy.GetDamageDealtToServer());
@@ -129,8 +211,14 @@ public class FirewallTowerScript : BasicTowerScript
 
     private void TakeDamage(int _damage)
     {
-        Debug.Log($"Took {_damage} damage");
+        // Debug.Log($"Firewall Took {_damage} damage");
         currHealth -= _damage;
+        // Stop regen if was
+        if (regenEnabled)
+        {
+            regenEnabled = false;
+            timeUntilHeal = 0f; //Reset time until heal so it doesnt accidentally start healing immediately
+        }
         // If health drops below 0, firewall is destroyed
         if (currHealth <= 0)
         {
@@ -139,8 +227,24 @@ public class FirewallTowerScript : BasicTowerScript
         // If health drops below 50%, then show damaged sprite
         else if (currHealth <= (maxHealth / 2))
         {
-            Debug.Log("Changing");
             mySR.sprite = damagedSprite;
         }
     }
+
+    private void RestoreHealth(int _health)
+    {
+        Debug.Log($"Firewall healed {_health} hp");
+        // If curr health is already full, do nothing
+        if (currHealth >= maxHealth) return;
+        // Else, heal
+        currHealth += _health;
+        // Prevent healing over max hp
+        if (currHealth > maxHealth) currHealth = maxHealth;
+        // If health heals back over 50%, restore healthy sprite
+        if (currHealth > (maxHealth / 2))
+        {
+            mySR.sprite = healthySprite;
+        }
+    }
+
 }

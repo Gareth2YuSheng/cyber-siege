@@ -59,7 +59,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    protected void OnMouseDown()
+    protected virtual void OnMouseDown()
     {
         // If not in building mode dont do anything
         // if (!isBuilding) return;
@@ -76,18 +76,7 @@ public class Tile : MonoBehaviour
         // Else If we are in building mode AND tile currently has no tower 
         if (isBuilding && currentTower == null)
         {
-            Debug.Log($"Build Selected Tower on {gameObject.name}");
-            //Build the Selected Tower on this tile
-            Tower towerToBuild = BuildManager.main.GetSelectedTower();
-            BuildManager.main.BuySelectedTower();
-            currentTower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
-            currentTowerScript = currentTower.GetComponent<BasicTowerScript>();
-            //Disable building mode
-            BuildManager.main.DisableBuilding();
-            //Set tile colour back to initialColour
-            sr.color = initialColor;
-            // Clear selected tile
-            BuildManager.main.ClearSelectedTile();
+            BuildTower();
         }
         // Else if we are not in building mode AND tile already has a tower
         else
@@ -96,6 +85,22 @@ public class Tile : MonoBehaviour
             BuildManager.main.SetSelectedTowerToUpgrade(currentTowerScript);
         }
 
+    }
+
+    protected virtual void BuildTower()
+    {
+        Debug.Log($"Build Selected Tower on {gameObject.name}");
+        //Build the Selected Tower on this tile
+        Tower towerToBuild = BuildManager.main.GetSelectedTower();
+        BuildManager.main.BuySelectedTower();
+        currentTower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
+        currentTowerScript = currentTower.GetComponent<BasicTowerScript>();
+        //Disable building mode
+        BuildManager.main.DisableBuilding();
+        //Set tile colour back to initialColour
+        sr.color = initialColor;
+        // Clear selected tile
+        BuildManager.main.ClearSelectedTile();
     }
 
     // For BuildManager to call tile clicking logic
