@@ -101,7 +101,7 @@ public class BasicTowerScript : MonoBehaviour
     protected virtual void Action() { }
 
     // Change for each Tower
-    protected void FindEnemyTarget()
+    protected virtual void FindEnemyTarget()
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, range, (Vector2)transform.position, 0f, enemyMask);
 

@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.04131365, a: 1}
+  m_Color: {r: 0, g: 0.78541684, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -272,9 +272,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8902548957978172073}
-  - component: {fileID: 5263338811850489945}
+  - component: {fileID: 5078104642030772681}
   m_Layer: 7
-  m_Name: SIEM Node
+  m_Name: Threat Intelligence Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -299,7 +299,7 @@ Transform:
   - {fileID: 4009835246018383585}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5263338811850489945
+--- !u!114 &5078104642030772681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -308,16 +308,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 3198532911862591802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 785362c069b246c4fa98d7b8d3c03d14, type: 3}
+  m_Script: {fileID: 11500000, guid: 68196bbaa03b3ce4a9af338658966784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower: {fileID: 11400000, guid: 371af5f0fd11afb4eb5c5f3d3939184e, type: 2}
+  tower: {fileID: 11400000, guid: e1e24adee7b7eaa45b96be0985696011, type: 2}
   towerRangeTransform: {fileID: 4009835246018383585}
   enemyMask:
     serializedVersion: 2
     m_Bits: 256
-  turretRotationPart: {fileID: 0}
-  upgrades: []
+  turretRotationPart: {fileID: 4257627478970964647}
+  upgrades:
+  - upgradeName: Threat Profiling
+    description: Buffs towers fire rate within radius
+    cost: 25
+    purchased: 0
+  - upgradeName: Expanded Network Visibility
+    description: Increases detection radius of nearby towers
+    cost: 25
+    purchased: 0
+  bulletPrefab: {fileID: 9067777257794173421, guid: 1692ec94da8d9b14aa8cd43ff8a158d2, type: 3}
+  firingPoint: {fileID: 2706843766656116215}
+  rangeBuffFactor: 1.25
+  fireRateBuffFactor: 1.25
 --- !u!1 &3278032483873518707
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,7 +494,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -712631045867808456, guid: b670ab75dde984907b8570040daa08c5, type: 3}
-  m_Color: {r: 0.5566038, g: 0.10809579, b: 0.09189212, a: 1}
+  m_Color: {r: 0.09019607, g: 0.115667395, b: 0.5568628, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -574,7 +586,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &395255284159023972
 Transform:
   m_ObjectHideFlags: 0
@@ -634,7 +646,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: -4416714869199238598, guid: ec72b5eb888c76b478c723bee6ed1cd9, type: 3}
+  m_Sprite: {fileID: -2260434424700462654, guid: ef8f4b5fb5e4c9143a3cc8dfdd73b20a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

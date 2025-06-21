@@ -105,13 +105,7 @@ public class TwoFA_GateScript : BasicPathTowerScript
         all sources (small % bonus damage for a few seconds).
     */
 
-    // Secondary Verification
-    // public override void Upgrade1()
-    // {
-    //     base.Upgrade1();
-    // }
-
-    // // Security Audit
+    // Security Audit
     public override void Upgrade2()
     {
         base.Upgrade2();
