@@ -2,10 +2,26 @@ using UnityEngine;
 
 public class ThreatIntelligenceTowerScript : BasicTowerScript
 {
+    [Header("References")]
+    // [SerializeField] private GameObject buffArea;
+    [SerializeField] private LayerMask towerMask;
+
+    [Header("Attributes")]
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firingPoint;
     [SerializeField] private float rangeBuffFactor = 1.25f;
     [SerializeField] private float fireRateBuffFactor = 1.25f;
+
+    // private CircleCollider2D buffAreaCollider;
+    private BasicTowerScript myScript;
+
+    public override void InitialiseTower()
+    {
+        base.InitialiseTower();
+        myScript = gameObject.GetComponent<BasicTowerScript>();
+        // Add Event Listener
+        BuildManager.main.onTowerBuilt.AddListener(ScanForTowersInRange);
+    }
 
     protected override void Action()
     {
@@ -48,15 +64,45 @@ public class ThreatIntelligenceTowerScript : BasicTowerScript
         Buffs towers fire rate within radius (deal with known threats faster)
 
         Upgrade 2 - Expanded Network Visibility
-        Increases detection radius of nearby towers.
+        Increases detection radius of nearby towers
     */
 
     public override void Upgrade1()
     {
         base.Upgrade1();
+        ScanForTowersInRange();
     }
     public override void Upgrade2()
     {
         base.Upgrade2();
+        ScanForTowersInRange();
+    }
+
+    private void ScanForTowersInRange()
+    {
+        Debug.Log("ThreatIntelTower Scanning For New Towers");
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range, towerMask);
+        foreach (Collider2D hit in hits)
+        {
+            // Hits will be objects with colliders, which are currently the tower Bases
+            // Script is in parent object
+            BasicTowerScript tower = hit.GetComponentInParent<BasicTowerScript>();
+            // Dont scan for itself
+            if (tower != null && tower != myScript)
+            {
+                Debug.Log($"Found tower: {tower.towerName}");
+                // If upgrade 1 has been purchased
+                if (upgrades[0].purchased)
+                {
+                    tower.UpdateTowerBPS(fireRateBuffFactor);
+                }
+                // If upgrade 2 has been purchased, Buff the tower's range if havent already
+                if (upgrades[1].purchased && tower.GetTowerRange() == tower.GetTowerBaseRange())
+                {
+                    tower.UpdateTowerRange(rangeBuffFactor);
+                }
+            }
+        }
     }
 }

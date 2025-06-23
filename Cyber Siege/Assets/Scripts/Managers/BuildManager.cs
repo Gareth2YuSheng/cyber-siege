@@ -17,6 +17,7 @@ public class BuildManager : MonoBehaviour
     public UnityEvent onStopPathBuilding = new UnityEvent();
     public UnityEvent onTowerSelectedForUpgrading = new UnityEvent();
     public UnityEvent onCancelTowerUpgrading = new UnityEvent();
+    public UnityEvent onTowerBuilt = new UnityEvent();
 
     private int selectedTower = 0;
     private bool isGroundBuilding = false;

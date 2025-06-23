@@ -14,10 +14,9 @@ public class TwoFA_GateScript : BasicPathTowerScript
     // private HashSet<BasicEnemyScript> slowedEnemies = new HashSet<BasicEnemyScript>();
     private Dictionary<BasicEnemyScript, float> slowedEnemies = new Dictionary<BasicEnemyScript, float>();
 
-
-    protected override void Start()
+    public override void InitialiseTower()
     {
-        base.Start();
+        base.InitialiseTower();
         // Set the circle collider radius
         slowingRangeCollider = gameObject.GetComponent<CircleCollider2D>();
         slowingRangeCollider.radius = range;

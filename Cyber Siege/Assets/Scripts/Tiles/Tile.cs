@@ -95,12 +95,15 @@ public class Tile : MonoBehaviour
         BuildManager.main.BuySelectedTower();
         currentTower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
         currentTowerScript = currentTower.GetComponent<BasicTowerScript>();
+        currentTowerScript.InitialiseTower();
         //Disable building mode
         BuildManager.main.DisableBuilding();
         //Set tile colour back to initialColour
         sr.color = initialColor;
         // Clear selected tile
         BuildManager.main.ClearSelectedTile();
+        // Invoke event
+        BuildManager.main.onTowerBuilt.Invoke();
     }
 
     // For BuildManager to call tile clicking logic

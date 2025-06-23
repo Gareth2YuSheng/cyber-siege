@@ -24,7 +24,7 @@ public class BasicTowerScript : MonoBehaviour
     protected int towerDamage;
     protected float rotationSpeed;
     protected float bps;
-    protected int level = 1;
+    // protected int level = 1;
     protected bool isRotatable;
 
     //For Modification (Upgrades)
@@ -41,9 +41,7 @@ public class BasicTowerScript : MonoBehaviour
     protected RansomwareScript ransomware; // For caching
     public bool disabled = false;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    protected virtual void Start()
+    public virtual void InitialiseTower()
     {
         towerName = tower.towerName;
         // cost = tower.cost;
@@ -164,36 +162,36 @@ public class BasicTowerScript : MonoBehaviour
 
     // For stat upgrades
 
-    public int CalculateUpgradeCost()
-    {
-        return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
-    }
+    // public int CalculateUpgradeCost()
+    // {
+    //     return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
+    // }
 
-    public float CalculateBPS()
-    {
-        return baseBPS * Mathf.Pow(level, 0.6f);
-    }
+    // public float CalculateBPS()
+    // {
+    //     return baseBPS * Mathf.Pow(level, 0.6f);
+    // }
 
-    public float CalculateTargetingRange()
-    {
-        return range * Mathf.Pow(level, 0.4f);
-    }
+    // public float CalculateTargetingRange()
+    // {
+    //     return range * Mathf.Pow(level, 0.4f);
+    // }
 
-    public void UpgradeStats()
-    {
-        if (CalculateUpgradeCost() > LevelManager.main.currency) return;
+    // public void UpgradeStats()
+    // {
+    //     if (CalculateUpgradeCost() > LevelManager.main.currency) return;
 
-        LevelManager.main.SpendCurrency(CalculateUpgradeCost());
+    //     LevelManager.main.SpendCurrency(CalculateUpgradeCost());
 
-        level++;
-        bps = CalculateBPS();
-        range = CalculateTargetingRange();
+    //     level++;
+    //     bps = CalculateBPS();
+    //     range = CalculateTargetingRange();
 
-        // CloseUpgradeUI();
-        Debug.Log("New BPS: " + bps);
-        Debug.Log("New Range: " + range);
-        Debug.Log("New Cost: " + CalculateUpgradeCost());
-    }
+    //     // CloseUpgradeUI();
+    //     Debug.Log("New BPS: " + bps);
+    //     Debug.Log("New Range: " + range);
+    //     Debug.Log("New Cost: " + CalculateUpgradeCost());
+    // }
 
     // For Behavioral Upgrades
     public virtual void Upgrade1()
@@ -215,9 +213,54 @@ public class BasicTowerScript : MonoBehaviour
         LevelManager.main.SpendCurrency(_upgrade.cost);
     }
 
+    // For Tower Range
+    public float GetTowerRange()
+    {
+        return range;
+    }
+
+    public float GetTowerBaseRange()
+    {
+        return baseRange;
+    }
+
+    public void UpdateTowerRange(float amt)
+    {
+        range = baseRange * amt;
+        UpdateTowerRangeTransform();
+    }
+
+    public void ResetTowerRange()
+    {
+        range = baseRange;
+        UpdateTowerRangeTransform();
+    }
+
+    // For Tower Fire Rate
+    public float GetTowerBPS()
+    {
+        return bps;
+    }
+
+    public float GetTowerBaseBPS()
+    {
+        return baseBPS;
+    }
+
+    public void UpdateTowerBPS(float amt)
+    {
+        bps = baseBPS * amt;
+    }
+
+    public void ResetTowerBPS()
+    {
+        bps = baseBPS;
+    }
+
+    // Ransomware related functions
     public virtual void FindRansomwareScript()
     {
-        Debug.Log("Running");
+        // Debug.Log("Running");
         // Dynamically find and update the reference to the RansomwareScript each frame
         ransomwareScript = FindFirstObjectByType<RansomwareScript>();
 
@@ -237,6 +280,21 @@ public class BasicTowerScript : MonoBehaviour
             disabled = true;
             // Start couroutine to enable after fixed amount of time
             StartCoroutine(EnableTower());
+        }
+    }
+
+    protected IEnumerator DisableTower(float duration)
+    {
+        // If currently already disabled, dont do anything
+        if (!disabled)
+        {
+            disabled = true;
+            // Wait for duration
+            yield return new WaitForSeconds(duration);
+            // You can place any logic you want to perform after the X seconds here
+            // Example:
+            // PerformAction();
+            disabled = false;
         }
     }
 

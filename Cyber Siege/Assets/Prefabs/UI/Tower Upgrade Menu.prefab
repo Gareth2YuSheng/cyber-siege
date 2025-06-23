@@ -283,7 +283,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -159}
-  m_SizeDelta: {x: -15.42, y: 437.0362}
+  m_SizeDelta: {x: -15.42, y: 484.2599}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &3380155502082493400
 MonoBehaviour:
@@ -305,7 +305,7 @@ MonoBehaviour:
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 1
-  m_CellSize: {x: 320, y: 200}
+  m_CellSize: {x: 320, y: 225}
   m_Spacing: {x: 0, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -672,6 +672,22 @@ PrefabInstance:
     - target: {fileID: 1718685041065053931, guid: bca837b634f25ae409e6d0048b2d2db4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5078950954099205071, guid: bca837b634f25ae409e6d0048b2d2db4, type: 3}
+      propertyPath: m_fontSize
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 5078950954099205071, guid: bca837b634f25ae409e6d0048b2d2db4, type: 3}
+      propertyPath: m_margin.w
+      value: 35.53528
+      objectReference: {fileID: 0}
+    - target: {fileID: 5078950954099205071, guid: bca837b634f25ae409e6d0048b2d2db4, type: 3}
+      propertyPath: m_margin.y
+      value: 35.549988
+      objectReference: {fileID: 0}
+    - target: {fileID: 5078950954099205071, guid: bca837b634f25ae409e6d0048b2d2db4, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 21
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

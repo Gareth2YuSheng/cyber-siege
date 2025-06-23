@@ -27,9 +27,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        // currency = 100;
-        IncreaseCurrency(100);
-        // serverHealth = 100;
+        IncreaseCurrency(200);
         HealServer(100);
     }
 

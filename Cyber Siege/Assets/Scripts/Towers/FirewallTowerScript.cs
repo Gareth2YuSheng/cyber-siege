@@ -26,9 +26,9 @@ public class FirewallTowerScript : BasicPathTowerScript
     // private HashSet<BasicEnemyScript> enemiesInContact = new HashSet<BasicEnemyScript>();
     private Dictionary<BasicEnemyScript, float> enemiesInContact = new Dictionary<BasicEnemyScript, float>();
 
-    protected override void Start()
+    public override void InitialiseTower()
     {
-        base.Start();
+        base.InitialiseTower();
         currHealth = maxHealth;
         healthySprite = mySR.sprite;
     }
@@ -121,11 +121,13 @@ public class FirewallTowerScript : BasicPathTowerScript
                 // We use the event to remove dead enemies
                 enemy.onEnemyDeath.RemoveListener(HandleEnemyDeath);
             }
-        } else if (disabled && collision.gameObject.layer == LayerMask.NameToLayer("Enemy")) { 
+        }
+        else if (disabled && collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
             BasicEnemyScript enemy = collision.gameObject.GetComponent<BasicEnemyScript>();
             enemy.isBlocked = false;
         }
-        
+
     }
 
     // This is for constant DoT against the enemies

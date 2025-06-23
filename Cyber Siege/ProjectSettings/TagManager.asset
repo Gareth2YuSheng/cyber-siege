@@ -9,6 +9,7 @@ TagManager:
   - Virus Enemy
   - Path Obstacle
   - TowerHittable
+  - Tower
   layers:
   - Default
   - TransparentFX

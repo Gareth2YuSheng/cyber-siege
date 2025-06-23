@@ -326,6 +326,8 @@ MonoBehaviour:
     description: Upgrades rate of fire to burst mode
     cost: 15
     purchased: 0
+  ransomwareScript: {fileID: 0}
+  disabled: 0
   bulletPrefab: {fileID: 9067777257794173421, guid: 6a4ca83943bb09a44b12e2a9a1d43893, type: 3}
   upgradedBulletPrefab: {fileID: 9067777257794173421, guid: b7a328f0c9be5054b8925d379eba3ef0, type: 3}
   firingPoint: {fileID: 2706843766656116215}
