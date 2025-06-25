@@ -39,7 +39,7 @@ public class SuspiciousCallScript : SuspiciousEnemyScript
             BasicEnemyScript enemy = collision.GetComponent<BasicEnemyScript>();
             if (enemy != null && !buffedEnemies.Contains(enemy))
             {
-                enemy.UpdateMovementSpeed(enemy.GetBaseSpeed() * buffAmount);
+                enemy.UpdateMovementSpeed(buffAmount);
                 enemy.onEnemyDeath.AddListener(HandleBuffedEnemyDeath);
                 buffedEnemies.Add(enemy);
             }

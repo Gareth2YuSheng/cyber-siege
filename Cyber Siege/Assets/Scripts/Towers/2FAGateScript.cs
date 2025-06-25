@@ -42,7 +42,7 @@ public class TwoFA_GateScript : BasicPathTowerScript
             BasicEnemyScript enemy = collision.GetComponent<BasicEnemyScript>();
             if (enemy != null && !slowedEnemies.ContainsKey(enemy))
             {
-                enemy.UpdateMovementSpeed(enemy.GetBaseSpeed() * (1f - slowingFactor));
+                enemy.UpdateMovementSpeed(1f - slowingFactor);
                 enemy.onEnemyDeath.AddListener(HandleBuffedEnemyDeath);
 
                 // If Upgrade 2 has been purchased

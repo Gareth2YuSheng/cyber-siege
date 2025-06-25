@@ -78,7 +78,8 @@ public class BasicTowerScript : MonoBehaviour
     {
         // Ransomware handling
         FindRansomwareScript();
-        if (!disabled)
+        // If tower is not disabled and wave is ongoing
+        if (!disabled && EnemyManager.main.waveOngoing) //not fully sanity tested
         {
             // If no target, look for one
             if (enemyTarget == null)

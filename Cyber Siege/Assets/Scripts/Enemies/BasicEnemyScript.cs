@@ -136,14 +136,14 @@ public class BasicEnemyScript : MonoBehaviour
         return baseMoveSpeed;
     }
 
-    public void UpdateMovementSpeed(float newMoveSpeed)
+    public void UpdateMovementSpeed(float amt)
     {
-        moveSpeed = newMoveSpeed;
+        moveSpeed = baseMoveSpeed * amt;
     }
 
-    public IEnumerator UpdateMovementSpeed(float newMoveSpeed, float duration)
+    public IEnumerator UpdateMovementSpeed(float amt, float duration)
     {
-        UpdateMovementSpeed(newMoveSpeed);
+        UpdateMovementSpeed(amt);
         yield return new WaitForSeconds(duration);
         ResetMovementSpeed();
     }
@@ -234,6 +234,13 @@ public class BasicEnemyScript : MonoBehaviour
     public void SetTakenDamageMultiplier(float multiplier)
     {
         damageTakenMultiplier = multiplier;
+    }
+
+    public IEnumerator SetTakenDamageMultiplier(float multiplier, float duration)
+    {
+        SetTakenDamageMultiplier(multiplier);
+        yield return new WaitForSeconds(duration);
+        ResetTakenDamageMultiplier();
     }
 
     public void ResetTakenDamageMultiplier()
