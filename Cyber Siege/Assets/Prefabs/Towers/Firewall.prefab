@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: -2974319952229688954}
   - component: {fileID: -7647892740620506158}
   m_Layer: 7
-  m_Name: Firewall Tower
+  m_Name: Firewall
   m_TagString: Path Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

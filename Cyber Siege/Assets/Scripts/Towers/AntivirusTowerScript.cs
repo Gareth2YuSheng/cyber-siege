@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class AntivirusTowerScript : BasicTowerScript
 {
+    [Header("References")]
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameObject upgradedBulletPrefab;
     [SerializeField] private Transform firingPoint;
+
+    [Header("Attributes")]
     [SerializeField] private int burstCount = 3;
     [SerializeField] private float burstCoolDown = 0.1f;
     [SerializeField] private float slowingFactor = 0.4f;
@@ -29,20 +32,13 @@ public class AntivirusTowerScript : BasicTowerScript
 
     // Upgrade 1 - Quarantine Protocol
     //  - Virus enemies hit are slowed by X% for Y seconds.
-    // public override void Upgrade1()
-    // {
-    //     base.Upgrade1();
-    // }
 
     // Upgrade 2 - Rapid Scan Protocol
     // - Burst fire mode
-    // public override void Upgrade2()
-    // {
-    //     base.Upgrade2();
-    // }
 
     private void Shoot()
     {
+        Vector2 firingDirection = (firingPoint.position - transform.position).normalized;
         // If quarantine protocol enabled
         if (upgrades[0].purchased)
         {
@@ -52,6 +48,8 @@ public class AntivirusTowerScript : BasicTowerScript
             bulletScript.SetTarget(enemyTarget);
             bulletScript.SetSlowingDuration(slowingDuration);
             bulletScript.SetSlowingFactor(slowingFactor);
+            // Rotate Bullet
+            bulletScript.RotateBullet(firingDirection);
         }
         // else use the normal bullet
         else
@@ -60,7 +58,10 @@ public class AntivirusTowerScript : BasicTowerScript
             BulletScript bulletScript = bulletObj.GetComponent<BulletScript>();
             bulletScript.SetBulletDamage(towerDamage);
             bulletScript.SetTarget(enemyTarget);
+            // Rotate Bullet
+            bulletScript.RotateBullet(firingDirection);
         }
+
     }
 
     private IEnumerator BurstFire()

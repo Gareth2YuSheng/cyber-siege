@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e294f80a0ae75c49879549751556762, type: 3}
-  m_Name: IDS Tower
+  m_Name: IDS
   m_EditorClassIdentifier: 
   towerName: Intrusion Detection System
   cost: 50

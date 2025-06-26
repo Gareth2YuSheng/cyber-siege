@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 8902548957978172073}
   - component: {fileID: 5078104642030772681}
   m_Layer: 7
-  m_Name: Threat Intelligence Tower
+  m_Name: Threat Intelligence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

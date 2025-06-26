@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 8902548957978172073}
   - component: {fileID: 7603992022838858925}
   m_Layer: 7
-  m_Name: IDS Tower
+  m_Name: IDS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

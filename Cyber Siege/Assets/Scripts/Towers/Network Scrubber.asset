@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e294f80a0ae75c49879549751556762, type: 3}
-  m_Name: Firewall Tower
+  m_Name: Network Scrubber
   m_EditorClassIdentifier: 
-  towerName: Firewall
-  cost: 30
-  range: 0
+  towerName: Network Scrubber
+  cost: 60
+  range: 1.5
   rotationSpeed: 0
-  bps: 0.8
+  bps: 1.5
   baseUpgradeCost: 0
   isRotatable: 0
   damage: 1
-  placementType: 1
+  placementType: 0
