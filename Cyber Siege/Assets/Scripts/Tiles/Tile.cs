@@ -83,6 +83,10 @@ public class Tile : MonoBehaviour
         {
             // Set selected Tower to upgrade and Open the Upgrade menu
             BuildManager.main.SetSelectedTowerToUpgrade(currentTowerScript);
+            // Show tower range as well
+            currentTowerScript.ShowTowerRange();
+            // Set selected tile so we can hide the range later
+            BuildManager.main.SetSelectedTile(this);
         }
 
     }
@@ -124,5 +128,13 @@ public class Tile : MonoBehaviour
         isBuilding = false;
         // Hide tile
         sr.enabled = false;
+    }
+
+    public void HideTowerRange()
+    {
+        if (currentTowerScript)
+        {
+            currentTowerScript.HideTowerRange();
+        }
     }
 }

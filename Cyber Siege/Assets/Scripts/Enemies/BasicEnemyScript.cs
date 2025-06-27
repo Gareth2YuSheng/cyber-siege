@@ -90,7 +90,12 @@ public class BasicEnemyScript : MonoBehaviour
             return;
         }
         // For Movement
-        Vector2 direction = (movementTarget.position - transform.position).normalized;
+        // Vector2 direction = (movementTarget.position - transform.position).normalized;
+        // Direction cannot be calculated based on current enemy position due to 
+        // the off-sync of the Unity Engine's calls for Update and FixedUpdate
+        // this causes the direction vector calculated using the above formula to 
+        // calculate a zero vector, causing the enemy to slow down at corners
+        Vector2 direction = GetMovementDirection();
         rb.linearVelocity = direction * moveSpeed;
     }
 

@@ -32,6 +32,9 @@ public class BuildManager : MonoBehaviour
     // And don't want to spam events as this is a small thing
     [NonSerialized] public bool isSelectedTileRestricted;
 
+    // Used for upgrade menu logic and tower range logic
+    [NonSerialized] public Tile selectedTile;
+
     private void Awake()
     {
         main = this;
@@ -158,5 +161,23 @@ public class BuildManager : MonoBehaviour
     {
         selectedTowerToUpgrade = null;
         onCancelTowerUpgrading.Invoke();
+        // Hide tower range if any tower was previously selected
+        if (selectedTile)
+        {
+            selectedTile.HideTowerRange();
+        }
+    }
+
+    public void SetSelectedTile(Tile tile)
+    {
+        // if tile selected was the same one, do nothing
+        if (selectedTile == tile) return;
+        // If a tile was already selected
+        if (selectedTile)
+        {
+            // Close the tower range of the previously selected tile first
+            selectedTile.HideTowerRange();
+        }
+        selectedTile = tile;
     }
 }

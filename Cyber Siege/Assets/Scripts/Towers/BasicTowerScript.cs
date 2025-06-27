@@ -9,13 +9,7 @@ public class BasicTowerScript : MonoBehaviour
     [SerializeField] protected Transform towerRangeTransform;
     [SerializeField] protected LayerMask enemyMask;
     [SerializeField] protected Transform turretRotationPart;
-    // [SerializeField] private GameObject bulletPrefab;
-    // [SerializeField] private Transform firingPoint;
-
     [SerializeField] public TowerUpgrade[] upgrades;
-    // [SerializeField] protected virtual TowerUpgrade[] upgrades { get; } = new TowerUpgrade[] { };
-    // public virtual string[] upgradeNames { get; } = new string[] { "Upgrade 1", "Upgrade 2" };
-    // public virtual string[] upgradeDescriptions { get; } = new string[] { "Desc 1", "Desc 2" };
 
     //Attributes
     [NonSerialized] public string towerName;
@@ -56,6 +50,8 @@ public class BasicTowerScript : MonoBehaviour
         baseRange = range;
 
         UpdateTowerRangeTransform();
+        // Hide Tower Range
+        HideTowerRange();
 
         // Populate tower upgrades if empty
         if (upgrades.Length == 0)
@@ -155,12 +151,6 @@ public class BasicTowerScript : MonoBehaviour
         turretRotationPart.rotation = Quaternion.RotateTowards(turretRotationPart.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    private void UpdateTowerRangeTransform()
-    {
-        // Range (Radius) is to be multiplied by 2 as X, Y and Z are length variables.
-        towerRangeTransform.localScale = new Vector3(range * 2f, range * 2f, range * 2f);
-    }
-
     // For stat upgrades
 
     // public int CalculateUpgradeCost()
@@ -235,6 +225,22 @@ public class BasicTowerScript : MonoBehaviour
     {
         range = baseRange;
         UpdateTowerRangeTransform();
+    }
+
+    private void UpdateTowerRangeTransform()
+    {
+        // Range (Radius) is to be multiplied by 2 as X, Y and Z are length variables.
+        towerRangeTransform.localScale = new Vector3(range * 2f, range * 2f, range * 2f);
+    }
+
+    public void ShowTowerRange()
+    {
+        towerRangeTransform.gameObject.SetActive(true);
+    }
+
+    public void HideTowerRange()
+    {
+        towerRangeTransform.gameObject.SetActive(false);
     }
 
     // For Tower Fire Rate
@@ -312,5 +318,7 @@ public class BasicTowerScript : MonoBehaviour
         // PerformAction();
         disabled = false;
     }
+
+
 
 }
