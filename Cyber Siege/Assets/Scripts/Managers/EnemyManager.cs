@@ -96,7 +96,9 @@ public class EnemyManager : MonoBehaviour
         GameObject prefabToSpawn = enemyPrefabs[0];
         // int index = Random.Range(0, enemyPrefabs.Length);
         // GameObject prefabToSpawn = enemyPrefabs[index];
-        Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
+        Vector3 position = LevelManager.main.startPoint.position;
+        position.z = -1; // Force the z-coord so it spawns above the path
+        Instantiate(prefabToSpawn, position, Quaternion.identity);
     }
 
     public void SpawnEnemies(int count, Vector3 position, int pathIndex, GameObject prefab)
