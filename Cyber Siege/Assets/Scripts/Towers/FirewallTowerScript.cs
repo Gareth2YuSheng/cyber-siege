@@ -103,7 +103,7 @@ public class FirewallTowerScript : BasicPathTowerScript
                 if (!enemiesInContact.ContainsKey(enemy))
                 {
                     // Play shield
-                    SoundFXManager.instance.PlaySoundFXClip(effectAudio, 0.5f);
+                    SoundManager.main.PlaySoundFXClip(effectAudio, 0.5f);
 
                     enemiesInContact.Add(enemy, 0f);
                 }

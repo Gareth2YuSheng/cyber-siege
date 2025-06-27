@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2f6cf32e8dbd54db432f0a7557f154, type: 3}
   m_Name: VKBullet
   m_EditorClassIdentifier: 
-  bulletSpeed: 5
+  bulletSpeed: 7

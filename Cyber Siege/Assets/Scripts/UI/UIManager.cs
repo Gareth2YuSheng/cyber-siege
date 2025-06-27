@@ -47,6 +47,9 @@ public class UIManager : MonoBehaviour
 
         // Hide Tower Upgrade Menu
         // HideTowerUpgradeMenu();
+
+        // Make sure to hide pause menu
+        pauseMenu.SetActive(false);
     }
 
     private void SetAllSelectableChildrenFromTowerMenu(bool state)

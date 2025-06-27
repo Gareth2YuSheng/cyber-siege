@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerName: Threat Intelligence Tower
   cost: 70
-  range: 1.8
+  range: 2.1
   rotationSpeed: 200
   bps: 1.5
   baseUpgradeCost: 10

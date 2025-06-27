@@ -1,21 +1,35 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
-public class SoundFXManager : MonoBehaviour
+public class SoundManager : MonoBehaviour
 {
-
-    public static SoundFXManager main;
-
+    public static SoundManager main;
+    [Header("References")]
     [SerializeField] private AudioSource soundFXObject;
-
+    [SerializeField] private AudioMixer audioMixer;
 
     private void Awake()
     {
-        if (main == null)
-        {
-            main = this;
-        }
+        main = this;
     }
 
+    // Mixer Functions
+    public void SetMasterVolume(float level)
+    {
+        audioMixer.SetFloat("masterVolume", level);
+    }
+
+    public void SetSoundFXVolume(float level)
+    {
+        audioMixer.SetFloat("soundFXVolume", level);
+    }
+
+    public void SetMusicVolume(float level)
+    {
+        audioMixer.SetFloat("musicVolume", level);
+    }
+
+    // FX Functions
     public void PlaySoundFXClip(AudioClip audioClip, float volume)
     {
         // Spawn in gameObject

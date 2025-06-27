@@ -99,7 +99,8 @@ public class BasicTowerScript : MonoBehaviour
                 timeUntilFire += Time.deltaTime;
                 if (timeUntilFire >= (1f / bps))
                 {
-                    SoundFXManager.instance.PlaySoundFXClip(effectAudio, 1f);
+                    // Sound Effect
+                    SoundManager.main.PlaySoundFXClip(effectAudio, 1f);
 
                     Action();
                     timeUntilFire = 0f;

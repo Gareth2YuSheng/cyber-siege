@@ -13,7 +13,7 @@ public class TrojanScript : BasicEnemyScript
         base.Start();
         Hide();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        onEnemyReveal.AddListener(RevealSelf);     
+        onEnemyReveal.AddListener(RevealSelf);
     }
 
     // Update is called once per frame
@@ -21,6 +21,6 @@ public class TrojanScript : BasicEnemyScript
     {
         // On first hit, change sprite.
         spriteRenderer.sprite = revealedSprite;
-        SoundFXManager.instance.PlaySoundFXClip(audioClipRevealed, 1f);
+        SoundManager.main.PlaySoundFXClip(audioClipRevealed, 1f);
     }
 }

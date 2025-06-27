@@ -219,8 +219,8 @@ public class BasicEnemyScript : MonoBehaviour
         isDestroyed = true;
         Destroy(gameObject);
         EnemyManager.main.EnemyDestroyed();
-        SoundFXManager.instance.PlaySoundFXClip(audioClipDestroy, 1f);
-
+        // Play Enemy Death Sound Effect
+        SoundManager.main.PlaySoundFXClip(audioClipDestroy, 1f);
     }
 
     // Hidden Enemy Related Functions

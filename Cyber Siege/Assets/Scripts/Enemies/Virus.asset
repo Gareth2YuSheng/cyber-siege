@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f33c55bc5e5c8d46ab9f774db757614, type: 3}
   m_Name: Virus
   m_EditorClassIdentifier: 
-  health: 10
+  health: 5
   moveSpeed: 1.5
   currencyValue: 20
   damageDealtToServer: 1
