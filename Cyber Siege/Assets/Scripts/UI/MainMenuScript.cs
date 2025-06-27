@@ -5,7 +5,7 @@ public class MainMenuScript : MonoBehaviour
 {
     public void PlayButtonOnClick()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync("LevelSelectMenu");
     }
 
     public void QuitButtonOnClick()

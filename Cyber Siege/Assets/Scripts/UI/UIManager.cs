@@ -146,7 +146,7 @@ public class UIManager : MonoBehaviour
         ransomwarePrompt.SetActive(true);
     }
 
-        public void CloseRansomwarePrompt()
+    public void CloseRansomwarePrompt()
     {
         ransomwarePrompt.SetActive(false);
     }
@@ -181,7 +181,7 @@ public class UIManager : MonoBehaviour
     public void PauseMenuExitLevelButtonOnClick()
     {
         //Change it later
-        SceneManager.LoadSceneAsync(0);
+        SceneManager.LoadSceneAsync("LevelSelectMenu");
     }
 
     public void GameOverMenuExitOnClick()
