@@ -152,7 +152,9 @@ MonoBehaviour:
       time if not attacked for 3 seconds
     cost: 15
     purchased: 0
+  effectAudio: {fileID: 8300000, guid: a084b29daf37e46fcb5e8eeb0b2ab6b8, type: 3}
   ransomwareScript: {fileID: 0}
+  disabled: 0
   damagedSprite: {fileID: 2387782019540734844, guid: 4e6f4973ade01e34ea9716d1c8ac348b, type: 3}
   mySR: {fileID: 8425233725850598387}
   maxHealth: 20

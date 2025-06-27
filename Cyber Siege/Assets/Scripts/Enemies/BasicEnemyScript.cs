@@ -10,8 +10,11 @@ public class BasicEnemyScript : MonoBehaviour
 
     [Header("Base Attributes")]
     public bool isHidden = false;
+    [SerializeField] public AudioClip audioClipDestroy;
+
 
     [Header("Base Events")]
+
     public UnityEvent onTakeDamage = new UnityEvent();
     public UnityEvent<BasicEnemyScript> onEnemyDeath = new UnityEvent<BasicEnemyScript>();
     public UnityEvent onEnemyReveal = new UnityEvent();
@@ -216,6 +219,8 @@ public class BasicEnemyScript : MonoBehaviour
         isDestroyed = true;
         Destroy(gameObject);
         EnemyManager.main.EnemyDestroyed();
+        SoundFXManager.instance.PlaySoundFXClip(audioClipDestroy, 1f);
+
     }
 
     // Hidden Enemy Related Functions

@@ -104,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 11400000, guid: cdcc9fd320ae34908bbe810e544fe8ed, type: 2}
   isHidden: 1
+  audioClipDestroy: {fileID: 8300000, guid: 0526016b246bb46abbdc65bcb1914577, type: 3}
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
@@ -113,7 +114,9 @@ MonoBehaviour:
   onEnemyReveal:
     m_PersistentCalls:
       m_Calls: []
+  isBlocked: 0
   revealedSprite: {fileID: 1965859600184778311, guid: 1e22c4810a0dc2049a1e4ba2d0cff493, type: 3}
+  audioClipRevealed: {fileID: 8300000, guid: e182318b7ea4340269c9af963605082f, type: 3}
 --- !u!50 &4661326746327342660
 Rigidbody2D:
   serializedVersion: 5

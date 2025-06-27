@@ -178,6 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 11400000, guid: 7329c6a1051a84adcbcdca8dd7ea2607, type: 2}
   isHidden: 0
+  audioClipDestroy: {fileID: 8300000, guid: 0526016b246bb46abbdc65bcb1914577, type: 3}
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []

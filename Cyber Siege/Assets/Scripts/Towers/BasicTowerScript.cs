@@ -10,6 +10,8 @@ public class BasicTowerScript : MonoBehaviour
     [SerializeField] protected LayerMask enemyMask;
     [SerializeField] protected Transform turretRotationPart;
     [SerializeField] public TowerUpgrade[] upgrades;
+    [SerializeField] public AudioClip effectAudio;
+
 
     //Attributes
     [NonSerialized] public string towerName;
@@ -97,6 +99,8 @@ public class BasicTowerScript : MonoBehaviour
                 timeUntilFire += Time.deltaTime;
                 if (timeUntilFire >= (1f / bps))
                 {
+                    SoundFXManager.instance.PlaySoundFXClip(effectAudio, 1f);
+
                     Action();
                     timeUntilFire = 0f;
                 }

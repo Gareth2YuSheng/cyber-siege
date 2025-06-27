@@ -405,6 +405,7 @@ MonoBehaviour:
     m_Bits: 256
   turretRotationPart: {fileID: 4257627478970964647}
   upgrades: []
+  effectAudio: {fileID: 8300000, guid: ee10ed2879bbb42a98c790feddd7904f, type: 3}
   ransomwareScript: {fileID: 0}
   disabled: 0
   bulletPrefab: {fileID: 9067777257794173421, guid: 1692ec94da8d9b14aa8cd43ff8a158d2, type: 3}

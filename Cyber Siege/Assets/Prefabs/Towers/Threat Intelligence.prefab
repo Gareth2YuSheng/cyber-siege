@@ -395,6 +395,7 @@ MonoBehaviour:
     description: Increases detection radius of nearby towers
     cost: 25
     purchased: 0
+  effectAudio: {fileID: 8300000, guid: ee10ed2879bbb42a98c790feddd7904f, type: 3}
   ransomwareScript: {fileID: 0}
   disabled: 0
   towerMask:

@@ -152,7 +152,9 @@ MonoBehaviour:
       all sources for a short duration.
     cost: 20
     purchased: 0
+  effectAudio: {fileID: 8300000, guid: a084b29daf37e46fcb5e8eeb0b2ab6b8, type: 3}
   ransomwareScript: {fileID: 0}
+  disabled: 0
   slowingFactor: 0.4
   stunInterval: 5
   stunDuration: 1
