@@ -48,7 +48,7 @@ public class TutorialManager : MonoBehaviour
         // Set Health and Currency
         LevelManager.main.IncreaseCurrency(50);
         LevelManager.main.HealServer(1);
-
+        // Set Max Wave Count
         EnemyManager.main.SetMaxWaveCount(3);
 
         StartCoroutine(StartTutorial());

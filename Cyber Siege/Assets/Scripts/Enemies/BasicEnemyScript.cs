@@ -60,24 +60,26 @@ public class BasicEnemyScript : MonoBehaviour
     {
         //For Basic Movement
         //Check if enemy is close to target
-        if (Vector2.Distance(movementTarget.position, transform.position) <= 0.1f)
-        {
-            //Incement pathIndex
-            pathIndex++;
-            //If no more points / reached the end of the path
-            if (pathIndex >= LevelManager.main.enemyPath.Length)
-            {
-                //Damange the server
-                LevelManager.main.DamageServer(damageDealtToServer);
-                DestroySelf();
-                return;
-            }
-            //Else if the path as not ended, update the target to the next point
-            else
-            {
-                UpdateMovementTarget();
-            }
-        }
+        // Debug.Log(Vector2.Distance(movementTarget.position, transform.position));
+        // if (Vector2.Distance(movementTarget.position, transform.position) <= 0.1f)
+        // {
+        //     //Incement pathIndex
+        //     pathIndex++;
+        //     Debug.Log($"New Path Index: {pathIndex}");
+        //     //If no more points / reached the end of the path
+        //     if (pathIndex >= LevelManager.main.enemyPath.Length)
+        //     {
+        //         //Damange the server
+        //         LevelManager.main.DamageServer(damageDealtToServer);
+        //         DestroySelf();
+        //         return;
+        //     }
+        //     //Else if the path as not ended, update the target to the next point
+        //     else
+        //     {
+        //         UpdateMovementTarget();
+        //     }
+        // }
     }
 
     private void FixedUpdate()
@@ -93,13 +95,34 @@ public class BasicEnemyScript : MonoBehaviour
             return;
         }
         // For Movement
-        // Vector2 direction = (movementTarget.position - transform.position).normalized;
         // Direction cannot be calculated based on current enemy position due to 
         // the off-sync of the Unity Engine's calls for Update and FixedUpdate
         // this causes the direction vector calculated using the above formula to 
         // calculate a zero vector, causing the enemy to slow down at corners
-        Vector2 direction = GetMovementDirection();
-        rb.linearVelocity = direction * moveSpeed;
+        // Vector2 direction = GetMovementDirection();
+        // rb.linearVelocity = direction * moveSpeed;
+
+        // All movement to now be controlled in Fixed Update due to the off-sync of 
+        // the Update and FixedUpdate method causing probelms
+
+        Vector2 distToTarget = movementTarget.position - transform.position;
+
+        // Use distance check to determine if enemy reached the point
+        if (distToTarget.sqrMagnitude < 0.1f * 0.1f) // Adjust threshold as needed
+        {
+            pathIndex++;
+            if (pathIndex >= LevelManager.main.enemyPath.Length)
+            {
+                LevelManager.main.DamageServer(damageDealtToServer);
+                DestroySelf();
+                return;
+            }
+
+            UpdateMovementTarget();
+            distToTarget = movementTarget.position - transform.position;
+        }
+
+        rb.linearVelocity = distToTarget.normalized * moveSpeed;
     }
 
     // Stopping when collide with obstacle behavior
@@ -127,6 +150,7 @@ public class BasicEnemyScript : MonoBehaviour
     protected void UpdateMovementTarget()
     {
         movementTarget = LevelManager.main.enemyPath[pathIndex];
+        Debug.Log("Updated Movement Target: " + movementTarget.name);
     }
 
     public void UpdatePathIndex(int _pathIndex)
@@ -224,7 +248,6 @@ public class BasicEnemyScript : MonoBehaviour
         {
             SoundManager.main.PlaySoundFXClip(audioClipDestroy, 1f);
         }
-
     }
 
     // Hidden Enemy Related Functions

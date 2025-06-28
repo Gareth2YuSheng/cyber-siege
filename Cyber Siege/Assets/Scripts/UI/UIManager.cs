@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject towerUpgradeMenu;
     [SerializeField] private RectTransform towerUpgradeMenuTransform;
     [SerializeField] private GameObject levelEndMenu;
+    [SerializeField] private GameObject levelPrompt;
     // For Scam Message
     [SerializeField] private GameObject susMessageAlertPrefab;
     // For Ransomare
@@ -97,6 +98,16 @@ public class UIManager : MonoBehaviour
     public void EnableStartWaveButton()
     {
         startButton.interactable = true;
+    }
+
+    public void ShowLevelPrompt()
+    {
+        levelPrompt.SetActive(true);
+    }
+
+    public void HideLevelPrompt()
+    {
+        levelPrompt.SetActive(false);
     }
 
     IEnumerator SetPromptTimeout(float timeoutDuration)

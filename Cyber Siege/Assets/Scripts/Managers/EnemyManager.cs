@@ -72,7 +72,7 @@ public class EnemyManager : MonoBehaviour
 
     public void StartWave()
     {
-        if (currentWave >= maxWaveCount)
+        if (maxWaveCount > 0 && currentWave >= maxWaveCount)
         {
             Debug.Log("Max Wave Count Reached");
             Debug.Log(currentWave);
@@ -91,7 +91,7 @@ public class EnemyManager : MonoBehaviour
         waveOngoing = false;
         timeSinceLastSpawn = 0f;
         onWaveEnd.Invoke();
-        if (currentWave == maxWaveCount)
+        if (maxWaveCount > 0 && currentWave == maxWaveCount)
         {
             onLevelEnd.Invoke();
             Debug.Log("Level Ended");
@@ -120,11 +120,14 @@ public class EnemyManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        GameObject prefabToSpawn = enemyPrefabs[0];
-        // int index = Random.Range(0, enemyPrefabs.Length);
-        // GameObject prefabToSpawn = enemyPrefabs[index];
+        // GameObject prefabToSpawn = enemyPrefabs[0];
+        // Randomise the enemies
+        int index = Random.Range(0, enemyPrefabs.Length);
+        GameObject prefabToSpawn = enemyPrefabs[index];
+
         Vector3 position = LevelManager.main.startPoint.position;
         position.z = -1; // Force the z-coord so it spawns above the path
+
         Instantiate(prefabToSpawn, position, Quaternion.identity);
     }
 

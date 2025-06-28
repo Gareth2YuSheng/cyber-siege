@@ -15,8 +15,11 @@ EditorBuildSettings:
     path: Assets/Scenes/TutorialLevel.unity
     guid: 978618bc25096d4428f8886cb596ad08
   - enabled: 1
-    path: Assets/Scenes/TestLevel.unity
-    guid: c274d9a5ae11f4e4698e8ce29aefb629
+    path: Assets/Scenes/Level1.unity
+    guid: 36b9556960ca9424d86315c61d56b868
+  - enabled: 1
+    path: Assets/Scenes/TestLevel - Tower Testing.unity
+    guid: 1b84130d05e994346992ccdce3549f84
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

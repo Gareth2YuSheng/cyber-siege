@@ -178,5 +178,5 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isBlocked: 0
-  VirusPrefab: {fileID: 1699728895133875648}
+  spawnEnemyPrefab: {fileID: 1699728895133875648}
   VirusSpawnCount: 1

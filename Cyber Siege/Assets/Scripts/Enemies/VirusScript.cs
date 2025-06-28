@@ -3,7 +3,7 @@ using UnityEngine;
 public class VirusScript : BasicEnemyScript
 {
     [Header("References")]
-    [SerializeField] private GameObject VirusPrefab;
+    [SerializeField] private GameObject spawnEnemyPrefab;
 
     [Header("Attributes")]
     [SerializeField] private int VirusSpawnCount;
@@ -44,7 +44,7 @@ public class VirusScript : BasicEnemyScript
             VirusSpawnCount,
             spawnPosition,
             GetCurrentPathIndex(),
-            VirusPrefab,
+            spawnEnemyPrefab,
             0.5f
         );
     }
