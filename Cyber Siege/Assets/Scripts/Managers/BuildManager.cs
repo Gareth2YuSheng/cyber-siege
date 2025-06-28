@@ -18,6 +18,7 @@ public class BuildManager : MonoBehaviour
     public UnityEvent onTowerSelectedForUpgrading = new UnityEvent();
     public UnityEvent onCancelTowerUpgrading = new UnityEvent();
     public UnityEvent onTowerBuilt = new UnityEvent();
+    public UnityEvent onTowerSelectedForBuilding = new UnityEvent();
 
     private int selectedTower = 0;
     private bool isGroundBuilding = false;
@@ -69,6 +70,7 @@ public class BuildManager : MonoBehaviour
     public void SetSelectedTower(int _selectedTower)
     {
         selectedTower = _selectedTower;
+        onTowerSelectedForBuilding.Invoke();
     }
 
     // public void EnableBuilding()

@@ -19,7 +19,7 @@ public class TowerMenuScript : MonoBehaviour
 
         // Add Event Listeners
         LevelManager.main.onCurrencyChange.AddListener(UpdateCurrencyLabel);
-        EnemyManager.main.onWaveEnd.AddListener(UpdateWaveLabel);
+        EnemyManager.main.onWaveStart.AddListener(UpdateWaveLabel);
 
         BuildManager.main.onStartGroundBuilding.AddListener(StartBuilding);
         BuildManager.main.onStartPathBuilding.AddListener(StartBuilding);
@@ -27,14 +27,14 @@ public class TowerMenuScript : MonoBehaviour
         BuildManager.main.onStopPathBuilding.AddListener(StopBuilding);
     }
 
-    private void Update()
-    {
-
-    }
-
     private void UpdateWaveLabel()
     {
-        waveLabel.text = $"Wave: {EnemyManager.main.currentWave}";
+        string labelText = $"Wave: {EnemyManager.main.GetCurrentWave()}";
+        if (EnemyManager.main.GetMaxWaveCount() > 0)
+        {
+            labelText += $"/{EnemyManager.main.GetMaxWaveCount()}";
+        }
+        waveLabel.text = labelText;
     }
 
 

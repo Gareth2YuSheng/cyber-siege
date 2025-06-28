@@ -12,34 +12,29 @@ public class EnemyManager : MonoBehaviour
     [Header("Attributes")]
     [SerializeField] private int baseEnemyCount = 8;
     [SerializeField] private float enemiesPerSecond = 2f;
-    // [SerializeField] private float timeBetweenWaves = 5f;
     [SerializeField] private float difficultyScalingFactor = 0.75f;
     [SerializeField] private float enemiesPerSecondCap = 15f;
 
     [Header("Events")]
-    // public UnityEvent onWaveStart = new UnityEvent();
+    public UnityEvent onWaveStart = new UnityEvent();
     public UnityEvent onWaveEnd = new UnityEvent();
+    public UnityEvent onLevelEnd = new UnityEvent();
     public UnityEvent onRansomwareClick = new UnityEvent();
 
     public bool waveOngoing = false;
-    public int currentWave = 1; // Public to allow access
+    private int currentWave = 0;
     private float timeSinceLastSpawn = 0f;
     private int enemiesAlive;
     private int enemiesLeftToSpawn;
     private float eps; //enemies per second
     public RansomwareScript selectedRansomwareScript;
+    private int maxWaveCount = 0;
 
     private void Awake()
     {
         main = this;
     }
 
-    private void Start()
-    {
-        // StartCoroutine(StartWave());
-        //Start wave from start wave button instead
-        onWaveEnd.Invoke();
-    }
 
     // Update is called once per frame
     private void Update()
@@ -77,9 +72,17 @@ public class EnemyManager : MonoBehaviour
 
     public void StartWave()
     {
+        if (currentWave >= maxWaveCount)
+        {
+            Debug.Log("Max Wave Count Reached");
+            Debug.Log(currentWave);
+            return;
+        }
+        currentWave++;
         waveOngoing = true;
         enemiesLeftToSpawn = EnemiesPerWave();
         eps = EnemiesPerSecond();
+        onWaveStart.Invoke();
     }
 
     private void EndWave()
@@ -87,8 +90,32 @@ public class EnemyManager : MonoBehaviour
         Debug.Log("Wave Ended");
         waveOngoing = false;
         timeSinceLastSpawn = 0f;
-        currentWave++;
         onWaveEnd.Invoke();
+        if (currentWave == maxWaveCount)
+        {
+            onLevelEnd.Invoke();
+            Debug.Log("Level Ended");
+        }
+    }
+
+    public bool HasLevelEnded()
+    {
+        return currentWave == maxWaveCount;
+    }
+
+    public int GetCurrentWave()
+    {
+        return currentWave;
+    }
+
+    public int GetMaxWaveCount()
+    {
+        return maxWaveCount;
+    }
+
+    public void SetMaxWaveCount(int count)
+    {
+        maxWaveCount = count;
     }
 
     private void SpawnEnemy()

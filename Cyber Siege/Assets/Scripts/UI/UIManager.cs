@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI errorPromptLabel;
     [SerializeField] private GameObject towerUpgradeMenu;
     [SerializeField] private RectTransform towerUpgradeMenuTransform;
+    [SerializeField] private GameObject levelEndMenu;
     // For Scam Message
     [SerializeField] private GameObject susMessageAlertPrefab;
     // For Ransomare
@@ -41,6 +42,8 @@ public class UIManager : MonoBehaviour
         // For tower upgrade menu
         BuildManager.main.onTowerSelectedForUpgrading.AddListener(ShowTowerUpgradeMenu);
         BuildManager.main.onCancelTowerUpgrading.AddListener(HideTowerUpgradeMenu);
+        // For Level End Menu
+        EnemyManager.main.onLevelEnd.AddListener(ShowLevelEndMenu);
 
         // For RansomarePrompt
         EnemyManager.main.onRansomwareClick.AddListener(ShowRansomwarePrompt);
@@ -61,6 +64,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void DisableTowerMenu()
+    {
+        SetAllSelectableChildrenFromTowerMenu(false);
+    }
+
+    public void EnableTowerMenu()
+    {
+        SetAllSelectableChildrenFromTowerMenu(true);
+    }
+
     private void GameOver()
     {
         gameOverMenu.SetActive(true);
@@ -70,7 +83,20 @@ public class UIManager : MonoBehaviour
 
     private void WaveEnded()
     {
-        startButton.gameObject.SetActive(true);
+        if (!EnemyManager.main.HasLevelEnded())
+        {
+            startButton.gameObject.SetActive(true);
+        }
+    }
+
+    public void DisableStartWaveButton()
+    {
+        startButton.interactable = false;
+    }
+
+    public void EnableStartWaveButton()
+    {
+        startButton.interactable = true;
     }
 
     IEnumerator SetPromptTimeout(float timeoutDuration)
@@ -154,6 +180,10 @@ public class UIManager : MonoBehaviour
         ransomwarePrompt.SetActive(false);
     }
 
+    private void ShowLevelEndMenu()
+    {
+        levelEndMenu.SetActive(true);
+    }
 
     // ON CLICK METHODS
 

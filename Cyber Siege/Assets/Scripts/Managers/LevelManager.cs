@@ -27,8 +27,9 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        IncreaseCurrency(200);
-        HealServer(100);
+        // To be called by the individual level Managers
+        // IncreaseCurrency(200);
+        // HealServer(100);
     }
 
     //Currency Related Functions
