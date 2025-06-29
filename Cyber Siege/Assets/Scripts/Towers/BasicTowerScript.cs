@@ -1,105 +1,146 @@
+using System;
+using System.Collections;
 using UnityEngine;
-using UnityEditor;
 
 public class BasicTowerScript : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private ScriptableTower tower;
-    [SerializeField] private Transform towerRangeTransform;
-    [SerializeField] private LayerMask enemyMask;
-    [SerializeField] private Transform turretRotationPart;
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform firingPoint;
+    [Header("Base References")]
+    [SerializeField] protected ScriptableTower tower;
+    [SerializeField] protected Transform towerRangeTransform;
+    [SerializeField] protected LayerMask enemyMask;
+    [SerializeField] protected Transform turretRotationPart;
+    [SerializeField] public TowerUpgrade[] upgrades;
+    [SerializeField] public AudioClip effectAudio;
 
-    // [SerializeField] private GameObject upgradeUI;
-    // [SerializeField] private Button upgradeButton;
 
     //Attributes
-    private string towerName;
-    private int cost;
-    private float range;
-    private float rotationSpeed;
-    private float bps;
-    private int level = 1;
-    private bool isRotatable;
+    [NonSerialized] public string towerName;
+    // private int cost;
+    protected float range; // Radius
+    protected int towerDamage;
+    protected float rotationSpeed;
+    protected float bps;
+    // protected int level = 1;
+    protected bool isRotatable;
 
     //For Modification (Upgrades)
-    private int baseUpgradeCost;
-    private float baseBPS;
-    private float baseRange;
+    protected int baseUpgradeCost;
+    protected float baseBPS;
+    protected float baseRange;
 
     //For Shooting
-    private Transform enemyTarget;
-    private float timeUntilFire;
+    protected Transform enemyTarget;
+    protected float timeUntilFire;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
+    // For Ransomware
+    public RansomwareScript ransomwareScript; // Reference to RansomwareScript
+    protected RansomwareScript ransomware; // For caching
+    public bool disabled = false;
+
+    public virtual void InitialiseTower()
     {
         towerName = tower.towerName;
-        cost = tower.cost;
+        // cost = tower.cost;
         range = tower.range;
         rotationSpeed = tower.rotationSpeed;
         bps = tower.bps;
         baseUpgradeCost = tower.baseUpgradeCost;
         isRotatable = tower.isRotatable;
+        towerDamage = tower.damage;
 
         baseBPS = bps;
         baseRange = range;
 
         UpdateTowerRangeTransform();
-    }
+        // Hide Tower Range
+        HideTowerRange();
 
-    // Update is called once per frame
-    private void Update()
-    {
-        //If no target, look for one
-        if (enemyTarget == null)
+        // Populate tower upgrades if empty
+        if (upgrades.Length == 0)
         {
-            FindEnemyTarget();
-            return;
-        }
-        //If target goes out of range, reset target
-        if (!CheckTargetIsInRange())
-        {
-            enemyTarget = null;
-        }
-        //Else Shoot at it
-        else
-        {
-            //If tower is rotatable, rotate towards target
-            if (isRotatable) RotateTowardsTarget();
-            //Shoot
-            timeUntilFire += Time.deltaTime;
-            if (timeUntilFire >= (1f / bps))
+            upgrades = new TowerUpgrade[2];
+            for (int i = 0; i < upgrades.Length; i++)
             {
-                Shoot();
-                timeUntilFire = 0f;
+                upgrades[i] = new TowerUpgrade
+                {
+                    upgradeName = "N/A",
+                    description = "",
+                    cost = 0,
+                    purchased = false
+                };
             }
         }
     }
 
-    private void Shoot()
+    protected virtual void Update()
     {
-        // Debug.Log("Pew");
-        GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
-        BulletScript bulletScript = bulletObj.GetComponent<BulletScript>();
-        bulletScript.SetTarget(enemyTarget);
-    }
-
-    private void FindEnemyTarget()
-    {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, range, (Vector2)transform.position, 0f, enemyMask);
-
-        //If there is a target in range, set the target to the 
-        //first enemy in its range
-        if (hits.Length > 0)
+        // Ransomware handling
+        FindRansomwareScript();
+        // If tower is not disabled and wave is ongoing
+        if (!disabled && EnemyManager.main.waveOngoing) //not fully sanity tested
         {
-            enemyTarget = hits[0].transform;
-            // Debug.Log("Found a Target"); //remove later
+            // If no target, look for one
+            if (enemyTarget == null)
+            {
+                FindEnemyTarget();
+                return;
+            }
+            //If target goes out of range, reset target
+            if (!CheckTargetIsInRange())
+            {
+                enemyTarget = null;
+            }
+            //Else Shoot at it
+            else
+            {
+                //If tower is rotatable, rotate towards target
+                if (isRotatable) RotateTowardsTarget();
+                //Shoot
+                timeUntilFire += Time.deltaTime;
+                if (timeUntilFire >= (1f / bps))
+                {
+                    // Sound Effect
+                    SoundManager.main.PlaySoundFXClip(effectAudio, 1f);
+
+                    Action();
+                    timeUntilFire = 0f;
+                }
+            }
         }
     }
 
-    private bool CheckTargetIsInRange()
+    // Change for each Tower
+    protected virtual void Action() { }
+
+    // Change for each Tower
+    protected virtual void FindEnemyTarget()
+    {
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, range, (Vector2)transform.position, 0f, enemyMask);
+
+        //If there is a target in range
+        if (hits.Length > 0)
+        {
+            // enemyTarget = hits[0].transform;
+            // Only target non-hidden enemies
+            foreach (RaycastHit2D hit in hits)
+            {
+                // Check if target is hidden
+                BasicEnemyScript enemyScript = hit.transform.GetComponentInParent<BasicEnemyScript>();
+                if (enemyScript != null && !enemyScript.isHidden)
+                {
+                    // Invoke to un-disguise Trojans. (For select towers)
+                    // Move logic to specific towers
+                    // Debug.Log("HIDDEN FOUND!");
+                    // enemyScript.Reveal();
+
+                    enemyTarget = hit.transform;
+                    return; // Return so only assignes the first one
+                }
+            }
+        }
+    }
+
+    protected bool CheckTargetIsInRange()
     {
         return Vector2.Distance(enemyTarget.position, transform.position) <= range;
     }
@@ -115,46 +156,174 @@ public class BasicTowerScript : MonoBehaviour
         turretRotationPart.rotation = Quaternion.RotateTowards(turretRotationPart.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    private int CalculateUpgradeCost()
+    // For stat upgrades
+
+    // public int CalculateUpgradeCost()
+    // {
+    //     return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
+    // }
+
+    // public float CalculateBPS()
+    // {
+    //     return baseBPS * Mathf.Pow(level, 0.6f);
+    // }
+
+    // public float CalculateTargetingRange()
+    // {
+    //     return range * Mathf.Pow(level, 0.4f);
+    // }
+
+    // public void UpgradeStats()
+    // {
+    //     if (CalculateUpgradeCost() > LevelManager.main.currency) return;
+
+    //     LevelManager.main.SpendCurrency(CalculateUpgradeCost());
+
+    //     level++;
+    //     bps = CalculateBPS();
+    //     range = CalculateTargetingRange();
+
+    //     // CloseUpgradeUI();
+    //     Debug.Log("New BPS: " + bps);
+    //     Debug.Log("New Range: " + range);
+    //     Debug.Log("New Cost: " + CalculateUpgradeCost());
+    // }
+
+    // For Behavioral Upgrades
+    public virtual void Upgrade1()
     {
-        return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
+        PurchaseUpgrade(upgrades[0]);
     }
 
-    private float CalculateBPS()
+    public virtual void Upgrade2()
     {
-        return baseBPS * Mathf.Pow(level, 0.6f);
+        PurchaseUpgrade(upgrades[1]);
     }
 
-    private float CalculateTargetingRange()
+    protected void PurchaseUpgrade(TowerUpgrade _upgrade)
     {
-        return range * Mathf.Pow(level, 0.4f);
+        Debug.Log("Selected Upgrade: " + _upgrade.upgradeName);
+        // Mark Upgrade as purchased
+        _upgrade.purchased = true;
+        // Assume we checked that we can afford the upgrade
+        LevelManager.main.SpendCurrency(_upgrade.cost);
     }
 
-    private void Upgrade()
+    // For Tower Range
+    public float GetTowerRange()
     {
-        if (CalculateUpgradeCost() > LevelManager.main.currency) return;
+        return range;
+    }
 
-        LevelManager.main.SpendCurrency(CalculateUpgradeCost());
+    public float GetTowerBaseRange()
+    {
+        return baseRange;
+    }
 
-        level++;
-        bps = CalculateBPS();
-        range = CalculateTargetingRange();
+    public void UpdateTowerRange(float amt)
+    {
+        range = baseRange * amt;
+        UpdateTowerRangeTransform();
+    }
 
-        // CloseUpgradeUI();
-        Debug.Log("New BPS: " + bps);
-        Debug.Log("New Range: " + range);
-        Debug.Log("New Cost: " + CalculateUpgradeCost());
+    public void ResetTowerRange()
+    {
+        range = baseRange;
+        UpdateTowerRangeTransform();
     }
 
     private void UpdateTowerRangeTransform()
     {
-        towerRangeTransform.localScale = new Vector3(range, range, range);
+        // Range (Radius) is to be multiplied by 2 as X, Y and Z are length variables.
+        towerRangeTransform.localScale = new Vector3(range * 2f, range * 2f, range * 2f);
     }
 
-    // private void OnDrawGizmosSelected()
-    // {
-    //     // To show range only to developer
-    //     Handles.color = Color.red;
-    //     Handles.DrawWireDisc(transform.position, transform.forward, range);
-    // }
+    public void ShowTowerRange()
+    {
+        towerRangeTransform.gameObject.SetActive(true);
+    }
+
+    public void HideTowerRange()
+    {
+        towerRangeTransform.gameObject.SetActive(false);
+    }
+
+    // For Tower Fire Rate
+    public float GetTowerBPS()
+    {
+        return bps;
+    }
+
+    public float GetTowerBaseBPS()
+    {
+        return baseBPS;
+    }
+
+    public void UpdateTowerBPS(float amt)
+    {
+        bps = baseBPS * amt;
+    }
+
+    public void ResetTowerBPS()
+    {
+        bps = baseBPS;
+    }
+
+    // Ransomware related functions
+    public virtual void FindRansomwareScript()
+    {
+        // Debug.Log("Running");
+        // Dynamically find and update the reference to the RansomwareScript each frame
+        ransomwareScript = FindFirstObjectByType<RansomwareScript>();
+
+        if (ransomwareScript != null && ransomware == null)
+        {
+            ransomware = ransomwareScript;
+            // Subscribe to an event or start logic based on ransomwareScript
+            ransomwareScript.onDisable.AddListener(DisableTower); // Example of adding a listener
+        }
+    }
+
+    protected void DisableTower()
+    {
+        if (!disabled)
+        {
+            Debug.Log("DISABLE TOWER!");
+            disabled = true;
+            // Start couroutine to enable after fixed amount of time
+            StartCoroutine(EnableTower());
+        }
+    }
+
+    protected IEnumerator DisableTower(float duration)
+    {
+        // If currently already disabled, dont do anything
+        if (!disabled)
+        {
+            disabled = true;
+            // Wait for duration
+            yield return new WaitForSeconds(duration);
+            // You can place any logic you want to perform after the X seconds here
+            // Example:
+            // PerformAction();
+            disabled = false;
+        }
+    }
+
+    protected IEnumerator EnableTower()
+    {
+        // Wait for 5 seconds
+        yield return new WaitForSeconds(5f);
+
+        // Code to execute after 5 seconds
+        Debug.Log("5 seconds have passed! Enabling tower...");
+
+        // You can place any logic you want to perform after the 5 seconds here
+        // Example:
+        // PerformAction();
+        disabled = false;
+    }
+
+
+
 }

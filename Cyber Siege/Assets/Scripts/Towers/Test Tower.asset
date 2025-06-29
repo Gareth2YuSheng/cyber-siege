@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Test Tower
   m_EditorClassIdentifier: 
   towerName: Test Tower
-  cost: 50
-  range: 3
+  cost: 30
+  range: 1.5
   rotationSpeed: 200
   bps: 2
   baseUpgradeCost: 10
   isRotatable: 1
+  damage: 1

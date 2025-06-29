@@ -1,14 +1,15 @@
 using UnityEngine;
 
-public class TestTowerScript : MonoBehaviour
+public class TestTowerScript : BasicTowerScript
 {
-    private void Start()
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform firingPoint;
+
+    protected override void Action()
     {
-
-    }
-
-    private void UpdateRange()
-    {
-
+        GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
+        BulletScript bulletScript = bulletObj.GetComponent<BulletScript>();
+        bulletScript.SetBulletDamage(towerDamage);
+        bulletScript.SetTarget(enemyTarget);
     }
 }

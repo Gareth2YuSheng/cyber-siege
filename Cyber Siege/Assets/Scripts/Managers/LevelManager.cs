@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
@@ -9,10 +10,15 @@ public class LevelManager : MonoBehaviour
 
     [Header("Attributes")]
     public Transform[] enemyPath;
-    public int currency; //Set to non-serialised after finish testing
-    public int serverHealth; //Set to non-serialised after finish testing
+    public int currency;
+    public int serverHealth;
 
-    public bool isServerAlive = true;
+    private bool isServerAlive = true;
+
+    [Header("Events")]
+    public UnityEvent onCurrencyChange = new UnityEvent();
+    public UnityEvent onHealthChange = new UnityEvent();
+    public UnityEvent onServerDeath = new UnityEvent();
 
     private void Awake()
     {
@@ -21,14 +27,19 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        currency = 100;
-        serverHealth = 100;
+        // To be called by the individual level Managers
+        // IncreaseCurrency(200);
+        // HealServer(100);
+
+        // Ensure game is unpaused
+        Time.timeScale = 1;
     }
 
     //Currency Related Functions
     public void IncreaseCurrency(int amt)
     {
         currency += amt;
+        onCurrencyChange.Invoke();
     }
 
     public bool SpendCurrency(int amt)
@@ -37,11 +48,13 @@ public class LevelManager : MonoBehaviour
         {
             //Buy item
             currency -= amt;
+            onCurrencyChange.Invoke();
             return true;
         }
         else
         {
             //Do some error prompt
+            UIManager.main.ShowErrorPrompt("Not enuf money");
             Debug.Log("Not enuf money");
             return false;
         }
@@ -51,6 +64,7 @@ public class LevelManager : MonoBehaviour
     public void HealServer(int amt)
     {
         serverHealth += amt;
+        onHealthChange.Invoke();
     }
 
     public void DamageServer(int amt)
@@ -58,9 +72,11 @@ public class LevelManager : MonoBehaviour
         if (isServerAlive)
         {
             serverHealth -= amt;
+            onHealthChange.Invoke();
             if (serverHealth <= 0)
             {
                 isServerAlive = false;
+                onServerDeath.Invoke();
             }
         }
     }

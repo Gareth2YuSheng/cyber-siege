@@ -10,4 +10,6 @@ public class ScriptableTower : ScriptableObject
     public float bps;
     public int baseUpgradeCost;
     public bool isRotatable;
+    public int damage;
+    public TowerPlacementType placementType;
 }
