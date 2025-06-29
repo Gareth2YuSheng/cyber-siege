@@ -7,7 +7,7 @@
     <key>CFBundleExecutable</key>
     <string>Cyber Siege</string>
     <key>CFBundleGetInfoString</key>
-    <string>Unity Player version 6000.0.50f1 (f1ef1dca8bff). (c) 2005-2025 Unity Technologies. All rights reserved.</string>
+    <string>Unity Player version 6000.0.49f1 (840e0a9776d9). (c) 2005-2025 Unity Technologies. All rights reserved.</string>
     <key>CFBundleIconFile</key>
     <string>PlayerIcon.icns</string>
     <key>CFBundleIdentifier</key>
@@ -40,6 +40,6 @@
     <key>NSPrincipalClass</key>
     <string>PlayerApplication</string>
     <key>UnityBuildNumber</key>
-    <string>f1ef1dca8bff</string>
+    <string>840e0a9776d9</string>
   </dict>
 </plist>
