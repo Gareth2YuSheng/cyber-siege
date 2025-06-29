@@ -30,6 +30,9 @@ public class LevelManager : MonoBehaviour
         // To be called by the individual level Managers
         // IncreaseCurrency(200);
         // HealServer(100);
+
+        // Ensure game is unpaused
+        Time.timeScale = 1;
     }
 
     //Currency Related Functions

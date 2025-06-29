@@ -10,6 +10,6 @@ public class LevelEndMenuScript : MonoBehaviour
 
     public void BackToLevelSelectButtonOnClick()
     {
-        SceneManager.LoadSceneAsync("LevelSelectMenu");
+        UIManager.main.PauseMenuExitLevelButtonOnClick();
     }
 }

@@ -17,7 +17,7 @@ public class HealthHUDScript : MonoBehaviour
 
     }
 
-    private void UpdateHealthLabel()
+    public void UpdateHealthLabel()
     {
         healthLabel.text = $"{LevelManager.main.serverHealth}";
     }

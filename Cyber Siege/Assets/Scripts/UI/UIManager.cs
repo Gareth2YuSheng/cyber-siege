@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RectTransform towerUpgradeMenuTransform;
     [SerializeField] private GameObject levelEndMenu;
     [SerializeField] private GameObject levelPrompt;
+    [SerializeField] private GameObject healthHUD;
     // For Scam Message
     [SerializeField] private GameObject susMessageAlertPrefab;
     // For Ransomare
@@ -51,9 +52,12 @@ public class UIManager : MonoBehaviour
 
         // Hide Tower Upgrade Menu
         // HideTowerUpgradeMenu();
+    }
 
-        // Make sure to hide pause menu
-        pauseMenu.SetActive(false);
+    public void UpdateHUDLabels()
+    {
+        towerMenu.GetComponent<TowerMenuScript>().UpdateCurrencyLabel();
+        healthHUD.GetComponent<HealthHUDScript>().UpdateHealthLabel();
     }
 
     private void SetAllSelectableChildrenFromTowerMenu(bool state)
@@ -193,6 +197,8 @@ public class UIManager : MonoBehaviour
 
     private void ShowLevelEndMenu()
     {
+        // Pause the game after level ended
+        Time.timeScale = 0;
         levelEndMenu.SetActive(true);
     }
 
@@ -224,8 +230,9 @@ public class UIManager : MonoBehaviour
 
     public void PauseMenuExitLevelButtonOnClick()
     {
-        //Change it later
         SceneManager.LoadSceneAsync("LevelSelectMenu");
+        // Unpause the game after exiting
+        Time.timeScale = 1;
     }
 
     public void GameOverMenuExitOnClick()

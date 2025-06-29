@@ -150,7 +150,6 @@ public class BasicEnemyScript : MonoBehaviour
     protected void UpdateMovementTarget()
     {
         movementTarget = LevelManager.main.enemyPath[pathIndex];
-        Debug.Log("Updated Movement Target: " + movementTarget.name);
     }
 
     public void UpdatePathIndex(int _pathIndex)
