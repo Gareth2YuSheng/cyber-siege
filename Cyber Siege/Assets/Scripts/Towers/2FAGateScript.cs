@@ -122,6 +122,9 @@ public class TwoFA_GateScript : BasicPathTowerScript
     private void StunEnemies()
     {
         Debug.Log("Stunning Enemies");
+        // if no enemies in range, do nothing
+        if (slowedEnemies.Count < 1) return;
+        // else stun all enemies in range
         foreach (var enemyWithTime in slowedEnemies.ToList())
         {
             BasicEnemyScript enemy = enemyWithTime.Key;
