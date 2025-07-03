@@ -156,6 +156,11 @@ public class TowerUpgradeMenuScript : MonoBehaviour
     }
 
     // On Click Functions
+    public void SellTowerMenuButtonOnClick()
+    {
+        BuildManager.main.SellSelectedTower();
+    }
+
     public void CloseTowerUpgradeMenuButtonOnClick()
     {
         BuildManager.main.CloseTowerUpgradeMenu();

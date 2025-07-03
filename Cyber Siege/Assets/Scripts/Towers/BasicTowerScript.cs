@@ -15,7 +15,7 @@ public class BasicTowerScript : MonoBehaviour
 
     //Attributes
     [NonSerialized] public string towerName;
-    // private int cost;
+    protected int cost;
     protected float range; // Radius
     protected int towerDamage;
     protected float rotationSpeed;
@@ -47,6 +47,7 @@ public class BasicTowerScript : MonoBehaviour
         baseUpgradeCost = tower.baseUpgradeCost;
         isRotatable = tower.isRotatable;
         towerDamage = tower.damage;
+        cost = tower.cost;
 
         baseBPS = bps;
         baseRange = range;
@@ -189,7 +190,7 @@ public class BasicTowerScript : MonoBehaviour
     //     Debug.Log("New Cost: " + CalculateUpgradeCost());
     // }
 
-    // For Behavioral Upgrades
+    // For Upgrades
     public virtual void Upgrade1()
     {
         PurchaseUpgrade(upgrades[0]);
@@ -207,6 +208,35 @@ public class BasicTowerScript : MonoBehaviour
         _upgrade.purchased = true;
         // Assume we checked that we can afford the upgrade
         LevelManager.main.SpendCurrency(_upgrade.cost);
+    }
+
+    // public bool HasPurchasedUpgrade(int index)
+    // {
+    //     if (index < 0 || index > 1) return false;
+    //     return upgrades[index].purchased;
+    // }
+
+    // public int GetTowerCost()
+    // {
+    //     return cost;
+    // }
+
+    // public int GetTowerUpgrade1Cost()
+    // {
+    //     return upgrades[0].cost;
+    // }
+
+    // public int GetTowerUpgrade2Cost()
+    // {
+    //     return upgrades[1].cost;
+    // }
+
+    public int GetTotalMoneySpentOnTower()
+    {
+        int amt = cost;
+        if (upgrades[0].purchased) amt += upgrades[0].cost;
+        if (upgrades[1].purchased) amt += upgrades[1].cost;
+        return amt;
     }
 
     // For Tower Range

@@ -221,47 +221,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 155802662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &363250576
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: UI/RoundedCorners/RoundedCorners
-  m_Shader: {fileID: 4800000, guid: 0bd2ec5d73751e34a814274a454bec41, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _ColorMask: 15
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _UseUIAlphaClip: 0
-    m_Colors:
-    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
-    - _WidthHeightRadius: {r: 1000, g: 100, b: 80, a: 0}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &433431479 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7159494357588526595, guid: feedda6d16a3aeb4e9036b9154ff7a57, type: 3}
@@ -440,7 +399,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2695893491221533823, guid: b6f8729d4197845459f1ec7d8e0e7c76, type: 3}
   m_PrefabInstance: {fileID: 576346261}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &579904363
+--- !u!21 &621912413
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -478,7 +437,7 @@ Material:
     - _UseUIAlphaClip: 0
     m_Colors:
     - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
-    - _WidthHeightRadius: {r: 1000, g: 600, b: 80, a: 0}
+    - _WidthHeightRadius: {r: 102.15, g: 100, b: 80, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!1 &658787416
@@ -747,7 +706,13 @@ MonoBehaviour:
   startButton: {fileID: 2137111044}
   errorPrompt: {fileID: 1956726626}
   errorPromptLabel: {fileID: 915998258}
+  towerUpgradeMenu: {fileID: 0}
+  towerUpgradeMenuTransform: {fileID: 0}
+  levelEndMenu: {fileID: 0}
+  levelPrompt: {fileID: 0}
+  healthHUD: {fileID: 0}
   susMessageAlertPrefab: {fileID: 1790885249392872460, guid: ab3131e13a15c7540996878247f65fd8, type: 3}
+  ransomwarePrompt: {fileID: 0}
 --- !u!1 &815801533
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,10 +748,28 @@ MonoBehaviour:
   - towerSObj: {fileID: 11400000, guid: eb342e8971f2aff448477361367969cf, type: 2}
     prefab: {fileID: 3198532911862591802, guid: 2e50909484dae5a4e9e1f9a200ec3eff, type: 3}
     sprite: {fileID: 4172426740079887628, guid: 70de42de4c1c4814fbc31975e98164f5, type: 3}
-  onStartBuilding:
+  onStartGroundBuilding:
     m_PersistentCalls:
       m_Calls: []
-  onStopBuilding:
+  onStopGroundBuilding:
+    m_PersistentCalls:
+      m_Calls: []
+  onStartPathBuilding:
+    m_PersistentCalls:
+      m_Calls: []
+  onStopPathBuilding:
+    m_PersistentCalls:
+      m_Calls: []
+  onTowerSelectedForUpgrading:
+    m_PersistentCalls:
+      m_Calls: []
+  onCancelTowerUpgrading:
+    m_PersistentCalls:
+      m_Calls: []
+  onTowerBuilt:
+    m_PersistentCalls:
+      m_Calls: []
+  onTowerSelectedForBuilding:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &815801535
@@ -860,10 +843,20 @@ MonoBehaviour:
   enemiesPerSecond: 0.5
   difficultyScalingFactor: 0.75
   enemiesPerSecondCap: 15
+  onWaveStart:
+    m_PersistentCalls:
+      m_Calls: []
   onWaveEnd:
     m_PersistentCalls:
       m_Calls: []
-  currentWave: 1
+  onLevelEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onRansomwareClick:
+    m_PersistentCalls:
+      m_Calls: []
+  waveOngoing: 0
+  selectedRansomwareScript: {fileID: 0}
 --- !u!1 &891256109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,47 +1073,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf27e264ae0d65547970cc795f9c0258, type: 3}
---- !u!21 &1105048215
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: UI/RoundedCorners/RoundedCorners
-  m_Shader: {fileID: 4800000, guid: 0bd2ec5d73751e34a814274a454bec41, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _ColorMask: 15
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _UseUIAlphaClip: 0
-    m_Colors:
-    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
-    - _WidthHeightRadius: {r: 102.15, g: 100, b: 80, a: 0}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!224 &1169013172 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6791879635205449778, guid: cffb14293eeb7e646bd1534c494addcc, type: 3}
@@ -1325,47 +1277,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 155802662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &1471110616
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: UI/RoundedCorners/RoundedCorners
-  m_Shader: {fileID: 4800000, guid: 0bd2ec5d73751e34a814274a454bec41, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _ColorMask: 15
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _UseUIAlphaClip: 0
-    m_Colors:
-    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
-    - _WidthHeightRadius: {r: 102.15, g: 100, b: 80, a: 0}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &1542749470 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4683643201832553453, guid: d1941559f887c934583be87a3776ab06, type: 3}
@@ -1624,6 +1535,47 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2695893491221533823, guid: b6f8729d4197845459f1ec7d8e0e7c76, type: 3}
   m_PrefabInstance: {fileID: 6041908071304381502}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &1839400214
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI/RoundedCorners/RoundedCorners
+  m_Shader: {fileID: 4800000, guid: 0bd2ec5d73751e34a814274a454bec41, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _OuterUV: {r: 0, g: 0, b: 1, a: 1}
+    - _WidthHeightRadius: {r: 1000, g: 100, b: 80, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &1904886006
 GameObject:
   m_ObjectHideFlags: 0
@@ -2054,27 +2006,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3437768099415291043, guid: d1941559f887c934583be87a3776ab06, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3437768099415291043, guid: d1941559f887c934583be87a3776ab06, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3437768099415291043, guid: d1941559f887c934583be87a3776ab06, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3437768099415291043, guid: d1941559f887c934583be87a3776ab06, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3437768099415291043, guid: d1941559f887c934583be87a3776ab06, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3437768099415291043, guid: d1941559f887c934583be87a3776ab06, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3437768099415291043, guid: d1941559f887c934583be87a3776ab06, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2127,6 +2079,10 @@ PrefabInstance:
     - target: {fileID: 4683643201832553453, guid: d1941559f887c934583be87a3776ab06, type: 3}
       propertyPath: m_Name
       value: Game Over Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4683643201832553453, guid: d1941559f887c934583be87a3776ab06, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7058353148626411728, guid: d1941559f887c934583be87a3776ab06, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2353,27 +2309,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 754724738910295261, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 754724738910295261, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 754724738910295261, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 754724738910295261, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 754724738910295261, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 754724738910295261, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 754724738910295261, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2431,14 +2387,78 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 795736393}
+    - target: {fileID: 2199590333161890239, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199590333161890239, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3114345982973587903, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3114345982973587903, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3114345982973587903, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3175191706109571984, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
       propertyPath: m_Name
       value: Pause Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175191706109571984, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422417073536518150, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422417073536518150, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949253587954815969, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949253587954815969, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949253587954815969, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056998958385814013, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5056998958385814013, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5580132221994653963, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 795736393}
+    - target: {fileID: 7407255116952869650, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407255116952869650, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407255116952869650, guid: 2b030a327792df443bf81e09cd3baeac, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2690,7 +2710,7 @@ PrefabInstance:
     - target: {fileID: 3285345316906680869, guid: cffb14293eeb7e646bd1534c494addcc, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 1105048215}
+      objectReference: {fileID: 621912413}
     - target: {fileID: 4897746071800160291, guid: cffb14293eeb7e646bd1534c494addcc, type: 3}
       propertyPath: m_Name
       value: Pause Button

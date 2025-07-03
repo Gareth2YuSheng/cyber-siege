@@ -182,4 +182,18 @@ public class BuildManager : MonoBehaviour
         }
         selectedTile = tile;
     }
+
+    public void SellSelectedTower()
+    {
+        // If there is no currently selected tile, do nothing
+        if (selectedTile == null) return;
+        // Calculate how much money spent on the tile/tower in total
+        int refundAmt = selectedTile.CalculateMoneySpentOnTile();
+        // Remove the Tower
+        selectedTile.DestroyTower();
+        // Refund the Money
+        LevelManager.main.IncreaseCurrency(refundAmt);
+        // Close the tower upgrade menu
+        CloseTowerUpgradeMenu();
+    }
 }

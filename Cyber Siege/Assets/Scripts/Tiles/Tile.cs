@@ -137,4 +137,18 @@ public class Tile : MonoBehaviour
             currentTowerScript.HideTowerRange();
         }
     }
+
+    // For Tower Selling Functionality
+    public int CalculateMoneySpentOnTile()
+    {
+        // Total Money Spent = Tower base cost + upgrades purchased costs
+        return currentTowerScript.GetTotalMoneySpentOnTower();
+    }
+
+    public void DestroyTower()
+    {
+        Destroy(currentTower);
+        currentTower = null;
+        currentTowerScript = null;
+    }
 }
