@@ -188,11 +188,11 @@ public class BuildManager : MonoBehaviour
         // If there is no currently selected tile, do nothing
         if (selectedTile == null) return;
         // Calculate how much money spent on the tile/tower in total
-        int refundAmt = selectedTile.CalculateMoneySpentOnTile();
+        float refundAmt = selectedTile.CalculateMoneySpentOnTile() * 0.7f;
         // Remove the Tower
         selectedTile.DestroyTower();
-        // Refund the Money
-        LevelManager.main.IncreaseCurrency(refundAmt);
+        // Refund only 70% of the Money
+        LevelManager.main.IncreaseCurrency((int)refundAmt);
         // Close the tower upgrade menu
         CloseTowerUpgradeMenu();
     }
