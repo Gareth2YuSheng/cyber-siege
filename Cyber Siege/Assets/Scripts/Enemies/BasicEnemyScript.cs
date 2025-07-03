@@ -7,11 +7,12 @@ public class BasicEnemyScript : MonoBehaviour
 {
     [Header("Base References")]
     [SerializeField] protected ScriptableEnemy enemy;
+    [SerializeField] protected AudioClip audioClipDestroy;
+    [SerializeField] protected Sprite stunnedSprite;
+    [SerializeField] protected GameObject stunEffect;
 
     [Header("Base Attributes")]
     public bool isHidden = false;
-    [SerializeField] public AudioClip audioClipDestroy;
-
 
     [Header("Base Events")]
 
@@ -25,6 +26,10 @@ public class BasicEnemyScript : MonoBehaviour
     protected int currencyValue;
     protected int damageDealtToServer;
     protected bool isDestroyed = false;
+
+    // For Sprite Changes
+    protected Sprite baseSprite;
+    protected SpriteRenderer sr;
 
     // For Pathing
     protected int pathIndex = 0;
@@ -49,7 +54,10 @@ public class BasicEnemyScript : MonoBehaviour
         baseMoveSpeed = moveSpeed;
         baseHealth = health;
 
+        sr = gameObject.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody2D>();
+
+        baseSprite = sr.sprite;
 
         //Start moving
         UpdateMovementTarget();
@@ -214,7 +222,19 @@ public class BasicEnemyScript : MonoBehaviour
     public IEnumerator Stun(float duration)
     {
         isBlocked = true;
+        // Switch to stunned sprite (if available)
+        if (stunnedSprite != null)
+        {
+            sr.sprite = stunnedSprite;
+            stunEffect.SetActive(true);
+        }
         yield return new WaitForSeconds(duration);
+        // Switch back to original sprite
+        if (stunnedSprite != null)
+        {
+            sr.sprite = baseSprite;
+            stunEffect.SetActive(false);
+        }
         isBlocked = false;
     }
 

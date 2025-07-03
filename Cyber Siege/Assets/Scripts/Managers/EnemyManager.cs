@@ -14,6 +14,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float enemiesPerSecond = 2f;
     [SerializeField] private float difficultyScalingFactor = 0.75f;
     [SerializeField] private float enemiesPerSecondCap = 15f;
+    [SerializeField] private bool testingMode = false; // For testing only, comment when building
 
     [Header("Events")]
     public UnityEvent onWaveStart = new UnityEvent();
@@ -122,8 +123,19 @@ public class EnemyManager : MonoBehaviour
     {
         // GameObject prefabToSpawn = enemyPrefabs[0];
         // Randomise the enemies
-        int index = Random.Range(0, enemyPrefabs.Length);
-        GameObject prefabToSpawn = enemyPrefabs[index];
+        // int index = Random.Range(0, enemyPrefabs.Length);
+        // GameObject prefabToSpawn = enemyPrefabs[index];
+        GameObject prefabToSpawn;
+
+        if (testingMode)
+        {
+            prefabToSpawn = enemyPrefabs[0];
+        }
+        else
+        {
+            int index = Random.Range(0, enemyPrefabs.Length);
+            prefabToSpawn = enemyPrefabs[index];
+        }
 
         Vector3 position = LevelManager.main.startPoint.position;
         position.z = -1; // Force the z-coord so it spawns above the path
