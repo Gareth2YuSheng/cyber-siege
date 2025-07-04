@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuScript : MonoBehaviour
 {
@@ -6,6 +7,11 @@ public class PauseMenuScript : MonoBehaviour
     public void ContinueButtonOnClick()
     {
         UIManager.main.PauseMenuContinueButtonOnClick();
+    }
+
+    public void RetryButtonOnClick()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void ExitButtonOnClick()
