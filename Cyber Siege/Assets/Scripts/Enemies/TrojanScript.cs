@@ -26,6 +26,7 @@ public class TrojanScript : BasicEnemyScript
     {
         if (stunnedSprite != null)
         {
+            if (isSlowed && slowEffect != null) slowEffect.SetActive(!stun);
             if (isHidden)
             {
                 sr.sprite = stun ? stunnedSprite : baseSprite;

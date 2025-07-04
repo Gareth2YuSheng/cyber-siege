@@ -10,6 +10,7 @@ public class BasicEnemyScript : MonoBehaviour
     [SerializeField] protected AudioClip audioClipDestroy;
     [SerializeField] protected Sprite stunnedSprite;
     [SerializeField] protected GameObject stunEffect;
+    [SerializeField] protected GameObject slowEffect;
 
     [Header("Base Attributes")]
     public bool isHidden = false;
@@ -43,6 +44,7 @@ public class BasicEnemyScript : MonoBehaviour
 
     // For Debuffs
     protected float damageTakenMultiplier = 1f;
+    protected bool isSlowed;
 
     protected virtual void Start()
     {
@@ -177,6 +179,12 @@ public class BasicEnemyScript : MonoBehaviour
 
     public void UpdateMovementSpeed(float amt)
     {
+        // If we are going to be slowed, show the slow effect
+        if (amt < 1f)
+        {
+            isSlowed = true;
+            slowEffect.SetActive(true);
+        }
         moveSpeed = baseMoveSpeed * amt;
     }
 
@@ -189,6 +197,11 @@ public class BasicEnemyScript : MonoBehaviour
 
     public void ResetMovementSpeed()
     {
+        if (isSlowed)
+        {
+            isSlowed = false;
+            slowEffect.SetActive(false);
+        }
         moveSpeed = baseMoveSpeed;
     }
 
@@ -223,8 +236,13 @@ public class BasicEnemyScript : MonoBehaviour
     {
         if (stunnedSprite != null)
         {
+            // if slow effect is currently turned on, turn off temporarily
+            if (isSlowed && slowEffect != null) slowEffect.SetActive(!stun);
+            // toggle stunned sprite and stun effect
             sr.sprite = stun ? stunnedSprite : baseSprite;
             stunEffect.SetActive(stun);
+            // Turn slow back on
+            // if (isSlowed && slowEffect != null && stun) slowEffect.SetActive(true);
         }
     }
 
