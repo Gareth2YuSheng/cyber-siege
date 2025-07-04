@@ -1,16 +1,19 @@
 fileFormatVersion: 2
-guid: a724f24ea1b61f9488bcd114963baf67
+guid: 057f2f1c41b22f241973a9860ed9c225
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6223010274085304667
-    second: trojan_undetected_0
+      213: 2086716452477236559
+    second: trojan_revealed_stun_0
   - first:
-      213: -5657084690454853918
-    second: trojan_undetected_1
+      213: 4539654973205132199
+    second: trojan_revealed_stun_1
   - first:
-      213: -8796600813006358274
-    second: trojan_undetected_2
+      213: 8730972721885451283
+    second: trojan_revealed_stun_2
+  - first:
+      213: 183928326982628292
+    second: trojan_revealed_stun_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -145,13 +148,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: trojan_undetected_0
+      name: trojan_revealed_stun_0
       rect:
         serializedVersion: 2
-        x: 551
-        y: 312
-        width: 921
-        height: 1624
+        x: 262
+        y: 344
+        width: 1608
+        height: 1477
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,20 +163,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5a60a8b602d63a9a0800000000000000
-      internalID: -6223010274085304667
+      spriteID: f457ed0ce8185fc10800000000000000
+      internalID: 2086716452477236559
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: trojan_undetected_1
+      name: trojan_revealed_stun_1
       rect:
         serializedVersion: 2
-        x: 729
-        y: 1769
-        width: 172
-        height: 106
+        x: 1519
+        y: 1344
+        width: 330
+        height: 366
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,20 +185,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2e64321527ffd71b0800000000000000
-      internalID: -5657084690454853918
+      spriteID: 7a33ab06528100f30800000000000000
+      internalID: 4539654973205132199
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: trojan_undetected_2
+      name: trojan_revealed_stun_2
       rect:
         serializedVersion: 2
-        x: 952
-        y: 1845
-        width: 190
-        height: 64
+        x: 142
+        y: 791
+        width: 9
+        height: 11
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,8 +207,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ef8f7ddba223ce580800000000000000
-      internalID: -8796600813006358274
+      spriteID: 3149b9f8e65aa2970800000000000000
+      internalID: 8730972721885451283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: trojan_revealed_stun_3
+      rect:
+        serializedVersion: 2
+        x: 1833
+        y: 784
+        width: 16
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c37ee1c6d17d8200800000000000000
+      internalID: 183928326982628292
       vertices: []
       indices: 
       edges: []
@@ -214,7 +239,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 316fd142492b151408e210e71d8ad352
+    spriteID: 3c30e4a5d5cf20a488521b907deac753
     internalID: 0
     vertices: []
     indices: 
@@ -224,9 +249,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      trojan_undetected_0: -6223010274085304667
-      trojan_undetected_1: -5657084690454853918
-      trojan_undetected_2: -8796600813006358274
+      trojan_revealed_stun_0: 2086716452477236559
+      trojan_revealed_stun_1: 4539654973205132199
+      trojan_revealed_stun_2: 8730972721885451283
+      trojan_revealed_stun_3: 183928326982628292
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

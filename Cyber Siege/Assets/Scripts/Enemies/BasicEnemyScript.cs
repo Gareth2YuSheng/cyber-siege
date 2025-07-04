@@ -219,22 +219,23 @@ public class BasicEnemyScript : MonoBehaviour
     //     isBlocked = false;
     // }
 
+    protected virtual void ToggleStunnedSprite(bool stun)
+    {
+        if (stunnedSprite != null)
+        {
+            sr.sprite = stun ? stunnedSprite : baseSprite;
+            stunEffect.SetActive(stun);
+        }
+    }
+
     public IEnumerator Stun(float duration)
     {
         isBlocked = true;
         // Switch to stunned sprite (if available)
-        if (stunnedSprite != null)
-        {
-            sr.sprite = stunnedSprite;
-            stunEffect.SetActive(true);
-        }
+        ToggleStunnedSprite(true);
         yield return new WaitForSeconds(duration);
         // Switch back to original sprite
-        if (stunnedSprite != null)
-        {
-            sr.sprite = baseSprite;
-            stunEffect.SetActive(false);
-        }
+        ToggleStunnedSprite(false);
         isBlocked = false;
     }
 

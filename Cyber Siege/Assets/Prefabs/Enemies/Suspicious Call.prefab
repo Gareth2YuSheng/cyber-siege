@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5715585359178516932}
   - component: {fileID: 4280977001666433137}
+  - component: {fileID: 4488489953571422504}
   - component: {fileID: 4798159098121115316}
   - component: {fileID: 215260713491139}
-  - component: {fileID: 4488489953571422504}
   - component: {fileID: 6579756674289149860}
   m_Layer: 8
   m_Name: Suspicious Call
@@ -33,7 +33,8 @@ Transform:
   m_LocalPosition: {x: -2.6936808, y: 0.5228215, z: -0.039494354}
   m_LocalScale: {x: 0.057, y: 0.057, z: 0.057}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 6178922861137907823}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4280977001666433137
@@ -91,6 +92,35 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4488489953571422504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5710481652798878408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0fb516fd61573f40b2055756d72f89d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 11400000, guid: 3811f19781c4b6a428b423f369775e46, type: 2}
+  audioClipDestroy: {fileID: 8300000, guid: 0526016b246bb46abbdc65bcb1914577, type: 3}
+  stunnedSprite: {fileID: 6194072883549891422, guid: fdd2b7b4d1b4ce3498a7d73a58fc15a6, type: 3}
+  stunEffect: {fileID: 1850537829375981999}
+  isHidden: 0
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyReveal:
+    m_PersistentCalls:
+      m_Calls: []
+  isBlocked: 0
+  buffRange: 2
+  buffAmount: 1.5
 --- !u!50 &4798159098121115316
 Rigidbody2D:
   serializedVersion: 5
@@ -164,33 +194,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 11.27, y: 18.23}
   m_EdgeRadius: 0
---- !u!114 &4488489953571422504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710481652798878408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0fb516fd61573f40b2055756d72f89d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 11400000, guid: 3811f19781c4b6a428b423f369775e46, type: 2}
-  isHidden: 0
-  audioClipDestroy: {fileID: 8300000, guid: 0526016b246bb46abbdc65bcb1914577, type: 3}
-  onTakeDamage:
-    m_PersistentCalls:
-      m_Calls: []
-  onEnemyDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  onEnemyReveal:
-    m_PersistentCalls:
-      m_Calls: []
-  isBlocked: 0
-  buffRange: 2
-  buffAmount: 1.5
 --- !u!58 &6579756674289149860
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -227,3 +230,74 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 9.16
+--- !u!1001 &4313572653636364662
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5715585359178516932}
+    m_Modifications:
+    - target: {fileID: 2482201515624042713, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+      propertyPath: m_Name
+      value: Stun Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2482201515624042713, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954222136195807513, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954222136195807513, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954222136195807513, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954222136195807513, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954222136195807513, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954222136195807513, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954222136195807513, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954222136195807513, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954222136195807513, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7954222136195807513, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+--- !u!1 &1850537829375981999 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2482201515624042713, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+  m_PrefabInstance: {fileID: 4313572653636364662}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6178922861137907823 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7954222136195807513, guid: 205c4224b990823448be6c3bf3551714, type: 3}
+  m_PrefabInstance: {fileID: 4313572653636364662}
+  m_PrefabAsset: {fileID: 0}
