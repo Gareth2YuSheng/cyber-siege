@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
@@ -27,8 +29,10 @@ public class UIManager : MonoBehaviour
     // For Ransomare
     [SerializeField] private GameObject ransomwarePrompt;
 
-
-    // private TowerUpgradeMenuScript upgradeMenuScript;
+    // For blocking clicks from passing through the Tower Upgrade Menu
+    private GraphicRaycaster rc;
+    private EventSystem es;
+    private PointerEventData pointerEventData;
 
     private void Awake()
     {
@@ -50,8 +54,8 @@ public class UIManager : MonoBehaviour
         // For RansomarePrompt
         EnemyManager.main.onRansomwareClick.AddListener(ShowRansomwarePrompt);
 
-        // Hide Tower Upgrade Menu
-        // HideTowerUpgradeMenu();
+        es = EventSystem.current;
+        rc = gameObject.GetComponent<GraphicRaycaster>();
     }
 
     public void UpdateHUDLabels()
@@ -200,6 +204,27 @@ public class UIManager : MonoBehaviour
         // Pause the game after level ended
         Time.timeScale = 0;
         levelEndMenu.SetActive(true);
+    }
+
+    public bool IsPointerOverUpgradeMenu()
+    {
+        pointerEventData = new PointerEventData(es)
+        {
+            position = Input.mousePosition
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        rc.Raycast(pointerEventData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject == towerUpgradeMenu || result.gameObject.transform.IsChildOf(towerUpgradeMenu.transform))
+            {
+                return true; // Pointer is over upgrade menu
+            }
+        }
+
+        return false;
     }
 
     // ON CLICK METHODS

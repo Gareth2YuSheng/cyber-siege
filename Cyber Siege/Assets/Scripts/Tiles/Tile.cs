@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Tile : MonoBehaviour
 {
@@ -61,6 +62,9 @@ public class Tile : MonoBehaviour
 
     protected virtual void OnMouseDown()
     {
+        // Do nothing if player is clicking on tower upgrade menu
+        if (UIManager.main.IsPointerOverUpgradeMenu()) return;
+
         // If not in building mode dont do anything
         // if (!isBuilding) return;
 
