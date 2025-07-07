@@ -45,6 +45,7 @@ public class BasicEnemyScript : MonoBehaviour
     // For Debuffs
     protected float damageTakenMultiplier = 1f;
     protected bool isSlowed;
+    protected int slowStackCounter;
 
     protected virtual void Start()
     {
@@ -184,6 +185,9 @@ public class BasicEnemyScript : MonoBehaviour
         {
             isSlowed = true;
             slowEffect.SetActive(true);
+            // Add 1 to the slow stack, this is used 
+            // to track how many of the slow effects is currently being applied to the enemy
+            slowStackCounter++;
         }
         moveSpeed = baseMoveSpeed * amt;
     }
@@ -197,12 +201,16 @@ public class BasicEnemyScript : MonoBehaviour
 
     public void ResetMovementSpeed()
     {
-        if (isSlowed)
+        slowStackCounter--;
+        // if the number of slow stacks is > 0, 
+        // means we are still in a debuff zone, 
+        // dont reset the speed
+        if (slowStackCounter < 1)
         {
             isSlowed = false;
             slowEffect.SetActive(false);
+            moveSpeed = baseMoveSpeed;
         }
-        moveSpeed = baseMoveSpeed;
     }
 
     public Vector3 GetMovementDirection()
