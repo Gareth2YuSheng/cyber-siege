@@ -300,6 +300,8 @@ public class BasicEnemyScript : MonoBehaviour
     public void Reveal()
     {
         isHidden = false;
+        // Increase opacity
+        changeOpacity(1f);
         onEnemyReveal.Invoke();
     }
 
@@ -329,5 +331,13 @@ public class BasicEnemyScript : MonoBehaviour
     public void ResetTakenDamageMultiplier()
     {
         damageTakenMultiplier = 1f;
+    }
+
+    // Change opacity -> 1f = 100%
+    public void changeOpacity(float amount)
+    {
+        Color color = sr.color;
+        color.a = amount;
+        sr.color = color;
     }
 }

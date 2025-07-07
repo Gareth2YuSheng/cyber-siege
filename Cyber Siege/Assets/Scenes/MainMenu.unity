@@ -528,7 +528,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cyber Threat Glossary
+  m_text: Glossary
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 90c956b924a0a454288495003c97dec0, type: 2}
   m_sharedMaterial: {fileID: 1511175825434818798, guid: 90c956b924a0a454288495003c97dec0, type: 2}
