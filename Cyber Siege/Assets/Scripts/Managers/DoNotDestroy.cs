@@ -10,7 +10,13 @@ public class DoNotDestroy : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        // GameObject[] musicObj = GameObject.FindGameObjectsWithTag("Music");
+
+        GameObject[] musicObj = GameObject.FindGameObjectsWithTag("Music");
+        // Important as it prevents multiple SoundManagers from being created.
+        if (musicObj.Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
         DontDestroyOnLoad(this.gameObject);
         main = this;
     }

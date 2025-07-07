@@ -10,6 +10,7 @@ TagManager:
   - Path Obstacle
   - TowerHittable
   - Tower
+  - Music
   layers:
   - Default
   - TransparentFX
