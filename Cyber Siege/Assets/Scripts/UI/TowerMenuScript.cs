@@ -40,7 +40,7 @@ public class TowerMenuScript : MonoBehaviour
 
     public void UpdateCurrencyLabel()
     {
-        moneyLabel.text = $"{LevelManager.main.currency}";
+        moneyLabel.text = $"{LevelManager.main.GetCurrency()}";
     }
 
     private void StartBuilding()

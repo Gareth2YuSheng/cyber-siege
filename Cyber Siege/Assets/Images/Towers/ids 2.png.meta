@@ -1,10 +1,28 @@
 fileFormatVersion: 2
-guid: 55e200bd844fc4f00bcbc1c970e4c2e8
+guid: 4f6ace848c3a30b47bb827e4a85d066d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5534334682517161600
-    second: encryption_0
+      213: -8197883938817976034
+    second: ids 2_0
+  - first:
+      213: 1408086043345506556
+    second: ids 2_1
+  - first:
+      213: -3865913170738059552
+    second: ids 2_2
+  - first:
+      213: -7624939049195521934
+    second: ids 2_3
+  - first:
+      213: 6031328906360666949
+    second: ids 2_4
+  - first:
+      213: -7157662320199787251
+    second: ids 2_5
+  - first:
+      213: -6579033506889279223
+    second: ids 2_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +157,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: encryption_0
+      name: ids 2_0
       rect:
         serializedVersion: 2
-        x: 151
-        y: 340
-        width: 1766
-        height: 1162
+        x: 1009
+        y: 1190
+        width: 56
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +172,140 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 089b07cade71233b0800000000000000
-      internalID: -5534334682517161600
+      spriteID: e19dfdcedf34b3e80800000000000000
+      internalID: -8197883938817976034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ids 2_1
+      rect:
+        serializedVersion: 2
+        x: 1118
+        y: 1204
+        width: 31
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf05bcacbc68a8310800000000000000
+      internalID: 1408086043345506556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ids 2_2
+      rect:
+        serializedVersion: 2
+        x: 1202
+        y: 1190
+        width: 56
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e667a52474895ac0800000000000000
+      internalID: -3865913170738059552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ids 2_3
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 764
+        width: 148
+        height: 383
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27832ba5556ce2690800000000000000
+      internalID: -7624939049195521934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ids 2_4
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 822
+        width: 113
+        height: 275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54b3c2b5fa593b350800000000000000
+      internalID: 6031328906360666949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ids 2_5
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 886
+        width: 78
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0d1b4eea00eaac90800000000000000
+      internalID: -7157662320199787251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ids 2_6
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 333
+        width: 740
+        height: 858
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 909d878f1e392b4a0800000000000000
+      internalID: -6579033506889279223
       vertices: []
       indices: 
       edges: []
@@ -173,8 +323,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      encryption_0: -5534334682517161600
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

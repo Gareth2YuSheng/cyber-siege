@@ -10,8 +10,7 @@ public class Level1Manager : MonoBehaviour
         UIManager.main.ShowLevelPrompt();
 
         // Set Health and Currency
-        LevelManager.main.IncreaseCurrency(100);
-        LevelManager.main.HealServer(100);
+        LevelManager.main.InitLevel(100, 100);
         UIManager.main.UpdateHUDLabels();
         // Set Max Wave Count
         EnemyManager.main.SetMaxWaveCount(waveCount);

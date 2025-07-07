@@ -46,8 +46,7 @@ public class TutorialManager : MonoBehaviour
         promptButton = promptWithButton.GetComponentInChildren<Button>();
 
         // Set Health and Currency
-        LevelManager.main.IncreaseCurrency(50);
-        LevelManager.main.HealServer(1);
+        LevelManager.main.InitLevel(50, 1);
         UIManager.main.UpdateHUDLabels();
         // Set Max Wave Count
         EnemyManager.main.SetMaxWaveCount(3);

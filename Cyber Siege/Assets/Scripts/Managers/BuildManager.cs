@@ -59,7 +59,7 @@ public class BuildManager : MonoBehaviour
 
     public bool CanAffordSelectedTower()
     {
-        return towers[selectedTower].towerSObj.cost <= LevelManager.main.currency;
+        return towers[selectedTower].towerSObj.cost <= LevelManager.main.GetCurrency();
     }
 
     public void BuySelectedTower()

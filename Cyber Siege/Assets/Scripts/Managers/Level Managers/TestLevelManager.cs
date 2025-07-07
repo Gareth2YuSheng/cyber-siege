@@ -4,8 +4,7 @@ public class TestLevelManager : MonoBehaviour
 {
     private void Start()
     {
-        LevelManager.main.IncreaseCurrency(200);
-        LevelManager.main.HealServer(100);
+        LevelManager.main.InitLevel(200, 100);
         UIManager.main.UpdateHUDLabels();
     }
 }
