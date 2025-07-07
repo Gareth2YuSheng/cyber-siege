@@ -40,7 +40,6 @@ public class FirewallTowerScript : BasicPathTowerScript
 
         // Ransomware handling - Derived from BasicTowerScript
 
-        FindRansomwareScript();
         // Reason for not combining both into 1 action is for more
         // customisable behavior
         if (!disabled)

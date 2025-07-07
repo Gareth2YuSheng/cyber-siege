@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3601920386494860038}
   - component: {fileID: 4661326746327342660}
   - component: {fileID: 7776543347787043342}
+  - component: {fileID: 2472766804823983552}
   m_Layer: 8
   m_Name: Ransomware
   m_TagString: Enemy
@@ -204,6 +205,42 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 15.88, y: 20.24}
   m_EdgeRadius: 0
+--- !u!58 &2472766804823983552
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699728895133875648}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 8.035
 --- !u!1 &6882384581738692393
 GameObject:
   m_ObjectHideFlags: 0

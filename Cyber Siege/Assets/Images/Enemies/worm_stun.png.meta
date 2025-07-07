@@ -948,7 +948,39 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      worm_stun_0: -2251015444424542118
+      worm_stun_1: 8798571961993125079
+      worm_stun_10: -4363642538893866456
+      worm_stun_11: 7433347693373356121
+      worm_stun_12: 532957724907389293
+      worm_stun_13: -8328190575507565761
+      worm_stun_14: -1032964352456308362
+      worm_stun_15: 2524541765634796298
+      worm_stun_16: -142500167724534550
+      worm_stun_17: -5061030454339351174
+      worm_stun_18: -5749676631441809230
+      worm_stun_19: -1378535289161973867
+      worm_stun_2: 2429712431753079075
+      worm_stun_20: 5729957907386474275
+      worm_stun_21: 3846513771077196073
+      worm_stun_22: 4233075952653796734
+      worm_stun_23: -1000071626638495210
+      worm_stun_24: -3043721744282708678
+      worm_stun_25: 2954912582232511288
+      worm_stun_26: 6995264222083320720
+      worm_stun_27: 6163281881583462610
+      worm_stun_28: -5204947443197446405
+      worm_stun_29: 3416748328561899305
+      worm_stun_3: -6129216830378741781
+      worm_stun_30: 3416843014457251654
+      worm_stun_31: 8679062525030209756
+      worm_stun_4: -2579168080580641960
+      worm_stun_5: -2477170772907211874
+      worm_stun_6: 469917539092353451
+      worm_stun_7: -5906320358497024665
+      worm_stun_8: -5273848790637934524
+      worm_stun_9: 8972845053394852422
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

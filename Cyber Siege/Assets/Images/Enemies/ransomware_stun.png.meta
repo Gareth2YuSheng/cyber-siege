@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ransomware_stun_0: 2580976388470836715
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

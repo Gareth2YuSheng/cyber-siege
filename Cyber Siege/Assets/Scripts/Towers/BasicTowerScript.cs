@@ -11,6 +11,7 @@ public class BasicTowerScript : MonoBehaviour
     [SerializeField] protected Transform turretRotationPart;
     [SerializeField] public TowerUpgrade[] upgrades;
     [SerializeField] public AudioClip effectAudio;
+    [SerializeField] protected GameObject protectedEffect;
 
 
     //Attributes
@@ -33,9 +34,13 @@ public class BasicTowerScript : MonoBehaviour
     protected float timeUntilFire;
 
     // For Ransomware
-    public RansomwareScript ransomwareScript; // Reference to RansomwareScript
-    protected RansomwareScript ransomware; // For caching
     public bool disabled = false;
+
+    public bool safeFromRansomware = false; // To prevent disabling when using Encryption Node
+    public bool onFirstRansomwareHit = true; // Sanity check to prevent too fast a frame update, this will allow an X amt of seconds leeway
+
+    public EncryptionNodeScript EncryptionNodeProtecting;
+
 
     public virtual void InitialiseTower()
     {
@@ -76,7 +81,6 @@ public class BasicTowerScript : MonoBehaviour
     protected virtual void Update()
     {
         // Ransomware handling
-        FindRansomwareScript();
         // If tower is not disabled and wave is ongoing
         if (!disabled && EnemyManager.main.waveOngoing) //not fully sanity tested
         {
@@ -299,61 +303,67 @@ public class BasicTowerScript : MonoBehaviour
         bps = baseBPS;
     }
 
-    // Ransomware related functions
-    public virtual void FindRansomwareScript()
-    {
-        // Debug.Log("Running");
-        // Dynamically find and update the reference to the RansomwareScript each frame
-        ransomwareScript = FindFirstObjectByType<RansomwareScript>();
 
-        if (ransomwareScript != null && ransomware == null)
+    // For Ransomware
+    public void DisableTower(BasicEnemyScript enemy)
+    {
+        // If safe from ransomware, do not disable, but stun 
+        if (safeFromRansomware && onFirstRansomwareHit)
         {
-            ransomware = ransomwareScript;
-            // Subscribe to an event or start logic based on ransomwareScript
-            ransomwareScript.onDisable.AddListener(DisableTower); // Example of adding a listener
-        }
-    }
+            Debug.Log("KEEPING TOWER SAFE");
+            onFirstRansomwareHit = false;
+            // Disable the Encryption Node protecting it.
+            // If upgrade is purchased stun enemy
 
-    protected void DisableTower()
-    {
-        if (!disabled)
+
+            StartCoroutine(KeepTowerSafe(enemy));
+
+        }
+        else if (!disabled && !safeFromRansomware)
         {
             Debug.Log("DISABLE TOWER!");
-            disabled = true;
-            // Start couroutine to enable after fixed amount of time
-            StartCoroutine(EnableTower());
+            StartCoroutine(DisableTowerForSeconds());
+
         }
     }
 
-    protected IEnumerator DisableTower(float duration)
+    protected IEnumerator KeepTowerSafe(BasicEnemyScript enemy)
     {
-        // If currently already disabled, dont do anything
-        if (!disabled)
-        {
-            disabled = true;
-            // Wait for duration
-            yield return new WaitForSeconds(duration);
-            // You can place any logic you want to perform after the X seconds here
-            // Example:
-            // PerformAction();
-            disabled = false;
-        }
+        // Disable the Encryption Node that protects it for 6 seconds
+        EncryptionNodeProtecting.disableEncryptionNode(this, enemy);
+        // Wait for 6 seconds
+        yield return new WaitForSeconds(6f);
+
+        // Code to execute after 6 seconds
+        Debug.Log("6 seconds have passed! Removing Ransomware Protection");
+        safeFromRansomware = false;
+        onFirstRansomwareHit = true;
     }
 
-    protected IEnumerator EnableTower()
+    // EncryptionNode - Protect the tower
+    public void ProtectTower(EncryptionNodeScript theScript)
     {
-        // Wait for 5 seconds
-        yield return new WaitForSeconds(5f);
+        Debug.Log("Protect Tower");
+        protectedEffect.SetActive(true);
+        EncryptionNodeProtecting = theScript;
+        safeFromRansomware = true;
+    }
 
-        // Code to execute after 5 seconds
-        Debug.Log("5 seconds have passed! Enabling tower...");
+    // EncryptionNode - Unprotect the tower
+    public void UnProtectTower()
+    {
+        Debug.Log("Unprotect Tower");
+        safeFromRansomware = false;
+        protectedEffect.SetActive(false);
+    }
 
-        // You can place any logic you want to perform after the 5 seconds here
-        // Example:
-        // PerformAction();
+    protected IEnumerator DisableTowerForSeconds()
+    {
+        disabled = true;
+        yield return new WaitForSeconds(6f);
+        Debug.Log("No more disabled");
         disabled = false;
+
     }
-
-
 
 }

@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      botnet_stun_0: 598739213382608502
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

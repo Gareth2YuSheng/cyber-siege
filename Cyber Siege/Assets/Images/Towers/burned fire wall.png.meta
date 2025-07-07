@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      burned fire wall_0: 5322161285626363845
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -51,7 +51,9 @@ public class RansomwareScript : BasicEnemyScript
         else
         {
             // Debug.Log("DISABLE!!!!");
-            onDisable.Invoke();
+            // Get BasicTowerScript instead of invoking
+            ScanForTowersInRange();
+            // onDisable.Invoke();
             // Invoke event to disable specific tower.
 
 
@@ -125,6 +127,25 @@ public class RansomwareScript : BasicEnemyScript
         if (!prompted)
         {
             EnemyManager.main.SetSelectedRansomware(this);
+        }
+    }
+
+    private void ScanForTowersInRange()
+    {
+        Debug.Log("ThreatIntelTower Scanning For New Towers");
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range, towerMask);
+        foreach (Collider2D hit in hits)
+        {
+            // Hits will be objects with colliders, which are currently the tower Bases
+            // Script is in parent object
+            BasicTowerScript tower = hit.GetComponentInParent<BasicTowerScript>();
+            // Dont scan for itself
+            if (tower != null)
+            {
+                Debug.Log($"Found tower: {tower.towerName}");
+                tower.DisableTower(this);
+            }
         }
     }
 
