@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f26078157e7d5c444aaef8b530a95ad9
+guid: 042baff5170f10b41a7ea46dfcc24de3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2545660968052194755
-    second: Threat Intelligence Tower_Preview_0
+      213: 295803783554672145
+    second: Encryption Node_Preview_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Threat Intelligence Tower_Preview_0
+      name: Encryption Node_Preview_0
       rect:
         serializedVersion: 2
-        x: 65
-        y: 42
-        width: 381
-        height: 428
+        x: 41
+        y: 67
+        width: 429
+        height: 377
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3cdf357b921045320800000000000000
-      internalID: 2545660968052194755
+      spriteID: 1162ef159f7ea1400800000000000000
+      internalID: 295803783554672145
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Threat Intelligence Tower_Preview_0: 2545660968052194755
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

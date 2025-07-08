@@ -67,11 +67,11 @@ public class EncryptionNodeScript : BasicTowerScript
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Towers"))
         {
-            var tower = collision.GetComponent<BasicTowerScript>();
+            BasicTowerScript tower = collision.GetComponent<BasicTowerScript>();
             if (tower != null)
             {
                 towersInRange.Add(tower);
-                tower.EncryptionNodeProtecting = this;
+                tower.SetEncryptionNode(this);
                 // tower.ProtectTower(this);
                 // Debug.Log("Protected tower");
 
@@ -95,7 +95,7 @@ public class EncryptionNodeScript : BasicTowerScript
                     // tower.ResetTakenDamageMultiplier();
                 }
                 towersInRange.Remove(tower);
-                tower.EncryptionNodeProtecting = null;
+                tower.ResetEncryptionNode();
             }
         }
     }
@@ -173,7 +173,7 @@ public class EncryptionNodeScript : BasicTowerScript
         // }
     }
 
-    public void disableEncryptionNode(BasicTowerScript tower, BasicEnemyScript enemy)
+    public void DisableEncryptionNode(BasicTowerScript tower, BasicEnemyScript enemy)
     {
         if (!isEncryptionActive)
             return;
@@ -192,10 +192,10 @@ public class EncryptionNodeScript : BasicTowerScript
             }
         }
         Debug.Log($"Encryption node disabled. Tower {tower.name} remains protected. 6 second start");
-        StartCoroutine(disableTemp());
+        StartCoroutine(DisableTemp());
     }
 
-    protected IEnumerator disableTemp()
+    protected IEnumerator DisableTemp()
     {
         // Wait for 6 seconds
         yield return new WaitForSeconds(cooldownInterval);

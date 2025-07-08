@@ -142,7 +142,7 @@ public class BasicEnemyScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Path Obstacle"))
         {
             BasicTowerScript towerScript = collision.gameObject.GetComponent<BasicTowerScript>();
-            if (!towerScript.disabled)
+            if (!towerScript.isTowerDisabled())
             {
                 isBlocked = true;
             }

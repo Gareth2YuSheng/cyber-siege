@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 25def136fed735a46a642b19c6ebb3ae
+guid: 9bf8a60320320a3429a255bfae244e19
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2937797626384235824
-    second: network_scrubber (2)_0
-  - first:
-      213: -6445767381963837318
-    second: network_scrubber (2)_1
-  - first:
-      213: -7218692991492062134
-    second: network_scrubber (2)_2
+      213: -556883815999738543
+    second: Threat Intelligence_Preview_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -145,67 +139,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: network_scrubber (2)_0
+      name: Threat Intelligence_Preview_0
       rect:
         serializedVersion: 2
-        x: 539
-        y: 463
-        width: 52
-        height: 112
+        x: 65
+        y: 42
+        width: 381
+        height: 428
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 03d3e96406725c820800000000000000
-      internalID: 2937797626384235824
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: network_scrubber (2)_1
-      rect:
-        serializedVersion: 2
-        x: 572
-        y: 474
-        width: 57
-        height: 105
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a70fe3d97b80c86a0800000000000000
-      internalID: -6445767381963837318
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: network_scrubber (2)_2
-      rect:
-        serializedVersion: 2
-        x: 531
-        y: 321
-        width: 703
-        height: 945
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a44838378fc02db90800000000000000
-      internalID: -7218692991492062134
+      spriteID: 15deb2eae1d8548f0800000000000000
+      internalID: -556883815999738543
       vertices: []
       indices: 
       edges: []
@@ -214,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5fcac26033dd68e48b66d544ca59939b
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -223,10 +173,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      network_scrubber (2)_0: 2937797626384235824
-      network_scrubber (2)_1: -6445767381963837318
-      network_scrubber (2)_2: -7218692991492062134
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -10,9 +10,8 @@ public class BasicTowerScript : MonoBehaviour
     [SerializeField] protected LayerMask enemyMask;
     [SerializeField] protected Transform turretRotationPart;
     [SerializeField] public TowerUpgrade[] upgrades;
-    [SerializeField] public AudioClip effectAudio;
+    [SerializeField] protected AudioClip effectAudio;
     [SerializeField] protected GameObject protectedEffect;
-
 
     //Attributes
     [NonSerialized] public string towerName;
@@ -34,12 +33,10 @@ public class BasicTowerScript : MonoBehaviour
     protected float timeUntilFire;
 
     // For Ransomware
-    public bool disabled = false;
-
-    public bool safeFromRansomware = false; // To prevent disabling when using Encryption Node
-    public bool onFirstRansomwareHit = true; // Sanity check to prevent too fast a frame update, this will allow an X amt of seconds leeway
-
-    public EncryptionNodeScript EncryptionNodeProtecting;
+    protected bool disabled = false;
+    protected bool safeFromRansomware = false; // To prevent disabling when using Encryption Node
+    protected bool onFirstRansomwareHit = true; // Sanity check to prevent too fast a frame update, this will allow an X amt of seconds leeway
+    protected EncryptionNodeScript encryptionNodeProtecting;
 
 
     public virtual void InitialiseTower()
@@ -330,7 +327,7 @@ public class BasicTowerScript : MonoBehaviour
     protected IEnumerator KeepTowerSafe(BasicEnemyScript enemy)
     {
         // Disable the Encryption Node that protects it for 6 seconds
-        EncryptionNodeProtecting.disableEncryptionNode(this, enemy);
+        encryptionNodeProtecting.DisableEncryptionNode(this, enemy);
         // Wait for 6 seconds
         yield return new WaitForSeconds(6f);
 
@@ -345,7 +342,7 @@ public class BasicTowerScript : MonoBehaviour
     {
         Debug.Log("Protect Tower");
         protectedEffect.SetActive(true);
-        EncryptionNodeProtecting = theScript;
+        encryptionNodeProtecting = theScript;
         safeFromRansomware = true;
     }
 
@@ -357,13 +354,27 @@ public class BasicTowerScript : MonoBehaviour
         protectedEffect.SetActive(false);
     }
 
+    public void SetEncryptionNode(EncryptionNodeScript script)
+    {
+        encryptionNodeProtecting = script;
+    }
+
+    public void ResetEncryptionNode()
+    {
+        encryptionNodeProtecting = null;
+    }
+
     protected IEnumerator DisableTowerForSeconds()
     {
         disabled = true;
         yield return new WaitForSeconds(6f);
         Debug.Log("No more disabled");
         disabled = false;
+    }
 
+    public bool isTowerDisabled()
+    {
+        return disabled;
     }
 
 }
