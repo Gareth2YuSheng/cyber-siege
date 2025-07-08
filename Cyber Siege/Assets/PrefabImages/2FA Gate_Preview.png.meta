@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      2FA Gate_Preview_0: 4353342106253054965
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

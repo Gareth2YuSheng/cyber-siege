@@ -9,23 +9,22 @@ public class EncryptionNodeScript : BasicTowerScript
 
     [Header("Attributes")]
     [SerializeField] private float cooldownInterval = 6f;
-    private CircleCollider2D protectRangeCollider;
     private HashSet<BasicTowerScript> towersInRange = new HashSet<BasicTowerScript>();
 
     private BasicTowerScript protectedTower = null;
 
     private bool isEncryptionActive = true;
+    [SerializeField] protected LayerMask towerMask;
 
     public override void InitialiseTower()
     {
         base.InitialiseTower();
         // Set the circle collider radius
-        protectRangeCollider = gameObject.GetComponent<CircleCollider2D>();
-        protectRangeCollider.radius = range;
     }
 
     protected override void Update()
     {
+        Action();
         if (upgrades[0].purchased)
         {
             // Cause a 1 second stun on the enemy! (Ransomware)
@@ -60,93 +59,76 @@ public class EncryptionNodeScript : BasicTowerScript
                 tower.UnProtectTower();
             }
         }
+
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Towers"))
-        {
-            BasicTowerScript tower = collision.GetComponent<BasicTowerScript>();
-            if (tower != null)
-            {
-                towersInRange.Add(tower);
-                tower.SetEncryptionNode(this);
-                // tower.ProtectTower(this);
-                // Debug.Log("Protected tower");
-
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Towers"))
-        {
-            BasicTowerScript tower = collision.GetComponent<BasicTowerScript>();
-            if (tower != null)
-            {
-                // tower.ResetMovementSpeed();
-                // tower.onEnemyDeath.RemoveListener(HandleBuffedEnemyDeath);
-
-                // If Upgrade 2 has been purchased
-                if (upgrades[1].purchased)
-                {
-                    // tower.ResetTakenDamageMultiplier();
-                }
-                towersInRange.Remove(tower);
-                tower.ResetEncryptionNode();
-            }
-        }
-    }
-
-    // private void OnTriggerStay2D(Collider2D collision)
+    // private void OnTriggerEnter2D(Collider2D collision)
     // {
-    //     // Debug.Log("Trigger Stay");
+
+
     //     if (collision.gameObject.layer == LayerMask.NameToLayer("Towers"))
     //     {
     //         BasicTowerScript tower = collision.GetComponent<BasicTowerScript>();
-    //         Debug.Log(tower);
-    //         if (tower != null && !towersInRange.ContainsKey(tower))
+    //         if (tower != null)
     //         {
-    //             // enemy.UpdateMovementSpeed(1f - slowingFactor);
-    //             if (!hasProtected)
-    //             {
-    //                 tower.ProtectTower(this);
-    //                 Debug.Log("Protecting tower");
-    //             }
-    //             else
-    //             {
+    //             towersInRange.Add(tower);
+    //             tower.SetEncryptionNode(this);
+    //             // tower.ProtectTower(this);
+    //             // Debug.Log("Protected tower");
 
-    //                 tower.UnProtectTower();
-
-    //             }
-
-
-    //             // If Upgrade 2 has been purchased
-    //             // if (upgrades[1].purchased)
-    //             // {
-    //             //     enemy.SetTakenDamageMultiplier(bonusDamageMultiplier);
-    //             // }
-
-    //             // slowedEnemies.Add(enemy, 0f);
     //         }
     //     }
     // }
 
-
-
-    // // For Upgrade 2
-    // private void OnCollisionStay2D(Collision2D collision)
+    // private void OnTriggerExit2D(Collider2D collision)
     // {
+    //     if (collision.gameObject.layer == LayerMask.NameToLayer("Towers"))
+    //     {
+    //         BasicTowerScript tower = collision.GetComponent<BasicTowerScript>();
+    //         if (tower != null)
+    //         {
+    //             // tower.ResetMovementSpeed();
+    //             // tower.onEnemyDeath.RemoveListener(HandleBuffedEnemyDeath);
 
+    //             // If Upgrade 2 has been purchased
+    //             if (upgrades[1].purchased)
+    //             {
+    //                 // tower.ResetTakenDamageMultiplier();
+    //             }
+    //             towersInRange.Remove(tower);
+    //             tower.ResetEncryptionNode();
+    //         }
+    //     }
     // }
-
 
     protected override void Action()
     {
+        Debug.Log("Scanning");
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, range, (Vector2)transform.position, 0f, towerMask);
 
+        //If there is a target in range
+        if (hits.Length > 0)
+        {
+            foreach (RaycastHit2D hit in hits)
+            {
+                // Check if target is hidden
+                BasicTowerScript tower = hit.transform.GetComponentInParent<BasicTowerScript>();
+                if (tower != null && tower != this && towersInRange.Contains(tower) == false)
+                {
+                    // Prevent performing too many times
+                    Debug.Log("ADDED TOWER");
+                    towersInRange.Add(tower);
+                    tower.SetEncryptionNode(this);
+
+                    // tower.ProtectTower(this);
+                    // Debug.Log("Protected tower");
+
+                }
+            }
+        }
     }
+
 
     /* Upgrades
         Upgrade 1 - Secondary Verification
@@ -205,5 +187,10 @@ public class EncryptionNodeScript : BasicTowerScript
         // Enable all towers
         isEncryptionActive = true;
         protectedTower = null;
+    }
+
+    public void removeTowerFromHashSet(BasicTowerScript context)
+    {
+
     }
 }
