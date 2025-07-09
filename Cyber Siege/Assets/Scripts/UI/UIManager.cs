@@ -23,6 +23,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RectTransform towerUpgradeMenuTransform;
     [SerializeField] private GameObject levelEndMenu;
     [SerializeField] private GameObject levelPrompt;
+    [SerializeField] private TextMeshProUGUI levelPromptTitle;
+    [SerializeField] private TextMeshProUGUI levelPromptBody;
+    [SerializeField] private Image levelPromptImage;
     [SerializeField] private GameObject healthHUD;
     // For Scam Message
     [SerializeField] private GameObject susMessageAlertPrefab;
@@ -116,6 +119,18 @@ public class UIManager : MonoBehaviour
     public void HideLevelPrompt()
     {
         levelPrompt.SetActive(false);
+    }
+
+    public Button GetLevelPromptButton()
+    {
+        return levelPrompt.GetComponentInChildren<Button>();
+    }
+
+    public void SetLevelPromptContent(string title, string body, Sprite image)
+    {
+        levelPromptTitle.text = title;
+        levelPromptBody.text = body;
+        levelPromptImage.sprite = image;
     }
 
     IEnumerator SetPromptTimeout(float timeoutDuration)
@@ -238,19 +253,14 @@ public class UIManager : MonoBehaviour
 
     public void PauseButtonOnClick()
     {
-        pauseMenu.gameObject.SetActive(true);
-
+        pauseMenu.SetActive(true);
         Time.timeScale = 0;
-        //Disable Tower Menu
-        SetAllSelectableChildrenFromTowerMenu(false);
     }
 
     public void PauseMenuContinueButtonOnClick()
     {
-        pauseMenu.gameObject.SetActive(false);
+        pauseMenu.SetActive(false);
         Time.timeScale = 1;
-        //Enable Tower Menu
-        SetAllSelectableChildrenFromTowerMenu(true);
     }
 
     public void PauseMenuExitLevelButtonOnClick()
@@ -259,10 +269,4 @@ public class UIManager : MonoBehaviour
         // Unpause the game after exiting
         Time.timeScale = 1;
     }
-
-    public void GameOverMenuExitOnClick()
-    {
-        Application.Quit();
-    }
-
 }
