@@ -38,6 +38,9 @@ public class BasicTowerScript : MonoBehaviour
     protected bool onFirstRansomwareHit = true; // Sanity check to prevent too fast a frame update, this will allow an X amt of seconds leeway
     protected EncryptionNodeScript encryptionNodeProtecting;
 
+    // For Upgrade Menu
+    protected Tile myTile;
+
 
     public virtual void InitialiseTower()
     {
@@ -190,6 +193,19 @@ public class BasicTowerScript : MonoBehaviour
     //     Debug.Log("New Range: " + range);
     //     Debug.Log("New Cost: " + CalculateUpgradeCost());
     // }
+
+    public void SetMyTile(Tile tile)
+    {
+        myTile = tile;
+    }
+
+    protected virtual void OnMouseDown()
+    {
+        if (myTile != null)
+        {
+            myTile.OnTileClickedExternally();
+        }
+    }
 
     // For Upgrades
     public virtual void Upgrade1()

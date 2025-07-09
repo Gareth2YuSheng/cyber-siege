@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class FirewallTowerScript : BasicPathTowerScript
+public class FirewallTowerScript : BasicTowerScript
 {
     [Header("References")]
     [SerializeField] private Sprite damagedSprite;

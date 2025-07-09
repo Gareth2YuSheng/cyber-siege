@@ -65,6 +65,8 @@ public class Tile : MonoBehaviour
         // Do nothing if player is clicking on tower upgrade menu
         if (UIManager.main.IsPointerOverUpgradeMenu()) return;
 
+        Debug.Log("Clicked on tile: " + gameObject.name);
+
         // If not in building mode dont do anything
         // if (!isBuilding) return;
 
@@ -104,6 +106,8 @@ public class Tile : MonoBehaviour
         currentTower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
         currentTowerScript = currentTower.GetComponent<BasicTowerScript>();
         currentTowerScript.InitialiseTower();
+        // Set Tower's Tile
+        currentTowerScript.SetMyTile(this);
         //Disable building mode
         BuildManager.main.DisableBuilding();
         //Set tile colour back to initialColour

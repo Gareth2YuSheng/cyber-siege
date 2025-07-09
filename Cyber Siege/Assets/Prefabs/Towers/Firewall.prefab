@@ -518,6 +518,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Protected Effect
       objectReference: {fileID: 0}
+    - target: {fileID: 8259741136861549085, guid: ffa543cb88625495eb0749bbb7d9afab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8906293634438516385, guid: ffa543cb88625495eb0749bbb7d9afab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

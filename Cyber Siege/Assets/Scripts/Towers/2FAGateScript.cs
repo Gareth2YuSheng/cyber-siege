@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class TwoFA_GateScript : BasicPathTowerScript
+public class TwoFA_GateScript : BasicTowerScript
 {
     [Header("Attributes")]
     [SerializeField] private float slowingFactor;

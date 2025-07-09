@@ -69,28 +69,7 @@ public class BasicEnemyScript : MonoBehaviour
     // Allow Update to be overridable by children to add logic and behavior
     protected virtual void Update()
     {
-        //For Basic Movement
-        //Check if enemy is close to target
-        // Debug.Log(Vector2.Distance(movementTarget.position, transform.position));
-        // if (Vector2.Distance(movementTarget.position, transform.position) <= 0.1f)
-        // {
-        //     //Incement pathIndex
-        //     pathIndex++;
-        //     Debug.Log($"New Path Index: {pathIndex}");
-        //     //If no more points / reached the end of the path
-        //     if (pathIndex >= LevelManager.main.enemyPath.Length)
-        //     {
-        //         //Damange the server
-        //         LevelManager.main.DamageServer(damageDealtToServer);
-        //         DestroySelf();
-        //         return;
-        //     }
-        //     //Else if the path as not ended, update the target to the next point
-        //     else
-        //     {
-        //         UpdateMovementTarget();
-        //     }
-        // }
+
     }
 
     private void FixedUpdate()
