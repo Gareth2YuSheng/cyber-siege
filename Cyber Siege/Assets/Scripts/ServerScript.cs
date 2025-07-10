@@ -8,7 +8,7 @@ public class ServerScript : MonoBehaviour
     private SpriteRenderer sr;
     private Sprite baseSprite;
 
-    private void Start()
+    private void Awake()
     {
         sr = gameObject.GetComponent<SpriteRenderer>();
         baseSprite = sr.sprite;
