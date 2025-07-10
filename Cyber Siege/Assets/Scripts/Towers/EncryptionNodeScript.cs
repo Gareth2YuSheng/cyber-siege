@@ -15,7 +15,8 @@ public class EncryptionNodeScript : BasicTowerScript
 
     private bool isEncryptionActive = true;
     [SerializeField] protected LayerMask towerMask;
-
+    [SerializeField] private GameObject upgradedStun;
+    [SerializeField] private GameObject upgradedTime;
     public override void InitialiseTower()
     {
         base.InitialiseTower();
@@ -28,20 +29,14 @@ public class EncryptionNodeScript : BasicTowerScript
         if (upgrades[0].purchased)
         {
             // Cause a 1 second stun on the enemy! (Ransomware)
-
-
-
-            // timeUntilFire += Time.deltaTime;
-            // if (timeUntilFire >= stunInterval)
-            // {
-            //     StunEnemies();
-            //     timeUntilFire = 0f;
-            // }
+            // This is done on DisableEncryptionNode in this file.
+            upgradedStun.SetActive(true);
         }
         if (upgrades[1].purchased)
         {
             // Decrease cooldown time
             cooldownInterval = 3f;
+            upgradedTime.SetActive(true);
         }
 
         foreach (var tower in towersInRange)
