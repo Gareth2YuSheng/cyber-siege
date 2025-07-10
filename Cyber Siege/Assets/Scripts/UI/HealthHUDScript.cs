@@ -3,22 +3,17 @@ using TMPro;
 
 public class HealthHUDScript : MonoBehaviour
 {
-    [SerializeField]
     private TextMeshProUGUI healthLabel;
 
     private void Start()
     {
+        healthLabel = gameObject.GetComponentInChildren<TextMeshProUGUI>();
         //Add Event Listener
-        LevelManager.main.onHealthChange.AddListener(UpdateHealthLabel);
-    }
-
-    private void Update()
-    {
-
+        HealthManager.main.onHealthChange.AddListener(UpdateHealthLabel);
     }
 
     public void UpdateHealthLabel()
     {
-        healthLabel.text = $"{LevelManager.main.GetServerHealth()}";
+        healthLabel.text = $"{HealthManager.main.GetServerHealth()}";
     }
 }

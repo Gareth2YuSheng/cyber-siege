@@ -22,7 +22,7 @@ public class TowerUpgradeMenuScript : MonoBehaviour
     {
         // Add Event Listeners
         BuildManager.main.onTowerSelectedForUpgrading.AddListener(UpdateTowerDetails);
-        LevelManager.main.onCurrencyChange.AddListener(CheckUpgradesAffordable);
+        CurrencyManager.main.onCurrencyChange.AddListener(CheckUpgradesAffordable);
 
         initialDisabledColor = upgradeButton1.colors.disabledColor;
     }
@@ -63,7 +63,7 @@ public class TowerUpgradeMenuScript : MonoBehaviour
         upgradeButton1.onClick.AddListener(() =>
         {
             // only upgrade if enough currency
-            if (tower.upgrades[0].cost <= LevelManager.main.GetCurrency())
+            if (tower.upgrades[0].cost <= CurrencyManager.main.GetCurrency())
             {
                 tower.Upgrade1();
             }
@@ -71,7 +71,7 @@ public class TowerUpgradeMenuScript : MonoBehaviour
         upgradeButton2.onClick.RemoveAllListeners();
         upgradeButton2.onClick.AddListener(() =>
         {
-            if (tower.upgrades[1].cost <= LevelManager.main.GetCurrency())
+            if (tower.upgrades[1].cost <= CurrencyManager.main.GetCurrency())
             {
                 tower.Upgrade2();
             }
@@ -137,7 +137,7 @@ public class TowerUpgradeMenuScript : MonoBehaviour
     private void UpdateUpgradeButton(Button button, bool purchased, int cost)
     {
         // If upgrade has not been purchased and we CAN afford it
-        if (!purchased && cost <= LevelManager.main.GetCurrency())
+        if (!purchased && cost <= CurrencyManager.main.GetCurrency())
         {
             // Enable button
             button.interactable = true;

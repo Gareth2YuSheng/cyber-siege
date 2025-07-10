@@ -59,12 +59,12 @@ public class BuildManager : MonoBehaviour
 
     public bool CanAffordSelectedTower()
     {
-        return towers[selectedTower].towerSObj.cost <= LevelManager.main.GetCurrency();
+        return towers[selectedTower].towerSObj.cost <= CurrencyManager.main.GetCurrency();
     }
 
     public void BuySelectedTower()
     {
-        LevelManager.main.SpendCurrency(towers[selectedTower].towerSObj.cost);
+        CurrencyManager.main.SpendCurrency(towers[selectedTower].towerSObj.cost);
     }
 
     public void SetSelectedTower(int _selectedTower)
@@ -192,7 +192,7 @@ public class BuildManager : MonoBehaviour
         // Remove the Tower
         selectedTile.DestroyTower();
         // Refund only 70% of the Money
-        LevelManager.main.IncreaseCurrency((int)refundAmt);
+        CurrencyManager.main.IncreaseCurrency((int)refundAmt);
         // Close the tower upgrade menu
         CloseTowerUpgradeMenu();
     }

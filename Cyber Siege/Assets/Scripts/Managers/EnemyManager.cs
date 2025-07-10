@@ -8,6 +8,8 @@ public class EnemyManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject[] enemyPrefabs;
+    public Transform startPoint;
+    public Transform[] enemyPath;
 
     [Header("Attributes")]
     [SerializeField] private int baseEnemyCount = 8;
@@ -137,7 +139,7 @@ public class EnemyManager : MonoBehaviour
             prefabToSpawn = enemyPrefabs[index];
         }
 
-        Vector3 position = LevelManager.main.startPoint.position;
+        Vector3 position = startPoint.position;
         position.z = -1; // Force the z-coord so it spawns above the path
 
         Instantiate(prefabToSpawn, position, Quaternion.identity);

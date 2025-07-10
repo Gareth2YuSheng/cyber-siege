@@ -1,23 +1,19 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class LevelManager : MonoBehaviour
+public class HealthManager : MonoBehaviour
 {
-    public static LevelManager main;
+    public static HealthManager main;
 
     [Header("References")]
-    public Transform startPoint;
     [SerializeField] private ServerScript myServer;
 
     [Header("Attributes")]
-    public Transform[] enemyPath;
-    [SerializeField] private int currency;
     [SerializeField] private int serverHealth;
     private int baseHealth = 0;
     private bool isServerAlive = true;
 
     [Header("Events")]
-    public UnityEvent onCurrencyChange = new UnityEvent();
     public UnityEvent onHealthChange = new UnityEvent();
     public UnityEvent onServerDeath = new UnityEvent();
 
@@ -26,57 +22,15 @@ public class LevelManager : MonoBehaviour
         main = this;
     }
 
-    private void Start()
-    {
-        // To be called by the individual level Managers
-        // IncreaseCurrency(200);
-        // HealServer(100);
-
-        // Ensure game is unpaused
-        Time.timeScale = 1;
-    }
-
-    public void InitLevel(int _currency, int _health)
-    {
-        IncreaseCurrency(_currency);
-        HealServer(_health);
-        baseHealth = _health;
-    }
-
-    //Currency Related Functions
-    public int GetCurrency()
-    {
-        return currency;
-    }
-
-    public void IncreaseCurrency(int amt)
-    {
-        currency += amt;
-        onCurrencyChange.Invoke();
-    }
-
-    public bool SpendCurrency(int amt)
-    {
-        if (amt <= currency)
-        {
-            //Buy item
-            currency -= amt;
-            onCurrencyChange.Invoke();
-            return true;
-        }
-        else
-        {
-            //Do some error prompt
-            UIManager.main.ShowErrorPrompt("Not enuf money");
-            Debug.Log("Not enuf money");
-            return false;
-        }
-    }
-
-    //Health Related Functions
     public int GetServerHealth()
     {
         return serverHealth;
+    }
+
+    public void InitServerHealth(int _health)
+    {
+        baseHealth = _health;
+        HealServer(_health);
     }
 
     public void HealServer(int amt)

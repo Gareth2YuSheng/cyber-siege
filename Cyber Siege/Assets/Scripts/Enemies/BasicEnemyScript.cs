@@ -101,9 +101,9 @@ public class BasicEnemyScript : MonoBehaviour
         if (distToTarget.sqrMagnitude < 0.1f * 0.1f) // Adjust threshold as needed
         {
             pathIndex++;
-            if (pathIndex >= LevelManager.main.enemyPath.Length)
+            if (pathIndex >= EnemyManager.main.enemyPath.Length)
             {
-                LevelManager.main.DamageServer(damageDealtToServer);
+                HealthManager.main.DamageServer(damageDealtToServer);
                 DestroySelf();
                 return;
             }
@@ -139,7 +139,7 @@ public class BasicEnemyScript : MonoBehaviour
     //Movement Related Functions
     protected void UpdateMovementTarget()
     {
-        movementTarget = LevelManager.main.enemyPath[pathIndex];
+        movementTarget = EnemyManager.main.enemyPath[pathIndex];
     }
 
     public void UpdatePathIndex(int _pathIndex)
@@ -197,14 +197,14 @@ public class BasicEnemyScript : MonoBehaviour
         // If pathIndex is 0, meaning we shld take enemyPath[0] - startPoint
         if (pathIndex == 0)
         {
-            Vector3 firstTarget = LevelManager.main.enemyPath[0].position;
-            Vector3 startPoint = LevelManager.main.startPoint.position;
+            Vector3 firstTarget = EnemyManager.main.enemyPath[0].position;
+            Vector3 startPoint = EnemyManager.main.startPoint.position;
             return (firstTarget - startPoint).normalized;
         }
 
         // Else, Calculate direction moving based on current and previous pathIndex points
-        Vector3 currentMovementTarget = LevelManager.main.enemyPath[pathIndex].position;
-        Vector3 prevMovementTarget = LevelManager.main.enemyPath[pathIndex - 1].position;
+        Vector3 currentMovementTarget = EnemyManager.main.enemyPath[pathIndex].position;
+        Vector3 prevMovementTarget = EnemyManager.main.enemyPath[pathIndex - 1].position;
 
         return (currentMovementTarget - prevMovementTarget).normalized;
     }
@@ -257,7 +257,7 @@ public class BasicEnemyScript : MonoBehaviour
             // Invoke the Event
             onEnemyDeath.Invoke(this);
             // Increase player money
-            LevelManager.main.IncreaseCurrency(currencyValue);
+            CurrencyManager.main.IncreaseCurrency(currencyValue);
             // Destroy Game Object
             DestroySelf();
         }

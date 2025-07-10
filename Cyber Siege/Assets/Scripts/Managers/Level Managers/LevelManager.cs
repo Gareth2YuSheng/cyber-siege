@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class IndividualLevelManager : MonoBehaviour
+public abstract class LevelManager : MonoBehaviour
 {
     [Header("Base Attributes")]
     [SerializeField] protected int waveCount = 10;
@@ -12,8 +12,12 @@ public abstract class IndividualLevelManager : MonoBehaviour
 
     protected virtual void Start()
     {
+        // Make sure game is unpaused
+        Time.timeScale = 1;
+
         // Set Health and Currency
-        LevelManager.main.InitLevel(initialCurrency, initialHealth);
+        CurrencyManager.main.IncreaseCurrency(initialCurrency);
+        HealthManager.main.InitServerHealth(initialHealth);
         UIManager.main.UpdateHUDLabels();
         // Set Max Wave Count
         EnemyManager.main.SetMaxWaveCount(waveCount);

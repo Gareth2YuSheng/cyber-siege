@@ -18,7 +18,7 @@ public class TowerMenuScript : MonoBehaviour
         //outside of the scene
 
         // Add Event Listeners
-        LevelManager.main.onCurrencyChange.AddListener(UpdateCurrencyLabel);
+        CurrencyManager.main.onCurrencyChange.AddListener(UpdateCurrencyLabel);
         EnemyManager.main.onWaveStart.AddListener(UpdateWaveLabel);
 
         BuildManager.main.onStartGroundBuilding.AddListener(StartBuilding);
@@ -40,7 +40,7 @@ public class TowerMenuScript : MonoBehaviour
 
     public void UpdateCurrencyLabel()
     {
-        moneyLabel.text = $"{LevelManager.main.GetCurrency()}";
+        moneyLabel.text = $"{CurrencyManager.main.GetCurrency()}";
     }
 
     private void StartBuilding()

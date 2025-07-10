@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
     {
         // upgradeMenuScript = towerUpgradeMenu.GetComponent<TowerUpgradeMenuScript>();
         // Add Event Listeners
-        LevelManager.main.onServerDeath.AddListener(GameOver);
+        HealthManager.main.onServerDeath.AddListener(GameOver);
         EnemyManager.main.onWaveEnd.AddListener(WaveEnded);
         // For tower upgrade menu
         BuildManager.main.onTowerSelectedForUpgrading.AddListener(ShowTowerUpgradeMenu);

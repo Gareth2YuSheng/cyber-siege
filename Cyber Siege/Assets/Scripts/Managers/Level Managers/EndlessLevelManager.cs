@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Level1Manager : LevelManager
+public class EndlessLevelManager : LevelManager
 {
     protected override IEnumerator StartLevel()
     {

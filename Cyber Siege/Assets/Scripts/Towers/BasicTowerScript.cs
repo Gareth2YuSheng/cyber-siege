@@ -224,7 +224,7 @@ public class BasicTowerScript : MonoBehaviour
         // Mark Upgrade as purchased
         _upgrade.purchased = true;
         // Assume we checked that we can afford the upgrade
-        LevelManager.main.SpendCurrency(_upgrade.cost);
+        CurrencyManager.main.SpendCurrency(_upgrade.cost);
     }
 
     // public bool HasPurchasedUpgrade(int index)
