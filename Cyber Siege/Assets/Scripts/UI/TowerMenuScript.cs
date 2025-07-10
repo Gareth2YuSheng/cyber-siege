@@ -59,7 +59,6 @@ public class TowerMenuScript : MonoBehaviour
 
     public void TowerMenuBuildCancelButtonOnClick()
     {
-        Debug.Log("Cancel Build Mode");
         BuildManager.main.DisableBuilding();
         // Hide Tower Preview
         towerPreviewSR.enabled = false;

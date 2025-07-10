@@ -20,6 +20,10 @@ public class Tile : MonoBehaviour
         initialColor = sr.color;
         sr.enabled = false;
         centerPosition = sr.bounds.center;
+
+        // If player cancels building, make sure to reset tile colour
+        BuildManager.main.onStopGroundBuilding.AddListener(ResetSelectedTileColour);
+        BuildManager.main.onStopPathBuilding.AddListener(ResetSelectedTileColour);
     }
 
     protected void OnMouseEnter()
@@ -64,6 +68,7 @@ public class Tile : MonoBehaviour
     {
         // Do nothing if player is clicking on tower upgrade menu
         if (UIManager.main.IsPointerOverUpgradeMenu()) return;
+        if (UIManager.main.IsPointerOverPauseButton()) return;
 
         Debug.Log("Clicked on tile: " + gameObject.name);
 
@@ -111,17 +116,32 @@ public class Tile : MonoBehaviour
         //Disable building mode
         BuildManager.main.DisableBuilding();
         //Set tile colour back to initialColour
-        sr.color = initialColor;
-        // Clear selected tile
-        BuildManager.main.ClearSelectedTile();
+        ResetSelectedTileColour();
+        // Clear selected tile - in BuildManager        
         // Invoke event
         BuildManager.main.onTowerBuilt.Invoke();
+    }
+
+    private void ResetSelectedTileColour()
+    {
+        //Set tile colour back to initialColour
+        sr.color = initialColor;
     }
 
     // For BuildManager to call tile clicking logic
     public void OnTileClickedExternally()
     {
         OnMouseDown();
+    }
+
+    public void OnTileEnteredExternally()
+    {
+        OnMouseEnter();
+    }
+
+    public void OnTileExitedExternally()
+    {
+        OnMouseExit();
     }
 
     protected void StartBuilding()

@@ -207,6 +207,22 @@ public class BasicTowerScript : MonoBehaviour
         }
     }
 
+    protected virtual void OnMouseEnter()
+    {
+        if (myTile != null)
+        {
+            myTile.OnTileEnteredExternally();
+        }
+    }
+
+    protected virtual void OnMouseExit()
+    {
+        if (myTile != null)
+        {
+            myTile.OnTileExitedExternally();
+        }
+    }
+
     // For Upgrades
     public virtual void Upgrade1()
     {

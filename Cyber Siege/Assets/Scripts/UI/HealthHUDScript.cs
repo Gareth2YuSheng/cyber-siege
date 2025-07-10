@@ -5,9 +5,13 @@ public class HealthHUDScript : MonoBehaviour
 {
     private TextMeshProUGUI healthLabel;
 
-    private void Start()
+    private void Awake()
     {
         healthLabel = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private void Start()
+    {
         //Add Event Listener
         HealthManager.main.onHealthChange.AddListener(UpdateHealthLabel);
     }

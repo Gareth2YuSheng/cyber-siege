@@ -16,11 +16,15 @@ public class TowerPreviewScript : MonoBehaviour
     // private SpriteRenderer previewRangeSR;
     // private Transform previewRangeTransform;
 
+    private void Awake()
+    {
+        mySR = gameObject.GetComponent<SpriteRenderer>();
+    }
+
     private void Start()
     {
         // previewRangeSR = GetComponentInChildren<SpriteRenderer>(); 
         // previewRangeTransform = GetComponentInChildren<Transform>();
-        mySR = gameObject.GetComponent<SpriteRenderer>();
 
         // Add Event Listeners
         BuildManager.main.onStartGroundBuilding.AddListener(StartBuilding);

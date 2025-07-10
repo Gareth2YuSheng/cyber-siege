@@ -221,7 +221,7 @@ public class UIManager : MonoBehaviour
         levelEndMenu.SetActive(true);
     }
 
-    public bool IsPointerOverUpgradeMenu()
+    private bool IsPointerOver(GameObject _object)
     {
         pointerEventData = new PointerEventData(es)
         {
@@ -233,13 +233,23 @@ public class UIManager : MonoBehaviour
 
         foreach (RaycastResult result in results)
         {
-            if (result.gameObject == towerUpgradeMenu || result.gameObject.transform.IsChildOf(towerUpgradeMenu.transform))
+            if (result.gameObject == _object || result.gameObject.transform.IsChildOf(_object.transform))
             {
                 return true; // Pointer is over upgrade menu
             }
         }
 
         return false;
+    }
+
+    public bool IsPointerOverUpgradeMenu()
+    {
+        return IsPointerOver(towerUpgradeMenu);
+    }
+
+    public bool IsPointerOverPauseButton()
+    {
+        return IsPointerOver(pauseButton.gameObject);
     }
 
     // ON CLICK METHODS
@@ -255,6 +265,11 @@ public class UIManager : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
+        // If player was building a tower, cancel it
+        if (BuildManager.main.isBuilding())
+        {
+            BuildManager.main.DisableBuilding();
+        }
     }
 
     public void PauseMenuContinueButtonOnClick()

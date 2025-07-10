@@ -73,10 +73,6 @@ public class BuildManager : MonoBehaviour
         onTowerSelectedForBuilding.Invoke();
     }
 
-    // public void EnableBuilding()
-    // {
-    // }
-
     // Only 1 type of building mode can be enabled at a time
     public void EnableGroundBuilding()
     {
@@ -110,6 +106,7 @@ public class BuildManager : MonoBehaviour
         {
             DisablePathBuilding();
         }
+        ClearSelectedTile();
     }
 
     public void DisableGroundBuilding()
@@ -122,6 +119,11 @@ public class BuildManager : MonoBehaviour
     {
         onStopPathBuilding.Invoke();
         isPathBuilding = false;
+    }
+
+    public bool isBuilding()
+    {
+        return isGroundBuilding || isPathBuilding;
     }
 
     // For Tower Preview

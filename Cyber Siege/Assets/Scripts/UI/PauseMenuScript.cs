@@ -51,6 +51,5 @@ public class PauseMenuScript : MonoBehaviour
         musicVolumeSlider.value = level;
         SoundManager.main.SetMusicVolume(level);
         DoNotDestroy.main.musicVolume = level;
-
     }
 }
