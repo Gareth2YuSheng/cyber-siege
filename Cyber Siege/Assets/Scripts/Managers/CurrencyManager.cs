@@ -32,8 +32,7 @@ public class CurrencyManager : MonoBehaviour
         if (amt <= currency)
         {
             //Buy item
-            currency -= amt;
-            onCurrencyChange.Invoke();
+            DecreaseCurrency(amt);
             return true;
         }
         else
@@ -42,6 +41,20 @@ public class CurrencyManager : MonoBehaviour
             UIManager.main.ShowErrorPrompt("Not enuf money");
             Debug.Log("Not enuf money");
             return false;
+        }
+    }
+
+    public void DecreaseCurrency(int amt)
+    {
+        if (currency > 0)
+        {
+            currency -= amt;
+            // Prevent negative currency
+            if (currency < 0)
+            {
+                currency = 0;
+            }
+            onCurrencyChange.Invoke();
         }
     }
 }

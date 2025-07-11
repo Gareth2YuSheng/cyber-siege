@@ -27,6 +27,7 @@ public class BasicTowerScript : MonoBehaviour
     protected int baseUpgradeCost;
     protected float baseBPS;
     protected float baseRange;
+    protected int fireRateDebuffStacks;
 
     //For Shooting
     protected Transform enemyTarget;
@@ -40,7 +41,6 @@ public class BasicTowerScript : MonoBehaviour
 
     // For Upgrade Menu
     protected Tile myTile;
-
 
     public virtual void InitialiseTower()
     {
@@ -332,6 +332,19 @@ public class BasicTowerScript : MonoBehaviour
         bps = baseBPS;
     }
 
+    public void AddTowerFireRateDebuffStack(int amt)
+    {
+        fireRateDebuffStacks += amt;
+    }
+
+    public void RemoveTowerFireRateDebuffStack(int amt)
+    {
+        fireRateDebuffStacks -= amt;
+        if (fireRateDebuffStacks < 0)
+        {
+            fireRateDebuffStacks = 0;
+        }
+    }
 
     // For Ransomware
     public void DisableTower(BasicEnemyScript enemy)
@@ -409,4 +422,8 @@ public class BasicTowerScript : MonoBehaviour
         return disabled;
     }
 
+    public TowerPlacementType GetTowerType()
+    {
+        return tower.placementType;
+    }
 }

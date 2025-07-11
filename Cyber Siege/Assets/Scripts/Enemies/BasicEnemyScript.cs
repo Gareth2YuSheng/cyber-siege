@@ -103,8 +103,7 @@ public class BasicEnemyScript : MonoBehaviour
             pathIndex++;
             if (pathIndex >= EnemyManager.main.enemyPath.Length)
             {
-                HealthManager.main.DamageServer(damageDealtToServer);
-                DestroySelf();
+                ReachedServer();
                 return;
             }
 
@@ -113,6 +112,12 @@ public class BasicEnemyScript : MonoBehaviour
         }
 
         rb.linearVelocity = distToTarget.normalized * moveSpeed;
+    }
+
+    protected virtual void ReachedServer()
+    {
+        HealthManager.main.DamageServer(damageDealtToServer);
+        DestroySelf();
     }
 
     // Stopping when collide with obstacle behavior
@@ -137,7 +142,7 @@ public class BasicEnemyScript : MonoBehaviour
     }
 
     //Movement Related Functions
-    protected void UpdateMovementTarget()
+    protected virtual void UpdateMovementTarget()
     {
         movementTarget = EnemyManager.main.enemyPath[pathIndex];
     }

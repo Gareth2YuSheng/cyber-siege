@@ -10,9 +10,4 @@ public class SuspiciousEnemyScript : BasicEnemyScript
         changeOpacity(0.2f);
         Hide();
     }
-
-    protected override void Update()
-    {
-        base.Update();
-    }
 }
