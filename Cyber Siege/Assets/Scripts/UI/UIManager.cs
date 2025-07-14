@@ -192,7 +192,7 @@ public class UIManager : MonoBehaviour
 
     private void HideTowerUpgradeMenu()
     {
-        MoveTowerUpgradeMenu(-1222f, 0.4f, () =>
+        MoveTowerUpgradeMenu(-1800f, 0.4f, () =>
         {
             towerUpgradeMenu.SetActive(false);
         });

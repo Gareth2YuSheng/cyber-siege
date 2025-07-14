@@ -37,6 +37,7 @@ public class BasicEnemyScript : MonoBehaviour
     protected Transform movementTarget;
     protected Rigidbody2D rb;
     public bool isBlocked = false;
+    public bool hasReachedServer = false;
 
     // For Modifiers
     protected float baseMoveSpeed;
@@ -74,8 +75,8 @@ public class BasicEnemyScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // If Enemy is currently blocked, stop moving
-        if (isBlocked)
+        // If Enemy is currently blocked OR has alr reached the server, stop moving
+        if (isBlocked || hasReachedServer)
         {
             // Reset linearVelocity if havent
             if (rb.linearVelocity.sqrMagnitude > 0.001f)
@@ -116,6 +117,7 @@ public class BasicEnemyScript : MonoBehaviour
 
     protected virtual void ReachedServer()
     {
+        hasReachedServer = true;
         HealthManager.main.DamageServer(damageDealtToServer);
         DestroySelf();
     }
@@ -274,7 +276,7 @@ public class BasicEnemyScript : MonoBehaviour
         Destroy(gameObject);
         EnemyManager.main.EnemyDestroyed();
         // Play Enemy Death Sound Effect
-        if (audioClipDestroy != null)
+        if (audioClipDestroy != null && SoundManager.main)
         {
             SoundManager.main.PlaySoundFXClip(audioClipDestroy, 1f);
         }
@@ -292,6 +294,16 @@ public class BasicEnemyScript : MonoBehaviour
     public void Hide()
     {
         isHidden = true;
+    }
+
+    protected void Vanish()
+    {
+        sr.enabled = false;
+    }
+
+    protected void UnVanish()
+    {
+        sr.enabled = true;
     }
 
     public int GetDamageDealtToServer()

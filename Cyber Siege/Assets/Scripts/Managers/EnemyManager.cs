@@ -128,19 +128,34 @@ public class EnemyManager : MonoBehaviour
         // int index = Random.Range(0, enemyPrefabs.Length);
         // GameObject prefabToSpawn = enemyPrefabs[index];
         GameObject prefabToSpawn;
-
-        if (testingMode)
-        {
-            prefabToSpawn = enemyPrefabs[0];
-        }
-        else
-        {
-            int index = Random.Range(0, enemyPrefabs.Length);
-            prefabToSpawn = enemyPrefabs[index];
-        }
-
         Vector3 position = startPoint.position;
         position.z = -1; // Force the z-coord so it spawns above the path
+        int index = 0;
+
+        if (!testingMode)
+        {
+            index = Random.Range(0, enemyPrefabs.Length);
+        }
+        prefabToSpawn = enemyPrefabs[index];
+
+        // Debug.Log(prefabToSpawn.name);
+        /*
+            If the selected prefab is a cryptojacking enemy,
+            we spawn it but it shouldnt be counted under the enemy count, 
+            so we need to spawn another random enemy to replace it
+        */
+
+        if (prefabToSpawn.name == "Cryptojacking")
+        {
+            // Spawn the cryptojacking
+            Instantiate(prefabToSpawn, position, Quaternion.identity);
+            // Set the prefabToSpawn to another enemy that is not cryptojacking
+            while (prefabToSpawn.name == "Cryptojacking")
+            {
+                index = Random.Range(0, enemyPrefabs.Length);
+                prefabToSpawn = enemyPrefabs[index];
+            }
+        }
 
         Instantiate(prefabToSpawn, position, Quaternion.identity);
     }

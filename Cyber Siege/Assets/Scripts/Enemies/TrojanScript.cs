@@ -19,7 +19,10 @@ public class TrojanScript : BasicEnemyScript
     {
         // On first hit, change sprite.
         sr.sprite = revealedSprite;
-        SoundManager.main.PlaySoundFXClip(audioClipRevealed, 1f);
+        if (audioClipRevealed != null && SoundManager.main != null)
+        {
+            SoundManager.main.PlaySoundFXClip(audioClipRevealed, 1f);
+        }
     }
 
     protected override void ToggleStunnedSprite(bool stun)

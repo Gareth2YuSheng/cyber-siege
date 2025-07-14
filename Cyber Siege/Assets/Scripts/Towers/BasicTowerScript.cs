@@ -27,7 +27,6 @@ public class BasicTowerScript : MonoBehaviour
     protected int baseUpgradeCost;
     protected float baseBPS;
     protected float baseRange;
-    protected int fireRateDebuffStacks;
 
     //For Shooting
     protected Transform enemyTarget;
@@ -101,12 +100,15 @@ public class BasicTowerScript : MonoBehaviour
                 //If tower is rotatable, rotate towards target
                 if (isRotatable) RotateTowardsTarget();
                 //Shoot
+                float adjustedBps = bps * Mathf.Pow(0.7f, ServerManager.main.GetCryptojackingCount()); // 30% reduction per stack
                 timeUntilFire += Time.deltaTime;
-                if (timeUntilFire >= (1f / bps))
+                if (timeUntilFire >= (1f / adjustedBps))
                 {
-                    // Sound Effect
-                    SoundManager.main.PlaySoundFXClip(effectAudio, 1f);
-
+                    if (effectAudio != null && SoundManager.main != null)
+                    {
+                        // Sound Effect
+                        SoundManager.main.PlaySoundFXClip(effectAudio, 1f);
+                    }
                     Action();
                     timeUntilFire = 0f;
                 }
@@ -330,20 +332,6 @@ public class BasicTowerScript : MonoBehaviour
     public void ResetTowerBPS()
     {
         bps = baseBPS;
-    }
-
-    public void AddTowerFireRateDebuffStack(int amt)
-    {
-        fireRateDebuffStacks += amt;
-    }
-
-    public void RemoveTowerFireRateDebuffStack(int amt)
-    {
-        fireRateDebuffStacks -= amt;
-        if (fireRateDebuffStacks < 0)
-        {
-            fireRateDebuffStacks = 0;
-        }
     }
 
     // For Ransomware

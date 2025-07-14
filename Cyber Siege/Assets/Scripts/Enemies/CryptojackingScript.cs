@@ -5,7 +5,6 @@ public class CryptojackingScript : BasicEnemyScript
     [Header("Attributes")]
     [SerializeField] private float cryptojackingInterval = 3f;
 
-    private bool hasReachedServer;
     private float timeUntilCryptoJacked;
 
     /* When affected by cryptojacking
@@ -13,8 +12,6 @@ public class CryptojackingScript : BasicEnemyScript
         - Slow down the firerate of all towers
 
         To do:
-        either use server manager to manage cryptojacking
-        OR
         make cryptojacking spawn special such that
         it doesnt take up a enemy count and spawn chance
     */
@@ -22,6 +19,7 @@ public class CryptojackingScript : BasicEnemyScript
     {
         base.Start();
         Hide();
+        // Vanish(); //Enable later
     }
 
     protected override void Update()
@@ -40,22 +38,21 @@ public class CryptojackingScript : BasicEnemyScript
 
     private void OnDestroy()
     {
-        Debug.Log("Help Me im dying");
-        // Reset Tower Performance
+        ServerManager.main.RemoveCryptojacking(1);
     }
 
     protected override void UpdateMovementTarget()
     {
+        // Set target directly to server
         movementTarget = EnemyManager.main.enemyPath[EnemyManager.main.enemyPath.Length - 1];
     }
 
     protected override void ReachedServer()
     {
-        // ServerManager.main.AddCryptojacking(1);
+        // Should only run once
+        // Debug.Log("Reached");
+        ServerManager.main.AddCryptojacking(1);
         // DestroySelf();
-
         hasReachedServer = true;
-        // Slow Tower Performance
-
     }
 }

@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.9685757, b: 0, a: 1}
+  m_Color: {r: 0.8584906, g: 0.5003344, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -272,11 +272,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8902548957978172073}
-  - component: {fileID: 7603992022838858925}
+  - component: {fileID: 4232509987279895133}
   - component: {fileID: -6031297805760421932}
   - component: {fileID: -5086529700040231681}
   m_Layer: 7
-  m_Name: IDS
+  m_Name: Resource Monitor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -302,7 +302,7 @@ Transform:
   - {fileID: 7965537221973110152}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7603992022838858925
+--- !u!114 &4232509987279895133
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -311,28 +311,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3198532911862591802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c955272c4c587469f5208c813babc3, type: 3}
+  m_Script: {fileID: 11500000, guid: f52a7378e42fdc341a8b97034f00ef4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower: {fileID: 11400000, guid: c2af54ddc74b5ee4eb720327498ac496, type: 2}
+  tower: {fileID: 11400000, guid: c94802d298de961439f4fa9df309c8b7, type: 2}
   towerRangeTransform: {fileID: 4009835246018383585}
   enemyMask:
     serializedVersion: 2
     m_Bits: 256
   turretRotationPart: {fileID: 0}
-  upgrades:
-  - upgradeName: Real-Time Protection
-    description: Auto-scans continuously
-    cost: 30
-    purchased: 0
-  - upgradeName: Targeted Containment
-    description: Stuns and increase damage taken by 50% upon revealing an enemy for
-      2s
-    cost: 30
-    purchased: 0
+  upgrades: []
   effectAudio: {fileID: 0}
   protectedEffect: {fileID: 7472239190551064884}
-  bonusDamageMultiplier: 1.5
 --- !u!61 &-6031297805760421932
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -571,7 +561,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -712631045867808456, guid: b670ab75dde984907b8570040daa08c5, type: 3}
-  m_Color: {r: 0.5568628, g: 0.49247074, b: 0.09019607, a: 1}
+  m_Color: {r: 0.46226418, g: 0.29238015, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -720,7 +710,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.045, y: 0.045, z: 0.045}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2273343325139513096}
@@ -769,7 +759,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: -70067978, guid: b9c91d41fc70d9d45a39cde7120bbb24, type: 3}
+  m_Sprite: {fileID: -7529554549325702343, guid: b83a46dd8cb9fd04b96add9050eff1e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

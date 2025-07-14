@@ -11,10 +11,14 @@ public class PauseMenuScript : MonoBehaviour
 
     public void Start()
     {
-        MasterVolumeOnValueChanged(DoNotDestroy.main.masterVolume);
-        SoundFXVolumeOnValueChanged(DoNotDestroy.main.soundFXVolume);
-        MusicVolumeOnValueChanged(DoNotDestroy.main.musicVolume);
+        if (DoNotDestroy.main)
+        {
+            MasterVolumeOnValueChanged(DoNotDestroy.main.masterVolume);
+            SoundFXVolumeOnValueChanged(DoNotDestroy.main.soundFXVolume);
+            MusicVolumeOnValueChanged(DoNotDestroy.main.musicVolume);
+        }
     }
+
     public void ContinueButtonOnClick()
     {
         UIManager.main.PauseMenuContinueButtonOnClick();
