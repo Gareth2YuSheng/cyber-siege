@@ -66,9 +66,10 @@ public class Tile : MonoBehaviour
 
     protected virtual void OnMouseDown()
     {
-        // Do nothing if player is clicking on tower upgrade menu
+        // Do nothing if player is clicking on specific UI elements
         if (UIManager.main.IsPointerOverUpgradeMenu()) return;
         if (UIManager.main.IsPointerOverPauseButton()) return;
+        if (UIManager.main.IsPointerOverRMPrompt()) return;
 
         Debug.Log("Clicked on tile: " + gameObject.name);
 

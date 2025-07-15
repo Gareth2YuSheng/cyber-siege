@@ -115,6 +115,11 @@ public class BasicEnemyScript : MonoBehaviour
         rb.linearVelocity = distToTarget.normalized * moveSpeed;
     }
 
+    public string GetEnemyName()
+    {
+        return enemy.name;
+    }
+
     protected virtual void ReachedServer()
     {
         hasReachedServer = true;
@@ -225,6 +230,8 @@ public class BasicEnemyScript : MonoBehaviour
     // {
     //     isBlocked = false;
     // }
+
+    // Sprite Related Functions
 
     protected virtual void ToggleStunnedSprite(bool stun)
     {

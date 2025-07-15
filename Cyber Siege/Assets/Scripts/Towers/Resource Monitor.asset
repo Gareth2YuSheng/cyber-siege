@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Resource Monitor
   m_EditorClassIdentifier: 
   towerName: Resource Monitor
-  cost: 100
+  cost: 300
   range: 0
   rotationSpeed: 0
   bps: 0

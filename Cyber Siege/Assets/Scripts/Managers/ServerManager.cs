@@ -1,14 +1,18 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ServerManager : MonoBehaviour
 {
     public static ServerManager main;
 
-    // [Header("Attributes")]
-    // [SerializeField] private float cryptojackingInterval = 3f;
+    [Header("Attributes")]
+    [SerializeField] private float cryptojackingInterval = 3f;
 
     private int cryptojackingCounter = 0;
     private float timeUntilCryptoJacked;
+
+    // FIFO so use Queue instead of list or hashmap
+    private Queue<SpywareEnemyScript> attachedSpywareEnemies = new Queue<SpywareEnemyScript>();
 
     private void Awake()
     {
@@ -19,25 +23,63 @@ public class ServerManager : MonoBehaviour
         - Slowly chip away at the player's money
         - Slow down the firerate of all towers
     */
-    // private void Update()
-    // {
+    private void Update()
+    {
+        // Assume all spyware will steal money if not use cryptojacking counter instead
+        if (attachedSpywareEnemies.Count > 0)
+        {
+            timeUntilCryptoJacked += Time.deltaTime;
+            if (timeUntilCryptoJacked >= cryptojackingInterval)
+            {
+                CurrencyManager.main.DecreaseCurrency(30);
+                timeUntilCryptoJacked = 0;
+            }
+        }
+    }
 
-    // }
+    public void AttachSpyware(SpywareEnemyScript spyware)
+    {
+        // Add if not already added
+        if (attachedSpywareEnemies.Contains(spyware)) return;
+
+        attachedSpywareEnemies.Enqueue(spyware);
+        string enemyName = spyware.GetEnemyName();
+        Debug.Log("Attaching Spyware: " + spyware.GetEnemyName());
+        if (enemyName == "Cryptojacking")
+        {
+            cryptojackingCounter++;
+        }
+    }
+
+    public void PurgeFirstSpyware()
+    {
+        // Dont do anything if no spyware attached
+        if (attachedSpywareEnemies.Count <= 0) return;
+
+        SpywareEnemyScript spyware = attachedSpywareEnemies.Dequeue();
+        // Destroy Spyware and adjust count
+        string enemyName = spyware.GetEnemyName();
+        if (enemyName == "Cryptojacking")
+        {
+            cryptojackingCounter--;
+        }
+
+        spyware.DestroySelf();
+        Debug.Log("Spyware Purged Successfully!");
+    }
 
     public int GetCryptojackingCount()
     {
         return cryptojackingCounter;
     }
 
-    public void AddCryptojacking(int amt)
-    {
-        cryptojackingCounter += amt;
-    }
+    // public void AddCryptojacking(int amt)
+    // {
+    //     cryptojackingCounter += amt;
+    // }
 
-    public void RemoveCryptojacking(int amt)
-    {
-        cryptojackingCounter -= amt;
-    }
-
-
+    // public void RemoveCryptojacking(int amt)
+    // {
+    //     cryptojackingCounter -= amt;
+    // }
 }
