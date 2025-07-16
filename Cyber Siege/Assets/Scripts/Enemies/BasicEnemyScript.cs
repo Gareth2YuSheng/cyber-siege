@@ -271,7 +271,7 @@ public class BasicEnemyScript : MonoBehaviour
             // Invoke the Event
             onEnemyDeath.Invoke(this);
             // Increase player money
-            CurrencyManager.main.IncreaseCurrency(currencyValue);
+            CurrencyManager.main.GainCurrencyFromKillingEnemy(currencyValue);
             // Destroy Game Object
             DestroySelf();
         }

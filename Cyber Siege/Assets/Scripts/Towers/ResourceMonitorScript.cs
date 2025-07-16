@@ -1,8 +1,12 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class ResourceMonitorScript : BasicTowerScript
 {
+    [Header("References")]
+    [SerializeField] private GameObject warningEffect;
+
     [Header("Attributes")]
     [SerializeField] private float cleanupCooldownDuration = 15f;
 
@@ -31,15 +35,52 @@ public class ResourceMonitorScript : BasicTowerScript
                 onCooldownSecondChagned.Invoke(secondsLeft);
             }
         }
+        // Upgrade 1
+        if (upgrades[0].purchased)
+        {
+            // Show warning alert if spyware is active
+            if (ServerManager.main.HasSpywareAttached() && !warningEffect.activeSelf)
+            {
+                warningEffect.SetActive(true);
+            }
+            // Hide warning alert if no spyware is active
+            else if (!ServerManager.main.HasSpywareAttached() && warningEffect.activeSelf)
+            {
+                warningEffect.SetActive(false);
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // If tower is sold, remove the multipler stack
+        if (upgrades[1].purchased)
+        {
+            CurrencyManager.main.DecreaseRMMultiplierStacks(1);
+        }
     }
 
     protected override void OnMouseDown()
     {
         base.OnMouseDown();
+        // Debug.Log("RM Prompt");
+
         // Make sure not in building mode
         if (!BuildManager.main.isBuilding())
         {
+            // Debug.Log("Opening RM Prompt");
             // Open Prompt
+            // UIManager.main.ShowResourceMonitorPrompt(this);
+            // Delay 1 frame to make sure upgrade menu opens first and no UI overlap
+            StartCoroutine(ShowRMPromptWithDelay());
+        }
+    }
+
+    private IEnumerator ShowRMPromptWithDelay()
+    {
+        yield return null; // Waits 1 frame before opening RMPrompt
+        if (!BuildManager.main.isBuilding())
+        {
             UIManager.main.ShowResourceMonitorPrompt(this);
         }
     }
@@ -72,4 +113,9 @@ public class ResourceMonitorScript : BasicTowerScript
         Upgrade 2 - Cost Auditor
         Increases resource gain per kill if no spyware is present.
     */
+    public override void Upgrade2()
+    {
+        base.Upgrade2();
+        CurrencyManager.main.IncreaseRMMultiplierStacks(1);
+    }
 }

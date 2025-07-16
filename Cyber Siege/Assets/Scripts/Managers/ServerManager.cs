@@ -68,6 +68,11 @@ public class ServerManager : MonoBehaviour
         Debug.Log("Spyware Purged Successfully!");
     }
 
+    public bool HasSpywareAttached()
+    {
+        return attachedSpywareEnemies.Count > 0;
+    }
+
     public int GetCryptojackingCount()
     {
         return cryptojackingCounter;
