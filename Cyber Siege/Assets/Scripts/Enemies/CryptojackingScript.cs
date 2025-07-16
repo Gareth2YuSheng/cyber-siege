@@ -41,6 +41,12 @@ public class CryptojackingScript : SpywareEnemyScript
     //     ServerManager.main.RemoveCryptojacking(1);
     // }
 
+    public override void DestroySelf()
+    {
+        isDestroyed = true;
+        Destroy(gameObject);
+    }
+
     protected override void UpdateMovementTarget()
     {
         // Set target directly to server

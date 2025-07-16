@@ -277,7 +277,7 @@ public class BasicEnemyScript : MonoBehaviour
         }
     }
 
-    public void DestroySelf()
+    public virtual void DestroySelf()
     {
         isDestroyed = true;
         Destroy(gameObject);
