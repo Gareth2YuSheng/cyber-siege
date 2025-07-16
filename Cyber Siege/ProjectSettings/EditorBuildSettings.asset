@@ -23,6 +23,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndlessLevel.unity
     guid: 1b84130d05e994346992ccdce3549f84
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: be462b1f381bb48c1999b2e276197df1
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: c476080550a7c435685a736a5e698072
+  - enabled: 1
+    path: Assets/Scenes/Level3.unity
+    guid: e74ca3aec00164729a2c84e8769e1ef9
+  - enabled: 1
+    path: Assets/Scenes/Level4.unity
+    guid: 36f1778129cc44f1990d5f0382b8d91d
+  - enabled: 1
+    path: Assets/Scenes/Level5.unity
+    guid: 0e7c459c4f437416cb3d8e0b36e0390f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -11,6 +11,7 @@ TagManager:
   - TowerHittable
   - Tower
   - Music
+  - Pagination
   layers:
   - Default
   - TransparentFX
