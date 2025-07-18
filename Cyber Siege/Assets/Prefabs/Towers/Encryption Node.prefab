@@ -115,7 +115,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.029618662}
-  m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 0.79999995}
+  m_LocalScale: {x: 0.74999994, y: 0.74999994, z: 0.74999994}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8902548957978172073}
@@ -165,7 +165,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -712631045867808456, guid: b670ab75dde984907b8570040daa08c5, type: 3}
-  m_Color: {r: 0.09019607, g: 0.106182195, b: 0.5568628, a: 1}
+  m_Color: {r: 0.12696917, g: 0, b: 0.5943396, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -540,22 +540,22 @@ MonoBehaviour:
     m_Bits: 0
   turretRotationPart: {fileID: 0}
   upgrades:
-  - upgradeName: Encryption Protection Plus (Blue)
+  - upgradeName: Encryption Protection Plus
     description: Stun the Ransomware that caused cooldown via tower for 3 seconds.
     cost: 10
     purchased: 0
-  - upgradeName: Encryption Fortification (Yellow)
+  - upgradeName: Encryption Fortification
     description: Decreases the cooldown timing from 6 seconds to 3 seconds.
     cost: 10
     purchased: 0
   effectAudio: {fileID: 0}
   protectedEffect: {fileID: 1327485068674384935}
-  cooldownInterval: 6
+  upgradeLayer1: {fileID: 818785057089552188}
+  upgradeLayer2: {fileID: 5369098075740243112}
   towerMask:
     serializedVersion: 2
     m_Bits: 128
-  upgradedStun: {fileID: 818785057089552188}
-  upgradedTime: {fileID: 5369098075740243112}
+  cooldownInterval: 6
 --- !u!61 &-2974319952229688954
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -875,7 +875,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.9622973, b: 0, a: 1}
+  m_Color: {r: 0.42315578, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

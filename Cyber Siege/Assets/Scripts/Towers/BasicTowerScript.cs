@@ -12,6 +12,8 @@ public class BasicTowerScript : MonoBehaviour
     [SerializeField] public TowerUpgrade[] upgrades;
     [SerializeField] protected AudioClip effectAudio;
     [SerializeField] protected GameObject protectedEffect;
+    [SerializeField] protected GameObject upgradeLayer1;
+    [SerializeField] protected GameObject upgradeLayer2;
 
     //Attributes
     [NonSerialized] public string towerName;
@@ -74,6 +76,16 @@ public class BasicTowerScript : MonoBehaviour
                     purchased = false
                 };
             }
+        }
+
+        // Hide Upgrade Layers if provided
+        if (upgradeLayer1 != null)
+        {
+            upgradeLayer1.SetActive(false);
+        }
+        if (upgradeLayer2 != null)
+        {
+            upgradeLayer2.SetActive(false);
         }
     }
 
@@ -229,11 +241,19 @@ public class BasicTowerScript : MonoBehaviour
     public virtual void Upgrade1()
     {
         PurchaseUpgrade(upgrades[0]);
+        if (upgradeLayer1 != null)
+        {
+            upgradeLayer1.SetActive(true);
+        }
     }
 
     public virtual void Upgrade2()
     {
         PurchaseUpgrade(upgrades[1]);
+        if (upgradeLayer2 != null)
+        {
+            upgradeLayer2.SetActive(true);
+        }
     }
 
     protected void PurchaseUpgrade(TowerUpgrade _upgrade)

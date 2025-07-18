@@ -7,6 +7,9 @@ public class EncryptionNodeScript : BasicTowerScript
     // Shield towers from stun
     // If tower is in range, give status of shielded
 
+    [Header("References")]
+    [SerializeField] protected LayerMask towerMask;
+
     [Header("Attributes")]
     [SerializeField] private float cooldownInterval = 6f;
     private HashSet<BasicTowerScript> towersInRange = new HashSet<BasicTowerScript>();
@@ -14,30 +17,10 @@ public class EncryptionNodeScript : BasicTowerScript
     private BasicTowerScript protectedTower = null;
 
     private bool isEncryptionActive = true;
-    [SerializeField] protected LayerMask towerMask;
-    [SerializeField] private GameObject upgradedStun;
-    [SerializeField] private GameObject upgradedTime;
-    public override void InitialiseTower()
-    {
-        base.InitialiseTower();
-        // Set the circle collider radius
-    }
 
     protected override void Update()
     {
         Action();
-        if (upgrades[0].purchased)
-        {
-            // Cause a 1 second stun on the enemy! (Ransomware)
-            // This is done on DisableEncryptionNode in this file.
-            upgradedStun.SetActive(true);
-        }
-        if (upgrades[1].purchased)
-        {
-            // Decrease cooldown time
-            cooldownInterval = 3f;
-            upgradedTime.SetActive(true);
-        }
 
         foreach (var tower in towersInRange)
         {
@@ -127,27 +110,16 @@ public class EncryptionNodeScript : BasicTowerScript
 
     /* Upgrades
         Upgrade 1 - Secondary Verification
-        Enemies that remain inside the area for more than X seconds are stunned 
-        or immobilized briefly (e.g. 1 second stun every 5 seconds spent inside).
+        Stun the Ransomware that caused cooldown via tower for 3 seconds.
 
-        Upgrade 2 - Security Audit
-        Enemies that pass through the gate temporarily take extra damage from 
-        all sources (small % bonus damage for a few seconds).
+        Upgrade 2 - Encryption Fortification
+        Decreases the cooldown timing from 6 seconds to 3 seconds.
     */
 
-    // Security Audit
     public override void Upgrade2()
     {
         base.Upgrade2();
-        // // Apply the damage multiplier to enemies already in the range
-        // foreach (var enemyWithTime in slowedEnemies.ToList())
-        // {
-        //     BasicEnemyScript enemy = enemyWithTime.Key;
-        //     if (enemy != null) // In case the enemy was destroyed
-        //     {
-        //         enemy.SetTakenDamageMultiplier(bonusDamageMultiplier);
-        //     }
-        // }
+        cooldownInterval = 3f;
     }
 
     public void DisableEncryptionNode(BasicTowerScript tower, BasicEnemyScript enemy)
@@ -182,10 +154,5 @@ public class EncryptionNodeScript : BasicTowerScript
         // Enable all towers
         isEncryptionActive = true;
         protectedTower = null;
-    }
-
-    public void removeTowerFromHashSet(BasicTowerScript context)
-    {
-
     }
 }
