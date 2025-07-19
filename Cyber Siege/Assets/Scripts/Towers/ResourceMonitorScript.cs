@@ -63,27 +63,27 @@ public class ResourceMonitorScript : BasicTowerScript
     protected override void OnMouseDown()
     {
         base.OnMouseDown();
-        Debug.Log("Resource Monitor OnMouseDown");
+        // Debug.Log("Resource Monitor OnMouseDown");
 
         // Make sure not in building mode
         if (!BuildManager.main.isBuilding())
         {
             Debug.Log("Opening RM Prompt");
             // Open Prompt
-            UIManager.main.ShowResourceMonitorPrompt(this);
+            // UIManager.main.ShowResourceMonitorPrompt(this);
             // Delay 1 frame to make sure upgrade menu opens first and no UI overlap
-            // StartCoroutine(ShowRMPromptWithDelay());
+            StartCoroutine(ShowRMPromptWithDelay());
         }
     }
 
-    // private IEnumerator ShowRMPromptWithDelay()
-    // {
-    //     yield return null; // Waits 1 frame before opening RMPrompt
-    //     if (!BuildManager.main.isBuilding())
-    //     {
-    //         UIManager.main.ShowResourceMonitorPrompt(this);
-    //     }
-    // }
+    private IEnumerator ShowRMPromptWithDelay()
+    {
+        yield return null; // Waits 1 frame before opening RMPrompt
+        if (!BuildManager.main.isBuilding())
+        {
+            UIManager.main.ShowResourceMonitorPrompt(this);
+        }
+    }
 
     public void CleanupServer()
     {
