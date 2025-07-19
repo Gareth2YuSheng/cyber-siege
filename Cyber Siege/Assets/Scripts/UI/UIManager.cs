@@ -298,6 +298,11 @@ public class UIManager : MonoBehaviour
         return IsPointerOver(resourceMonitorPrompt);
     }
 
+    public bool IsPointerOverStartButton()
+    {
+        return IsPointerOver(startButton.gameObject);
+    }
+
     // ON CLICK METHODS
 
     public void StartButtonOnClick()

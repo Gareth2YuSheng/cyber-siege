@@ -122,16 +122,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isBlocked: 0
+  hasReachedServer: 0
   enemyRangeTransform: {fileID: 1097093367883141269}
   towerMask:
     serializedVersion: 2
     m_Bits: 128
-  HittableTag: TowerHittable
   range: 1.5
-  onDisable:
-    m_PersistentCalls:
-      m_Calls: []
-  prompted: 0
+  cooldown: 1
+  hasAttemptedRemoval: 0
 --- !u!50 &4661326746327342660
 Rigidbody2D:
   serializedVersion: 5
@@ -268,7 +266,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -14.888887, y: -14.888887, z: -14.888887}
+  m_LocalScale: {x: -1.9999999, y: -1.9999999, z: -1.9999999}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4438821444525476795}

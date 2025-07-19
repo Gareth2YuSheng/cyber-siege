@@ -16,7 +16,6 @@ public class BasicEnemyScript : MonoBehaviour
     public bool isHidden = false;
 
     [Header("Base Events")]
-
     public UnityEvent onTakeDamage = new UnityEvent();
     public UnityEvent<BasicEnemyScript> onEnemyDeath = new UnityEvent<BasicEnemyScript>();
     public UnityEvent onEnemyReveal = new UnityEvent();
@@ -62,6 +61,10 @@ public class BasicEnemyScript : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
 
         baseSprite = sr.sprite;
+
+        // Hide Effects
+        slowEffect.SetActive(false);
+        stunEffect.SetActive(false);
 
         //Start moving
         UpdateMovementTarget();
@@ -133,7 +136,7 @@ public class BasicEnemyScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Path Obstacle"))
         {
             BasicTowerScript towerScript = collision.gameObject.GetComponent<BasicTowerScript>();
-            if (!towerScript.isTowerDisabled())
+            if (!towerScript.IsTowerDisabled())
             {
                 isBlocked = true;
             }
@@ -263,7 +266,7 @@ public class BasicEnemyScript : MonoBehaviour
     {
         // If damage multiplier applied, include in damage calculation
         health -= (int)(dmg * damageTakenMultiplier);
-        Debug.Log($"Damage taken {dmg * damageTakenMultiplier}");
+        // Debug.Log($"Damage taken {dmg * damageTakenMultiplier}");
         onTakeDamage.Invoke();
 
         if (health <= 0 && !isDestroyed)

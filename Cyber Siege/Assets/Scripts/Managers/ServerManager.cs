@@ -26,7 +26,8 @@ public class ServerManager : MonoBehaviour
     private void Update()
     {
         // Assume all spyware will steal money if not use cryptojacking counter instead
-        if (attachedSpywareEnemies.Count > 0)
+        // Only run when wave is ongoing
+        if (attachedSpywareEnemies.Count > 0 && EnemyManager.main.waveOngoing)
         {
             timeUntilCryptoJacked += Time.deltaTime;
             if (timeUntilCryptoJacked >= cryptojackingInterval)

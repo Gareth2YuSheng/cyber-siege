@@ -13,12 +13,12 @@ public class ThreatIntelligenceTowerScript : BasicTowerScript
     [SerializeField] private float fireRateBuffFactor = 1.25f;
 
     // private CircleCollider2D buffAreaCollider;
-    private BasicTowerScript myScript;
+    // private BasicTowerScript myScript;
 
     public override void InitialiseTower()
     {
         base.InitialiseTower();
-        myScript = gameObject.GetComponent<BasicTowerScript>();
+        // myScript = gameObject.GetComponent<BasicTowerScript>();
         // Add Event Listener
         BuildManager.main.onTowerBuilt.AddListener(ScanForTowersInRange);
     }
@@ -89,7 +89,7 @@ public class ThreatIntelligenceTowerScript : BasicTowerScript
             // Script is in parent object
             BasicTowerScript tower = hit.GetComponentInParent<BasicTowerScript>();
             // Dont scan for itself
-            if (tower != null && tower != myScript)
+            if (tower != null && tower != this)
             {
                 Debug.Log($"Found tower: {tower.towerName}");
                 // If upgrade 1 has been purchased

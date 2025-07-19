@@ -30,7 +30,7 @@ public class RansomwarePromptScript : MonoBehaviour
         RansomwareScript ransomware = EnemyManager.main.GetRansomwareScript();
 
         // Disable prompting
-        ransomware.onPurchase();
+        ransomware.PromptPurchased();
 
         if (choice == 1) // true
         {

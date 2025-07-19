@@ -4,109 +4,128 @@ using System.Collections;
 
 public class EncryptionNodeScript : BasicTowerScript
 {
-    // Shield towers from stun
-    // If tower is in range, give status of shielded
-
     [Header("References")]
-    [SerializeField] protected LayerMask towerMask;
+    [SerializeField] private LayerMask towerMask;
+    [SerializeField] private GameObject cooldownEffect;
 
     [Header("Attributes")]
     [SerializeField] private float cooldownInterval = 6f;
-    private HashSet<BasicTowerScript> towersInRange = new HashSet<BasicTowerScript>();
+    [SerializeField] private float stunDuration = 3f;
 
+    private HashSet<BasicTowerScript> towersInRange = new HashSet<BasicTowerScript>();
     private BasicTowerScript protectedTower = null;
 
-    private bool isEncryptionActive = true;
-
-    protected override void Update()
+    public override void InitialiseTower()
     {
-        Action();
+        base.InitialiseTower();
+        cooldownEffect.SetActive(false);
 
-        foreach (var tower in towersInRange)
-        {
-            // Debug.Log($"[EncryptNode {name}] Trying to protect {tower.name} with node ID {GetInstanceID()}");
-
-            if (isEncryptionActive || tower == protectedTower)
-            {
-                tower.ProtectTower(this);
-            }
-            else
-            {
-                Debug.Log($"[UNPROTECT {GetInstanceID()}");
-
-                tower.UnProtectTower();
-            }
-        }
-
+        // Do an Initial Scan
+        ScanForTowersInRange();
+        // Add Event Listener
+        BuildManager.main.onTowerBuilt.AddListener(ScanForTowersInRange);
     }
 
-
-    // private void OnTriggerEnter2D(Collider2D collision)
-    // {
-
-
-    //     if (collision.gameObject.layer == LayerMask.NameToLayer("Towers"))
-    //     {
-    //         BasicTowerScript tower = collision.GetComponent<BasicTowerScript>();
-    //         if (tower != null)
-    //         {
-    //             towersInRange.Add(tower);
-    //             tower.SetEncryptionNode(this);
-    //             // tower.ProtectTower(this);
-    //             // Debug.Log("Protected tower");
-
-    //         }
-    //     }
-    // }
-
-    // private void OnTriggerExit2D(Collider2D collision)
-    // {
-    //     if (collision.gameObject.layer == LayerMask.NameToLayer("Towers"))
-    //     {
-    //         BasicTowerScript tower = collision.GetComponent<BasicTowerScript>();
-    //         if (tower != null)
-    //         {
-    //             // tower.ResetMovementSpeed();
-    //             // tower.onEnemyDeath.RemoveListener(HandleBuffedEnemyDeath);
-
-    //             // If Upgrade 2 has been purchased
-    //             if (upgrades[1].purchased)
-    //             {
-    //                 // tower.ResetTakenDamageMultiplier();
-    //             }
-    //             towersInRange.Remove(tower);
-    //             tower.ResetEncryptionNode();
-    //         }
-    //     }
-    // }
+    private void OnDestroy()
+    {
+        // Remove protection from towersInRange
+        foreach (BasicTowerScript tower in towersInRange)
+        {
+            if (tower != null)
+            {
+                tower.UnProtectTower();
+                tower.ResetEncryptionNode();
+                tower.onTowerDestroyed.RemoveListener(HandleTowerDestroyed);
+            }
+        }
+    }
 
     protected override void Action()
     {
-        Debug.Log("Scanning");
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, range, (Vector2)transform.position, 0f, towerMask);
+        // Override to prevent unexpeted behavior
+    }
 
-        //If there is a target in range
-        if (hits.Length > 0)
+    private void UpdateProtectionForTowersInRange()
+    {
+        foreach (BasicTowerScript tower in towersInRange)
         {
-            foreach (RaycastHit2D hit in hits)
+            if (!disabled || tower == protectedTower)
             {
-                // Check if target is hidden
-                BasicTowerScript tower = hit.transform.GetComponentInParent<BasicTowerScript>();
-                if (tower != null && tower != this && towersInRange.Contains(tower) == false)
-                {
-                    // Prevent performing too many times
-                    Debug.Log("ADDED TOWER");
-                    towersInRange.Add(tower);
-                    tower.SetEncryptionNode(this);
-
-                    // tower.ProtectTower(this);
-                    // Debug.Log("Protected tower");
-
-                }
+                tower.ProtectTower();
+            }
+            else
+            {
+                tower.UnProtectTower();
             }
         }
     }
 
+    private void ScanForTowersInRange()
+    {
+        Debug.Log("Encryption Node Scanning For New Towers");
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range, towerMask);
+        foreach (Collider2D hit in hits)
+        {
+            // Hits will be objects with colliders, which are currently the tower Bases
+            // Script is in parent object
+            BasicTowerScript tower = hit.GetComponentInParent<BasicTowerScript>();
+            // Dont scan for itself
+            if (tower != null && tower != this && !towersInRange.Contains(tower))
+            {
+                Debug.Log($"Found new tower: {tower.towerName}");
+                tower.SetEncryptionNode(this);
+                tower.onTowerDestroyed.AddListener(HandleTowerDestroyed);
+                towersInRange.Add(tower);
+            }
+        }
+
+        UpdateProtectionForTowersInRange();
+    }
+
+    // This is added in the case that towers are sold while being protected
+    // to clean up the references in towersInRange
+    private void HandleTowerDestroyed(BasicTowerScript tower)
+    {
+        towersInRange.Remove(tower);
+        tower.onTowerDestroyed.RemoveListener(HandleTowerDestroyed);
+    }
+
+    public void DisableEncryptionNode(BasicTowerScript tower, BasicEnemyScript enemy)
+    {
+        if (disabled) return;
+
+        protectedTower = tower;
+
+        // If upgrade 1 was purchased
+        if (upgrades[0].purchased)
+        {
+            // Stun enemy
+            if (enemy != null) // In case the enemy was destroyed
+            {
+                // May need to handle null exception for when it tries to switch sprite back.
+                StartCoroutine(enemy.Stun(stunDuration));
+            }
+        }
+
+        Debug.Log($"Encryption node disabled. Tower {tower.name} remains protected. {cooldownInterval} second start");
+        StartCoroutine(Disable());
+    }
+
+    protected override IEnumerator Disable()
+    {
+        disabled = true;
+        UpdateProtectionForTowersInRange();
+        cooldownEffect.SetActive(true);
+
+        yield return new WaitForSeconds(cooldownInterval);
+
+        Debug.Log("Encryption Node Back Online");
+        protectedTower = null;
+        disabled = false;
+        UpdateProtectionForTowersInRange();
+        cooldownEffect.SetActive(false);
+    }
 
     /* Upgrades
         Upgrade 1 - Secondary Verification
@@ -120,39 +139,5 @@ public class EncryptionNodeScript : BasicTowerScript
     {
         base.Upgrade2();
         cooldownInterval = 3f;
-    }
-
-    public void DisableEncryptionNode(BasicTowerScript tower, BasicEnemyScript enemy)
-    {
-        if (!isEncryptionActive)
-            return;
-        isEncryptionActive = false;
-        protectedTower = tower;
-
-        // Check upgrade
-        if (upgrades[0].purchased)
-        {
-            // Stun enemy
-            // enemy
-            if (enemy != null) // In case the enemy was destroyed
-            {
-                // May need to handle null exception for when it tries to switch sprite back.
-                StartCoroutine(enemy.Stun(3f));
-            }
-        }
-        Debug.Log($"Encryption node disabled. Tower {tower.name} remains protected. 6 second start");
-        StartCoroutine(DisableTemp());
-    }
-
-    protected IEnumerator DisableTemp()
-    {
-        // Wait for 6 seconds
-        yield return new WaitForSeconds(cooldownInterval);
-
-        // Code to execute after 6 seconds
-        Debug.Log("6 seconds have passed! Enabling Protection again");
-        // Enable all towers
-        isEncryptionActive = true;
-        protectedTower = null;
     }
 }

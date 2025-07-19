@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Tile : MonoBehaviour
 {
@@ -10,7 +9,6 @@ public class Tile : MonoBehaviour
     protected Color initialColor;
     protected GameObject currentTower;
     protected BasicTowerScript currentTowerScript;
-
     protected bool isBuilding = false;
     protected Vector3 centerPosition;
 
@@ -70,6 +68,10 @@ public class Tile : MonoBehaviour
         if (UIManager.main.IsPointerOverUpgradeMenu()) return;
         if (UIManager.main.IsPointerOverPauseButton()) return;
         if (UIManager.main.IsPointerOverRMPrompt()) return;
+        if (UIManager.main.IsPointerOverStartButton()) return;
+        // these checks just prevent a tower from being built when in building mode 
+        // and player clicks on UI elements, it DOES NOT prevent the player from
+        // clicking on the UI elements themselves
 
         Debug.Log("Clicked on tile: " + gameObject.name);
 
@@ -176,7 +178,9 @@ public class Tile : MonoBehaviour
 
     public void DestroyTower()
     {
-        Destroy(currentTower);
+        if (currentTowerScript == null) return;
+
+        currentTowerScript.DestroySelf();
         currentTower = null;
         currentTowerScript = null;
     }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e294f80a0ae75c49879549751556762, type: 3}
   m_Name: Encryption Node
   m_EditorClassIdentifier: 
-  towerName: Encryption node
+  towerName: Encryption Node
   cost: 30
   range: 1.5
   rotationSpeed: 0
