@@ -43,8 +43,7 @@ public class TutorialManager : LevelManager
         // Waves: 3, Health: 1, Currency: 50
 
         // Disable Tower Menu until wave started
-        UIManager.main.DisableTowerMenu();
-        UIManager.main.DisableStartWaveButton();
+        DisableUIs();
         // Welcome Message
         yield return WelcomeMessage();
         UIManager.main.EnableStartWaveButton();

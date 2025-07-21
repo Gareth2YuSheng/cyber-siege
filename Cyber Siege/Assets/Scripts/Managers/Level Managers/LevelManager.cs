@@ -43,4 +43,22 @@ public abstract class LevelManager : MonoBehaviour
     {
         hasPlayerContinued = true;
     }
+
+    protected void DisableUIs()
+    {
+        UIManager.main.DisableTowerMenu();
+        UIManager.main.DisableStartWaveButton();
+    }
+
+    protected void EnableUIs()
+    {
+        UIManager.main.EnableTowerMenu();
+        UIManager.main.EnableStartWaveButton();
+    }
+
+    protected IEnumerator ShowPrompt(string title, string body, Sprite image)
+    {
+        UIManager.main.SetLevelPromptContent(title, body, image);
+        yield return WaitForPrompt();
+    }
 }
