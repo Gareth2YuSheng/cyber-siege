@@ -82,7 +82,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 6685967289642897284, guid: f0fbcf01baa6cb542b5a51fae6395548, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -123,12 +123,12 @@ MonoBehaviour:
       m_Calls: []
   isBlocked: 0
   hasReachedServer: 0
-  enemyRangeTransform: {fileID: 1097093367883141269}
   towerMask:
     serializedVersion: 2
     m_Bits: 128
+  attackPrefab: {fileID: 8012834947208276396, guid: 8975e531368854f4298296c2d0987ce1, type: 3}
   range: 1.5
-  cooldown: 1
+  cooldown: 2.5
   hasAttemptedRemoval: 0
 --- !u!50 &4661326746327342660
 Rigidbody2D:
@@ -255,7 +255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1097093367883141269
 Transform:
   m_ObjectHideFlags: 0
@@ -344,7 +344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3696751783335763509, guid: 205c4224b990823448be6c3bf3551714, type: 3}
       propertyPath: m_SortingOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7954222136195807513, guid: 205c4224b990823448be6c3bf3551714, type: 3}
       propertyPath: m_LocalScale.x
@@ -423,7 +423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3232224171990887852, guid: f8002b8cd164c6f40add89ab059dba40, type: 3}
       propertyPath: m_SortingOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4031986718373333386, guid: f8002b8cd164c6f40add89ab059dba40, type: 3}
       propertyPath: m_LocalPosition.x

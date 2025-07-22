@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class RansomwareScript : BasicEnemyScript
 {
     [Header("References")]
-    [SerializeField] protected Transform enemyRangeTransform;
-    [SerializeField] protected LayerMask towerMask;
+    // [SerializeField] private Transform enemyRangeTransform;
+    [SerializeField] private LayerMask towerMask;
+    [SerializeField] private GameObject attackPrefab;
 
     [Header("Attributes")]
     [SerializeField] private float range;
@@ -20,7 +21,7 @@ public class RansomwareScript : BasicEnemyScript
     protected override void Start()
     {
         base.Start();
-        UpdateEnemyRangeTransform();
+        // UpdateEnemyRangeTransform();
     }
 
     protected override void Update()
@@ -30,7 +31,8 @@ public class RansomwareScript : BasicEnemyScript
         timeUntilDisableTowers += Time.deltaTime;
         if (timeUntilDisableTowers >= cooldown)
         {
-            ScanAndDisableTowersInRange();
+            // ScanAndDisableTowersInRange();
+            Attack();
             timeUntilDisableTowers = 0f;
         }
     }
@@ -43,33 +45,44 @@ public class RansomwareScript : BasicEnemyScript
         }
     }
 
-    private void UpdateEnemyRangeTransform()
-    {
-        // Range (Radius) is to be multiplied by 2 as X, Y and Z are length variables.
-        enemyRangeTransform.localScale = new Vector3(range / transform.localScale.x * 2, range / transform.localScale.y * 2, range / transform.localScale.z * 2);
-    }
+    // private void UpdateEnemyRangeTransform()
+    // {
+    //     // Range (Radius) is to be multiplied by 2 as X, Y and Z are length variables.
+    //     enemyRangeTransform.localScale = new Vector3(range / transform.localScale.x * 2, range / transform.localScale.y * 2, range / transform.localScale.z * 2);
+    // }
 
     public void PromptPurchased()
     {
         hasAttemptedRemoval = true;
     }
 
-    private void ScanAndDisableTowersInRange()
+    // Replaced with Attack
+    // private void ScanAndDisableTowersInRange()
+    // {
+    //     Debug.Log("Ransomware Scanning For Towers");
+
+    //     Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range, towerMask);
+    //     foreach (Collider2D hit in hits)
+    //     {
+    //         // Hits will be objects with colliders, which are currently the tower Bases
+    //         // Script is in parent object
+    //         BasicTowerScript tower = hit.GetComponentInParent<BasicTowerScript>();
+    //         if (tower != null && tower.towerName != "Encryption Node")
+    //         {
+    //             Debug.Log($"Found tower: {tower.towerName}");
+    //             tower.DisableTower(this);
+    //         }
+    //     }
+    // }
+
+    private void Attack()
     {
         Debug.Log("Ransomware Scanning For Towers");
-
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range, towerMask);
-        foreach (Collider2D hit in hits)
-        {
-            // Hits will be objects with colliders, which are currently the tower Bases
-            // Script is in parent object
-            BasicTowerScript tower = hit.GetComponentInParent<BasicTowerScript>();
-            if (tower != null && tower.towerName != "Encryption Node")
-            {
-                Debug.Log($"Found tower: {tower.towerName}");
-                tower.DisableTower(this);
-            }
-        }
+        GameObject shockwave = Instantiate(attackPrefab, transform.position, Quaternion.identity);
+        // Set the parent of the shockwave so it follows the ransomware
+        shockwave.transform.SetParent(transform);
+        RansomwareAttackScript shockwaveScript = shockwave.GetComponent<RansomwareAttackScript>();
+        shockwaveScript.SetRansomwareScript(this);
+        StartCoroutine(shockwaveScript.ExpandAndFade(range, 0.7f));
     }
-
 }
