@@ -17,7 +17,7 @@ public class CrossPlatformScrollScript : ScrollRect
 #endif
 
         // Modify scrollDelta in place before calling base
-        data.scrollDelta *= sensitivityModifier;
+        data.scrollDelta = new Vector2(0, data.scrollDelta.y);
 
         base.OnScroll(data);
     }
