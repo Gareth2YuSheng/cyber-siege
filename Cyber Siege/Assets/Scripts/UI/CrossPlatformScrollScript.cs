@@ -10,6 +10,11 @@ public class CrossPlatformScrollScript : ScrollRect
 
     public float windowsSensMultiplier = 7f;
     public float macSensMultiplier = 1f;
+    protected override void Start()
+    {
+        base.Start();
+        horizontal = false;  // disable horizontal scrolling
+    }
 
     public override void OnScroll(PointerEventData data)
     {
@@ -20,10 +25,7 @@ public class CrossPlatformScrollScript : ScrollRect
 #endif
 
         // Modify scrollDelta in place before calling base
-        data.scrollDelta = new Vector2(0, data.scrollDelta.y);
-
         data.scrollDelta *= sensitivityModifier;
-
         base.OnScroll(data);
     }
 }
