@@ -8,6 +8,13 @@ public class Level3Manager : LevelManager
     [SerializeField] private Sprite enemyImage2;
 
     [SerializeField] private Sprite towerImage1;
+
+    /*
+        Map Design Idea:
+        Level 3, Starting with 60 currency is sufficient as it forces players to upgrade and avoid using Network Scrubber.
+        Difficulty scale x1.3.
+    */
+    
     protected override IEnumerator StartLevel()
     {
         // Disable start button and tower menu while user reads the prompt

@@ -6,6 +6,12 @@ public class Level2Manager : LevelManager
     [Header("Attributes")]
     [SerializeField] private Sprite enemyImage;
 
+    /*
+        Map Design Idea:
+        Level 2, Starting with 100 currency is a must as players will need at least two towers to gain more currency.
+        Difficulty scale x1.3. 2 is too much.
+    */
+    
     protected override IEnumerator StartLevel()
     {
         // Disable start button and tower menu while user reads the prompt

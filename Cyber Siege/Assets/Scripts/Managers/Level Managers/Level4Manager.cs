@@ -6,6 +6,14 @@ public class Level4Manager : LevelManager
     [Header("Attributes")]
     [SerializeField] private Sprite enemyImage;
     [SerializeField] private Sprite towerImage1;
+
+    /*
+        Map Design Idea:
+        Level 4, the SUS level.
+        Starting with 71 currency is sufficient as it forces player to get Threat Intelligence tower.
+        This also allows sell and get back to 50 to allow for another tower to be bought in case they purchased Threat Intelligence tower by accident.
+        Difficulty scale x1.3.
+    */
     protected override IEnumerator StartLevel()
     {
         // Disable start button and tower menu while user reads the prompt

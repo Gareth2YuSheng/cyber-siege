@@ -101,11 +101,14 @@ public class FirewallTowerScript : BasicTowerScript
                 // enemiesInContact.Add(enemy);
                 if (!enemiesInContact.ContainsKey(enemy))
                 {
-                    // Play shield
-                    SoundManager.main.PlaySoundFXClip(effectAudio, 0.5f);
-
                     enemiesInContact.Add(enemy, 0f);
+                    if (effectAudio != null && SoundManager.main != null)
+                    {
+                        // Play shield
+                        SoundManager.main.PlaySoundFXClip(effectAudio, 0.5f);
+                    }
                 }
+
             }
         }
     }

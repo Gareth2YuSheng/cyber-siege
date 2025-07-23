@@ -8,6 +8,10 @@ public class Level1Manager : LevelManager
     [SerializeField] private Sprite towerImage1;
     [SerializeField] private Sprite towerImage2;
 
+    /*
+        Map Design Idea:
+        Start level, make it easy such that anyone can pass it.
+    */
 
     protected override IEnumerator StartLevel()
     {
