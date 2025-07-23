@@ -11,7 +11,7 @@ public class Level7Manager : LevelManager
         Map Design Idea:
         Shorter map to give player chance to make use of path towers more
         Also to give less distractions so that they can look out for cryptojacking
-        *Cryptojacking spawn rate is increased in this level
+        *Cryptojacking spawn rate is increased in this level but interval increased to 7 seconds for balancing.
     */
 
     protected override IEnumerator StartLevel()

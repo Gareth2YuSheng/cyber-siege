@@ -6,6 +6,15 @@ public class Level6Manager : LevelManager
     [Header("Attributes")]
     [SerializeField] private Sprite enemyImage1;
     [SerializeField] private Sprite towerImage1;
+
+    /*
+        Map Design Idea:
+        Level 6. Shaped like a race derby track, cuz we have a trojan that resembles a horse when revealed.
+        Starting with 100 currency is sufficient as it allows players to anticipate the enemy and use whatever is available.
+        Level also forces use of IDS.
+        Difficulty scale x1.3.
+    */
+
     protected override IEnumerator StartLevel()
     {
         // Disable start button and tower menu while user reads the prompt

@@ -8,6 +8,14 @@ public class Level5Manager : LevelManager
     [SerializeField] private Sprite enemyImage2;
 
     [SerializeField] private Sprite towerImage1;
+
+    /*
+        Map Design Idea:
+        Level 5. Shaped like the Sus Call (or a banana).
+        Starting with 100 currency is sufficient as it forces player to get either get Threat Intelligence, or go the IDS + Antivirus route.
+        Difficulty scale x1.3.
+    */
+
     protected override IEnumerator StartLevel()
     {
         // Disable start button and tower menu while user reads the prompt
