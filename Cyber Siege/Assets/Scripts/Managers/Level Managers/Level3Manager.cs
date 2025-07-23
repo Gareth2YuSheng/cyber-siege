@@ -17,6 +17,7 @@ public class Level3Manager : LevelManager
             "New Enemy Detected: DoS",
             "A Denial-of-Service (DoS) attack is when a bad person sends too many fake requests to a network, making it hard for normal users to do things like check email, visit websites, or use online accounts. It doesn’t usually cause data loss, but it can waste a lot of time and money trying to fix the problem. The DoS enemy produces DDoS bots! Nuke it quick before it spawns too many!",
             enemyImage1);
+        // DDoS Prompt
         yield return ShowPrompt(
             "New Enemy Detected: DDoS",
             "Like DoS, but DDoS comes from many computers. DDoS attacks are harder to stop because there are more computers involved in the attack. It a DoS! They spawn rapidly from DDoS enemies!",
