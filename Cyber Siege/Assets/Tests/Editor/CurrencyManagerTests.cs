@@ -174,14 +174,24 @@ public class CurrencyManagerTests
         Assert.Throws<ArgumentOutOfRangeException>(() => currencyManager.DecreaseCurrency(-100));
     }
 
-    // Event Tests
+    // onCurrencyChange Event Tests
     [Test]
-    public void OnCurrencyChange_InvokesListeners()
+    public void OnCurrencyChange_InvokesOnIncrease()
     {
         bool wasCalled = false;
         currencyManager.onCurrencyChange.AddListener(() => wasCalled = true);
-
         currencyManager.IncreaseCurrency(10);
+        Assert.IsTrue(wasCalled);
+    }
+
+    [Test]
+    public void OnCurrencyChange_InvokesOnDecrease()
+    {
+        bool wasCalled = false;
+        currencyManager.Reset();
+        currencyManager.IncreaseCurrency(100);
+        currencyManager.onCurrencyChange.AddListener(() => wasCalled = true);
+        currencyManager.DecreaseCurrency(10);
         Assert.IsTrue(wasCalled);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -36,12 +37,14 @@ public class HealthManager : MonoBehaviour
 
     public void InitServerHealth(int _health)
     {
+        if (_health < 0) throw new ArgumentOutOfRangeException("Cannot Initiate Manager with Negative Health");
         baseHealth = _health;
         HealServer(_health);
     }
 
     public void HealServer(int amt)
     {
+        if (amt < 0) throw new ArgumentOutOfRangeException("Cannot Heal Negative Health");
         // If baseHealth has not been set, means we are initialising the health
         if (baseHealth == 0)
         {
@@ -65,6 +68,7 @@ public class HealthManager : MonoBehaviour
 
     public void DamageServer(int amt)
     {
+        if (amt < 0) throw new ArgumentOutOfRangeException("Cannot Take Negative Damage");
         if (isServerAlive)
         {
             serverHealth -= amt;

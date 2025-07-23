@@ -14,7 +14,7 @@ public class ServerScript : MonoBehaviour
         baseSprite = sr.sprite;
     }
 
-    public void UpdateHealthySprite()
+    public virtual void UpdateHealthySprite()
     {
         if (sr.sprite != baseSprite)
         {
@@ -22,7 +22,7 @@ public class ServerScript : MonoBehaviour
         }
     }
 
-    public void UpdateDamagedSprite()
+    public virtual void UpdateDamagedSprite()
     {
         if (sr.sprite != damagedServerSprite)
         {
