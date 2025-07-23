@@ -35,7 +35,14 @@ public class EnemyManager : MonoBehaviour
 
     private void Awake()
     {
-        main = this;
+        if (main != null && main != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            main = this;
+        }
     }
 
 

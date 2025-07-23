@@ -7,6 +7,7 @@ public class ServerManager : MonoBehaviour
 
     [Header("Attributes")]
     [SerializeField] private float cryptojackingInterval = 3f;
+    [SerializeField] private int cryptojackingAmt = 30;
 
     private int cryptojackingCounter = 0;
     private float timeUntilCryptoJacked;
@@ -16,7 +17,14 @@ public class ServerManager : MonoBehaviour
 
     private void Awake()
     {
-        main = this;
+        if (main != null && main != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            main = this;
+        }
     }
 
     /* When affected by cryptojacking
@@ -32,7 +40,7 @@ public class ServerManager : MonoBehaviour
             timeUntilCryptoJacked += Time.deltaTime;
             if (timeUntilCryptoJacked >= cryptojackingInterval)
             {
-                CurrencyManager.main.DecreaseCurrency(30);
+                CurrencyManager.main.DecreaseCurrency(cryptojackingAmt);
                 timeUntilCryptoJacked = 0;
             }
         }

@@ -10,7 +10,11 @@ public class SoundFXManager : MonoBehaviour
 
     private void Awake()
     {
-        if (main == null)
+        if (main != null && main != this)
+        {
+            Destroy(this);
+        }
+        else
         {
             main = this;
         }

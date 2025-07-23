@@ -17,7 +17,14 @@ public class CurrencyManager : MonoBehaviour
 
     private void Awake()
     {
-        main = this;
+        if (main != null && main != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            main = this;
+        }
     }
 
     public int GetCurrency()
@@ -27,18 +34,21 @@ public class CurrencyManager : MonoBehaviour
 
     public void IncreaseCurrency(int amt)
     {
+        if (amt < 0) throw new ArgumentOutOfRangeException("Cannot Add Negative Currency");
         currency += amt;
         onCurrencyChange.Invoke();
     }
 
     public void GainCurrencyFromKillingEnemy(int amt)
     {
+        if (amt < 0) throw new ArgumentOutOfRangeException("Cannot Add Negative Currency");
         float multiplier = Mathf.Pow(resourceMonitorMultiplier, resouceMonitorMultiplierStacks);
         IncreaseCurrency(Mathf.RoundToInt(amt * multiplier));
     }
 
     public bool SpendCurrency(int amt)
     {
+        if (amt < 0) throw new ArgumentOutOfRangeException("Cannot Spend Negative Currency");
         if (amt <= currency)
         {
             //Buy item
@@ -48,7 +58,7 @@ public class CurrencyManager : MonoBehaviour
         else
         {
             //Do some error prompt
-            UIManager.main.ShowErrorPrompt("Not enuf money");
+            UIManager.main?.ShowErrorPrompt("Not enuf money");
             Debug.Log("Not enuf money");
             return false;
         }
@@ -56,6 +66,7 @@ public class CurrencyManager : MonoBehaviour
 
     public void DecreaseCurrency(int amt)
     {
+        if (amt < 0) throw new ArgumentOutOfRangeException("Cannot Subtract Negative Currency");
         if (currency > 0)
         {
             currency -= amt;
@@ -70,11 +81,13 @@ public class CurrencyManager : MonoBehaviour
 
     public void IncreaseRMMultiplierStacks(int amt)
     {
+        if (amt < 0) throw new ArgumentOutOfRangeException("Cannot Add Negative Stacks");
         resouceMonitorMultiplierStacks += amt;
     }
 
     public void DecreaseRMMultiplierStacks(int amt)
     {
+        if (amt < 0) throw new ArgumentOutOfRangeException("Cannot Decrease Negative Stacks");
         if (resouceMonitorMultiplierStacks > 0)
         {
             resouceMonitorMultiplierStacks -= amt;
@@ -83,5 +96,17 @@ public class CurrencyManager : MonoBehaviour
                 resouceMonitorMultiplierStacks = 0;
             }
         }
+    }
+
+    public int GetRMMultiplierStacks()
+    {
+        return resouceMonitorMultiplierStacks;
+    }
+
+    // For Testing
+    public void Reset()
+    {
+        currency = 0;
+        resouceMonitorMultiplierStacks = 0;
     }
 }

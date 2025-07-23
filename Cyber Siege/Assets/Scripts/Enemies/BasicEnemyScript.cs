@@ -123,6 +123,12 @@ public class BasicEnemyScript : MonoBehaviour
         return enemy.name;
     }
 
+    // For Unit Testing
+    public int GetHealth()
+    {
+        return health;
+    }
+
     protected virtual void ReachedServer()
     {
         hasReachedServer = true;

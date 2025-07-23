@@ -19,7 +19,14 @@ public class HealthManager : MonoBehaviour
 
     private void Awake()
     {
-        main = this;
+        if (main != null && main != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            main = this;
+        }
     }
 
     public int GetServerHealth()
