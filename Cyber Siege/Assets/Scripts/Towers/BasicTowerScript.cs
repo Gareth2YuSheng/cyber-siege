@@ -50,6 +50,8 @@ public class BasicTowerScript : MonoBehaviour
 
     public virtual void InitialiseTower()
     {
+        if (tower == null) return;
+
         towerName = tower.towerName;
         // cost = tower.cost;
         range = tower.range;

@@ -47,8 +47,10 @@ public class BasicEnemyScript : MonoBehaviour
     protected bool isSlowed;
     protected int slowStackCounter;
 
-    protected virtual void Start()
+    public virtual void InitialiseEnemy()
     {
+        if (enemy == null) return;
+
         health = enemy.health;
         moveSpeed = enemy.moveSpeed;
         currencyValue = enemy.currencyValue;
@@ -68,6 +70,11 @@ public class BasicEnemyScript : MonoBehaviour
 
         //Start moving
         UpdateMovementTarget();
+    }
+
+    protected virtual void Start()
+    {
+        InitialiseEnemy();
     }
 
     // Allow Update to be overridable by children to add logic and behavior
@@ -160,7 +167,7 @@ public class BasicEnemyScript : MonoBehaviour
     //Movement Related Functions
     protected virtual void UpdateMovementTarget()
     {
-        movementTarget = EnemyManager.main.enemyPath[pathIndex];
+        movementTarget = EnemyManager.main?.enemyPath[pathIndex];
     }
 
     public void UpdatePathIndex(int _pathIndex)
@@ -180,6 +187,7 @@ public class BasicEnemyScript : MonoBehaviour
 
     public void UpdateMovementSpeed(float amt)
     {
+        if (amt < 0) throw new ArgumentOutOfRangeException("Cannot Update to Negative Speed");
         // If we are going to be slowed, show the slow effect
         if (amt < 1f)
         {
@@ -201,8 +209,8 @@ public class BasicEnemyScript : MonoBehaviour
 
     public void ResetMovementSpeed()
     {
-        slowStackCounter--;
-        // if the number of slow stacks is > 0, 
+        if (slowStackCounter > 0) slowStackCounter--;
+        // if the number of slow stacks is still > 0, 
         // means we are still in a debuff zone, 
         // dont reset the speed
         if (slowStackCounter < 1)
@@ -280,7 +288,14 @@ public class BasicEnemyScript : MonoBehaviour
             // Invoke the Event
             onEnemyDeath.Invoke(this);
             // Increase player money
-            CurrencyManager.main.GainCurrencyFromKillingEnemy(currencyValue);
+            if (CurrencyManager.main != null)
+            {
+                CurrencyManager.main.GainCurrencyFromKillingEnemy(currencyValue);
+            }
+            else
+            {
+                Debug.Log("CurrencyManager cannot be found");
+            }
             // Destroy Game Object
             DestroySelf();
         }
@@ -290,11 +305,11 @@ public class BasicEnemyScript : MonoBehaviour
     {
         isDestroyed = true;
         Destroy(gameObject);
-        EnemyManager.main.EnemyDestroyed();
+        EnemyManager.main?.EnemyDestroyed();
         // Play Enemy Death Sound Effect
-        if (audioClipDestroy != null && SoundManager.main)
+        if (audioClipDestroy != null)
         {
-            SoundManager.main.PlaySoundFXClip(audioClipDestroy, 1f);
+            SoundManager.main?.PlaySoundFXClip(audioClipDestroy, 1f);
         }
     }
 
