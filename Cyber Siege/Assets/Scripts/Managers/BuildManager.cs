@@ -8,8 +8,6 @@ public class BuildManager : MonoBehaviour
 
     [SerializeField] public Tower[] towers;
 
-    // [NonSerialized] public bool isBuilding = false;
-
     [Header("Events")]
     public UnityEvent onStartGroundBuilding = new UnityEvent();
     public UnityEvent onStopGroundBuilding = new UnityEvent();
@@ -48,6 +46,13 @@ public class BuildManager : MonoBehaviour
         }
     }
 
+    public void SetSelectedTower(int _selectedTower)
+    {
+        if (_selectedTower < 0 || _selectedTower > towers.Length - 1) throw new ArgumentOutOfRangeException("Invalid Tower Index");
+        selectedTower = _selectedTower;
+        onTowerSelectedForBuilding.Invoke();
+    }
+
     public Tower GetSelectedTower()
     {
         // return towerPrefabs[selectedTower];
@@ -59,11 +64,6 @@ public class BuildManager : MonoBehaviour
         return towers[selectedTower].towerSObj.range;
     }
 
-    // public int GetSelectedTowerCost()
-    // {
-    //     return towers[selectedTower].towerSObj.cost;
-    // }
-
     public bool CanAffordSelectedTower()
     {
         return towers[selectedTower].towerSObj.cost <= CurrencyManager.main.GetCurrency();
@@ -72,12 +72,6 @@ public class BuildManager : MonoBehaviour
     public void BuySelectedTower()
     {
         CurrencyManager.main.SpendCurrency(towers[selectedTower].towerSObj.cost);
-    }
-
-    public void SetSelectedTower(int _selectedTower)
-    {
-        selectedTower = _selectedTower;
-        onTowerSelectedForBuilding.Invoke();
     }
 
     // Only 1 type of building mode can be enabled at a time

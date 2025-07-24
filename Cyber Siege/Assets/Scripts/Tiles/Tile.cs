@@ -170,13 +170,13 @@ public class Tile : MonoBehaviour
     }
 
     // For Tower Selling Functionality
-    public int CalculateMoneySpentOnTile()
+    public virtual int CalculateMoneySpentOnTile()
     {
         // Total Money Spent = Tower base cost + upgrades purchased costs
         return currentTowerScript.GetTotalMoneySpentOnTower();
     }
 
-    public void DestroyTower()
+    public virtual void DestroyTower()
     {
         if (currentTowerScript == null) return;
 

@@ -6,6 +6,6 @@ public class SpywareEnemyScript : BasicEnemyScript
     {
         base.Start();
         Hide();
-        // Vanish(); //Enable later
+        Vanish();
     }
 }

@@ -118,7 +118,7 @@ public class BasicEnemyScript : MonoBehaviour
         rb.linearVelocity = distToTarget.normalized * moveSpeed;
     }
 
-    public string GetEnemyName()
+    public virtual string GetEnemyName()
     {
         return enemy.name;
     }
