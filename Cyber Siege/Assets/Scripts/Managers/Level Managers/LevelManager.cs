@@ -18,9 +18,9 @@ public abstract class LevelManager : MonoBehaviour
         // Set Health and Currency
         CurrencyManager.main.IncreaseCurrency(initialCurrency);
         HealthManager.main.InitServerHealth(initialHealth);
-        UIManager.main.UpdateHUDLabels();
         // Set Max Wave Count
         EnemyManager.main.SetMaxWaveCount(waveCount);
+        UIManager.main.UpdateHUDLabels();
 
         StartCoroutine(StartLevel());
     }

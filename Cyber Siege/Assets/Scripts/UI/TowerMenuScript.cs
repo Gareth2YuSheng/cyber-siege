@@ -27,7 +27,7 @@ public class TowerMenuScript : MonoBehaviour
         BuildManager.main.onStopPathBuilding.AddListener(StopBuilding);
     }
 
-    private void UpdateWaveLabel()
+    public void UpdateWaveLabel()
     {
         string labelText = $"Wave: {EnemyManager.main.GetCurrentWave()}";
         if (EnemyManager.main.GetMaxWaveCount() > 0)

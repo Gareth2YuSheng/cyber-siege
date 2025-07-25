@@ -79,7 +79,9 @@ public class UIManager : MonoBehaviour
 
     public void UpdateHUDLabels()
     {
-        towerMenu.GetComponent<TowerMenuScript>().UpdateCurrencyLabel();
+        TowerMenuScript menuScript = towerMenu.GetComponent<TowerMenuScript>();
+        menuScript.UpdateCurrencyLabel();
+        // menuScript.UpdateWaveLabel();
         healthHUD.GetComponent<HealthHUDScript>().UpdateHealthLabel();
     }
 
