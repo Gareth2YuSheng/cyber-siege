@@ -46,6 +46,14 @@ public class BuildManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        // Add Event Listener
+        // To disable building mode if level ends and player is in building mode
+        EnemyManager.main.onLevelEnd.AddListener(DisableBuilding);
+        HealthManager.main.onServerDeath.AddListener(DisableBuilding);
+    }
+
     public void SetSelectedTower(int _selectedTower)
     {
         if (_selectedTower < 0 || _selectedTower > towers.Length - 1) throw new ArgumentOutOfRangeException("Invalid Tower Index");
