@@ -193,6 +193,7 @@ public class BasicTowerScript : MonoBehaviour
 
     protected virtual void OnMouseDown()
     {
+        Debug.Log("You Clicked On: " + name);
         if (myTile != null)
         {
             myTile.OnTileClickedExternally();

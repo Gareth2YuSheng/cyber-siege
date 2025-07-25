@@ -4,22 +4,23 @@ using System.Linq;
 
 public class TwoFA_GateScript : BasicTowerScript
 {
+    [Header("References")]
+    [SerializeField] private EnemyDetectionRangeScript enemyDetectionRange;
+
     [Header("Attributes")]
     [SerializeField] private float slowingFactor;
     [SerializeField] private float stunInterval = 3f;
     [SerializeField] private float stunDuration = 1f;
     [SerializeField] private float bonusDamageMultiplier = 1.25f;
-    private CircleCollider2D slowingRangeCollider;
 
-    // private HashSet<BasicEnemyScript> slowedEnemies = new HashSet<BasicEnemyScript>();
     private Dictionary<BasicEnemyScript, float> slowedEnemies = new Dictionary<BasicEnemyScript, float>();
 
     public override void InitialiseTower()
     {
         base.InitialiseTower();
         // Set the circle collider radius
-        slowingRangeCollider = gameObject.GetComponent<CircleCollider2D>();
-        slowingRangeCollider.radius = range;
+        enemyDetectionRange.SetMyTower(this);
+        enemyDetectionRange.SetDetectionRange(range);
     }
 
     protected override void Update()
@@ -35,53 +36,39 @@ public class TwoFA_GateScript : BasicTowerScript
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void AddToSlowedEnemies(BasicEnemyScript enemy)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (enemy != null && !slowedEnemies.ContainsKey(enemy))
         {
-            BasicEnemyScript enemy = collision.GetComponent<BasicEnemyScript>();
-            if (enemy != null && !slowedEnemies.ContainsKey(enemy))
+            enemy.UpdateMovementSpeed(1f - slowingFactor);
+            enemy.onEnemyDeath.AddListener(HandleBuffedEnemyDeath);
+
+            // If Upgrade 2 has been purchased
+            if (upgrades[1].purchased)
             {
-                enemy.UpdateMovementSpeed(1f - slowingFactor);
-                enemy.onEnemyDeath.AddListener(HandleBuffedEnemyDeath);
-
-                // If Upgrade 2 has been purchased
-                if (upgrades[1].purchased)
-                {
-                    enemy.SetTakenDamageMultiplier(bonusDamageMultiplier);
-                }
-
-                slowedEnemies.Add(enemy, 0f);
+                enemy.SetTakenDamageMultiplier(bonusDamageMultiplier);
             }
+
+            slowedEnemies.Add(enemy, 0f);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public void RemovedFromSlowedEnemies(BasicEnemyScript enemy)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (enemy != null && slowedEnemies.ContainsKey(enemy))
         {
-            BasicEnemyScript enemy = collision.GetComponent<BasicEnemyScript>();
-            if (enemy != null && slowedEnemies.ContainsKey(enemy))
+            enemy.ResetMovementSpeed();
+            enemy.onEnemyDeath.RemoveListener(HandleBuffedEnemyDeath);
+
+            // If Upgrade 2 has been purchased
+            if (upgrades[1].purchased)
             {
-                enemy.ResetMovementSpeed();
-                enemy.onEnemyDeath.RemoveListener(HandleBuffedEnemyDeath);
-
-                // If Upgrade 2 has been purchased
-                if (upgrades[1].purchased)
-                {
-                    enemy.ResetTakenDamageMultiplier();
-                }
-
-                slowedEnemies.Remove(enemy);
+                enemy.ResetTakenDamageMultiplier();
             }
+
+            slowedEnemies.Remove(enemy);
         }
     }
-
-    // // For Upgrade 2
-    // private void OnCollisionStay2D(Collision2D collision)
-    // {
-
-    // }
 
     private void HandleBuffedEnemyDeath(BasicEnemyScript enemy)
     {
@@ -91,7 +78,7 @@ public class TwoFA_GateScript : BasicTowerScript
 
     protected override void Action()
     {
-
+        // Override to prevent unintented behavior
     }
 
     /* Upgrades
