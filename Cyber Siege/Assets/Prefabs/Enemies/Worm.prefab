@@ -123,7 +123,7 @@ MonoBehaviour:
   hasReachedServer: 0
   WormPrefab: {fileID: 1699728895133875648}
   WormSpawnCount: 1
-  WormSpawnRate: 4
+  WormSpawnRate: 6
 --- !u!50 &4661326746327342660
 Rigidbody2D:
   serializedVersion: 5

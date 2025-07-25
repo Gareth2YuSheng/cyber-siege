@@ -63,7 +63,7 @@ public class ResourceMonitorScript : BasicTowerScript
     protected override void OnMouseDown()
     {
         base.OnMouseDown();
-        // Debug.Log("Resource Monitor OnMouseDown");
+        Debug.Log("Resource Monitor OnMouseDown");
 
         // Make sure not in building mode
         if (!BuildManager.main.isBuilding())
