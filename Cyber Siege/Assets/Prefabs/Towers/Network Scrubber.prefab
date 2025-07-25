@@ -1670,11 +1670,11 @@ MonoBehaviour:
   upgrades:
   - upgradeName: Deep Packet Inspection
     description: Increased fire rate and bullets pierce more enemies
-    cost: 30
+    cost: 250
     purchased: 0
   - upgradeName: Parallel Scrubbing
     description: Increases the amount bullets being fired at a time
-    cost: 30
+    cost: 250
     purchased: 0
   effectAudio: {fileID: 8300000, guid: ee10ed2879bbb42a98c790feddd7904f, type: 3}
   protectedEffect: {fileID: 8754075667939230504}

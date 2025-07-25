@@ -325,11 +325,11 @@ MonoBehaviour:
   upgrades:
   - upgradeName: Threat Profiling
     description: Buffs towers fire rate within radius
-    cost: 25
+    cost: 250
     purchased: 0
   - upgradeName: Expanded Network Visibility
     description: Increases detection radius of nearby towers
-    cost: 25
+    cost: 250
     purchased: 0
   effectAudio: {fileID: 8300000, guid: ee10ed2879bbb42a98c790feddd7904f, type: 3}
   protectedEffect: {fileID: 4255542510259068760}

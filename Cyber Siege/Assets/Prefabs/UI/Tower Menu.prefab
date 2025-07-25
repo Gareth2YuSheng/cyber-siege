@@ -167,7 +167,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -103.3, y: -0.0000014305}
+  m_AnchoredPosition: {x: -160.3, y: -0.0000014305}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2834053728524935301
@@ -454,8 +454,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 32.955566, y: -469}
-  m_SizeDelta: {x: 134.089, y: 50}
+  m_AnchoredPosition: {x: 45, y: -469}
+  m_SizeDelta: {x: 235, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8001509186938597236
 CanvasRenderer:
@@ -485,7 +485,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: $10000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 90c956b924a0a454288495003c97dec0, type: 2}
   m_sharedMaterial: {fileID: 1511175825434818798, guid: 90c956b924a0a454288495003c97dec0, type: 2}
@@ -550,7 +550,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -78.145386, w: 0}
+  m_margin: {x: 0, y: 0, z: -0.026977539, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -790,6 +790,7 @@ MonoBehaviour:
   cancelButton: {fileID: 9069423482640555125}
   towerPreviewSR: {fileID: 6165330251644162666}
   moneyLabel: {fileID: 4976470423060382949}
+  currencyPopup: {fileID: 8634706115713269264, guid: e2224d0957b1e404a8bf5a3ccb3e25e6, type: 3}
   waveLabel: {fileID: 3707183546713087726}
 --- !u!1001 &7137699381869730716
 PrefabInstance:

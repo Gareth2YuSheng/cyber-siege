@@ -326,11 +326,11 @@ MonoBehaviour:
   upgrades:
   - upgradeName: Background Checker
     description: Detects when Spyware is active and warns player
-    cost: 10
+    cost: 150
     purchased: 0
   - upgradeName: Cost Auditor
     description: Increases resource gain per kill if no spyware is present.
-    cost: 10
+    cost: 500
     purchased: 0
   effectAudio: {fileID: 0}
   protectedEffect: {fileID: 7472239190551064884}

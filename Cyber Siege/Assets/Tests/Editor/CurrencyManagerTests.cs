@@ -179,7 +179,7 @@ public class CurrencyManagerTests
     public void OnCurrencyChange_InvokesOnIncrease()
     {
         bool wasCalled = false;
-        currencyManager.onCurrencyChange.AddListener(() => wasCalled = true);
+        currencyManager.onCurrencyChange.AddListener((int amt) => wasCalled = true);
         currencyManager.IncreaseCurrency(10);
         Assert.IsTrue(wasCalled);
     }
@@ -190,7 +190,7 @@ public class CurrencyManagerTests
         bool wasCalled = false;
         currencyManager.Reset();
         currencyManager.IncreaseCurrency(100);
-        currencyManager.onCurrencyChange.AddListener(() => wasCalled = true);
+        currencyManager.onCurrencyChange.AddListener((int amt) => wasCalled = true);
         currencyManager.DecreaseCurrency(10);
         Assert.IsTrue(wasCalled);
     }

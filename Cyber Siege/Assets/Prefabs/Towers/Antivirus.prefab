@@ -325,11 +325,11 @@ MonoBehaviour:
   upgrades:
   - upgradeName: Quarantine Protocol
     description: Virus enemies hit are slowed
-    cost: 15
+    cost: 150
     purchased: 0
   - upgradeName: Rapid Scan Protocol
     description: Upgrades rate of fire to burst mode
-    cost: 15
+    cost: 250
     purchased: 0
   effectAudio: {fileID: 8300000, guid: ee10ed2879bbb42a98c790feddd7904f, type: 3}
   protectedEffect: {fileID: 1785227094430873861}

@@ -211,7 +211,7 @@ public class TutorialManager : LevelManager
         hasSelectedTower = true;
     }
 
-    private void OnEarnCurrency()
+    private void OnEarnCurrency(int amt)
     {
         hasEarnedCurrency = true;
     }

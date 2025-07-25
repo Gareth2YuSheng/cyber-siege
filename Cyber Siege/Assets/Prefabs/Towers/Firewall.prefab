@@ -357,12 +357,12 @@ MonoBehaviour:
   - upgradeName: Adaptive Burn
     description: The longer an enemy remains in contact with the Firewall, the more
       damage it takes
-    cost: 15
+    cost: 200
     purchased: 0
   - upgradeName: Resilience Module
     description: Firewall gains an additional shield that regenerates slowly over
       time if not attacked for 3 seconds
-    cost: 15
+    cost: 150
     purchased: 0
   effectAudio: {fileID: 8300000, guid: a084b29daf37e46fcb5e8eeb0b2ab6b8, type: 3}
   protectedEffect: {fileID: 5200662338162848532}

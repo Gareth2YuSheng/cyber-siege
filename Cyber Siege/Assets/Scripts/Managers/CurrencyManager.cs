@@ -7,7 +7,7 @@ public class CurrencyManager : MonoBehaviour
     public static CurrencyManager main;
 
     [Header("Events")]
-    public UnityEvent onCurrencyChange = new UnityEvent();
+    public UnityEvent<int> onCurrencyChange = new UnityEvent<int>();
 
     [Header("Attributes")]
     [SerializeField] private int currency;
@@ -36,7 +36,7 @@ public class CurrencyManager : MonoBehaviour
     {
         if (amt < 0) throw new ArgumentOutOfRangeException("Cannot Add Negative Currency");
         currency += amt;
-        onCurrencyChange.Invoke();
+        onCurrencyChange.Invoke(amt);
     }
 
     public void GainCurrencyFromKillingEnemy(int amt)
@@ -75,7 +75,7 @@ public class CurrencyManager : MonoBehaviour
             {
                 currency = 0;
             }
-            onCurrencyChange.Invoke();
+            onCurrencyChange.Invoke(-amt);
         }
     }
 

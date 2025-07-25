@@ -544,11 +544,11 @@ MonoBehaviour:
   upgrades:
   - upgradeName: Encryption Protection Plus
     description: Stun the Ransomware that caused cooldown via tower for 3 seconds.
-    cost: 10
+    cost: 100
     purchased: 0
   - upgradeName: Encryption Fortification
     description: Decreases the cooldown timing from 6 seconds to 3 seconds.
-    cost: 10
+    cost: 200
     purchased: 0
   effectAudio: {fileID: 0}
   protectedEffect: {fileID: 1327485068674384935}

@@ -412,12 +412,12 @@ MonoBehaviour:
   upgrades:
   - upgradeName: Real-Time Protection
     description: Auto-scans continuously
-    cost: 30
+    cost: 300
     purchased: 0
   - upgradeName: Targeted Containment
     description: Stuns and increase damage taken by 50% upon revealing an enemy for
       2s
-    cost: 30
+    cost: 300
     purchased: 0
   effectAudio: {fileID: 0}
   protectedEffect: {fileID: 7472239190551064884}

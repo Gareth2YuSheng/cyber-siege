@@ -78,7 +78,7 @@ public class TowerUpgradeMenuScript : MonoBehaviour
         });
 
         // If not enough currency for upgrade, make button red
-        CheckUpgradesAffordable();
+        CheckUpgradesAffordable(0);
     }
 
     private void UpdateUpgradeButtonLabels(BasicTowerScript tower)
@@ -107,7 +107,7 @@ public class TowerUpgradeMenuScript : MonoBehaviour
             tower.upgrades[1].purchased);
     }
 
-    private void CheckUpgradesAffordable()
+    private void CheckUpgradesAffordable(int amt)
     {
         BasicTowerScript tower = BuildManager.main.GetSelectedTowerToUpgrade();
         // If no tower has been selected, return
