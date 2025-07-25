@@ -22,7 +22,7 @@ public class Level6Manager : LevelManager
         // Trojan Prompt
         yield return ShowPrompt(
             "New Enemy Detected: Trojan",
-            "Neigh! A Trojan is a type of bad software that looks like a normal program or file, such as something you might download for free. It tricks you into thinking it's safe, but once installed, it can cause harm. Trojans are often spread through tricks like phishing or fake websites. Trojans will need to be revealed in order to be targetted! I wonder what tower we can use...",
+            "Neigh! A Trojan hides in plain sight — it looks like something safe, but once inside, it causes trouble.\n\nOften spread through phishing or fake sites, Trojans must be revealed before they can be targeted.\n\nHmm... which tower sees through the disguise",
             enemyImage1);
         // 2FA Gate Prompt
         yield return ShowPrompt(

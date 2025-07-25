@@ -22,7 +22,7 @@ public class Level8Manager : LevelManager
         // Ransomware Prompt
         yield return ShowPrompt(
             "New Enemy Detected: Ransomware",
-            "Ransomware locks down your defenses and demands a price—literally. It disrupts nearby towers as it moves, forcing tough choices: pay up for a risky fix or use the right tool to defend against it safely. \n*Click on ransomware to pay ransom",
+            "Ransomware locks your defenses and demands a price—literally. It disrupts nearby towers as it moves.\n\nPay the ransom for a risky fix, or use the right counter to remove it safely.\n\n*Click on Ransomware to pay up.",
             ransomwareImage);
         // Resource Monitor Prompt
         yield return ShowPrompt(

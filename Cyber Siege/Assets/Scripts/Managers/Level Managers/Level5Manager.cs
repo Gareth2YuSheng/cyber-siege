@@ -23,17 +23,17 @@ public class Level5Manager : LevelManager
         // Suspicious Call Prompt
         yield return ShowPrompt(
             "New Enemy Detected: Suspicious Call",
-            "Another sus enemy! Suspicious Calls happen when people send fake calls to trick you into giving away personal information like passwords, usernames, or credit card numbers. They might pretend to be your bank or a shipping company to make you believe the call is real!",
+            "Another sus enemy! Suspicious Calls pretend to be someone you trust to steal personal info.\n\nThis hidden threat boosts nearby phishing enemies — spot it fast before it strengthens the scam!",
             enemyImage1);
         // Suspicious Text Prompt
         yield return ShowPrompt(
             "New Enemy Detected: Suspicious Text Message",
-            "Suspicious Text Messages come in the form of Smishing, where bad people send fake text messages to trick you into giving away personal information like passwords, usernames, or credit card numbers. They might pretend to be your bank or a shipping company to make you believe the message is real.",
+            "Sneaky enemy detected! Suspicious Text Messages are hidden and fast, tricking you with fake texts pretending to be banks or delivery services.\n\nWatch out — they clutter your screen with fake SMS distractions!",
             enemyImage2);
         // IDS Prompt
         yield return ShowPrompt(
             "New Tower: IDS",
-            "Intruder Detection System! This tower helps uncover suspicious enemies and allows them to be targetted!",
+            "Intruder Detection System! This tower helps uncover suspicious and other hidden enemies, allowing them to be targetted!",
             towerImage1);
         // Enable them after user has read the prompt
         EnableUIs();

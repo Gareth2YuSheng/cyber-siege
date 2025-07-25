@@ -11,7 +11,7 @@ public class Level7Manager : LevelManager
         Map Design Idea:
         Shorter map to give player chance to make use of path towers more
         Also to give less distractions so that they can look out for cryptojacking
-        *Cryptojacking spawn rate is increased in this level but interval increased to 7 seconds for balancing.
+        *Cryptojacking spawn rate is increased in this level but interval increased to 5 seconds for balancing.
     */
 
     protected override IEnumerator StartLevel()
@@ -21,7 +21,7 @@ public class Level7Manager : LevelManager
         // Cryptojacking Prompt
         yield return ShowPrompt(
             "New Enemy Detected: Cryptojacking",
-            "Cryptojacking is when hackers secretly use your system to mine cryptocurrency, quietly draining resources and slowing performance. These stealthy enemies latch onto your server, slowing your defenses and clogging up performance. If something feels off, it might be time for a system check.",
+            "Cryptojacking is when hackers secretly use your system to mine cryptocurrency, draining resources and slowing everything down.\n\nThese stealthy threats cling to your server. Something feel off? Time for a system scan.",
             cryptojackingImage);
         // Resource Monitor Prompt
         yield return ShowPrompt(

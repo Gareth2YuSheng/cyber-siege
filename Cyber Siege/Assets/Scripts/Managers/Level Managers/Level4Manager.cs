@@ -21,12 +21,12 @@ public class Level4Manager : LevelManager
         // Sus Email Prompt
         yield return ShowPrompt(
             "New Enemy Detected: Suspicious Email",
-            "Sus! Email spoofing is a result of Suspicious Emails, and happens when a bad person sends an email that looks like it's from someone you trust, like a business or friend. Because the email looks real, you might open it and click on a dangerous link or download a harmful attachment. This can trick people into giving away sensitive information or letting in a virus.",
+            "Sus! Suspicious Emails use spoofing to look like they’re from someone you trust.\n\nOne click can let in viruses or steal information.\n\nThis hidden enemy drops malware when destroyed — don’t fall for the bait!",
             enemyImage);
         // Threat Intelligence Prompt
         yield return ShowPrompt(
             "New Tower: Threat Intelligence",
-            "This tower targets hidden enemies like the Suspicious Email! You never know when you need em'!",
+            "This tower targets hidden enemies like the Suspicious Email, it can target other enemies but not viruses.\n\nYou never know when you need em'!",
             towerImage1);
         // Enable them after user has read the prompt
         EnableUIs();
