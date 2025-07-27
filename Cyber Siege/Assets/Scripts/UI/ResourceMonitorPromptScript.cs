@@ -26,12 +26,12 @@ public class ResourceMonitorPromptScript : MonoBehaviour
         // Remove Previous Listener from previous resource monitor
         if (selectedResourceMonitor != null)
         {
-            selectedResourceMonitor.onCooldownSecondChagned.RemoveListener(UpdateCleanServerButtonLabel);
+            selectedResourceMonitor.onCooldownSecondChanged.RemoveListener(UpdateCleanServerButtonLabel);
         }
         // Update selected script to new one
         selectedResourceMonitor = script;
         // Add Event Listener
-        selectedResourceMonitor.onCooldownSecondChagned.AddListener(UpdateCleanServerButtonLabel);
+        selectedResourceMonitor.onCooldownSecondChanged.AddListener(UpdateCleanServerButtonLabel);
         // Update Label
         UpdateCleanServerButtonLabel(selectedResourceMonitor.GetCoolDown());
     }

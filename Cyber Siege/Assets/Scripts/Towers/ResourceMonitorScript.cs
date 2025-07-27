@@ -11,14 +11,13 @@ public class ResourceMonitorScript : BasicTowerScript
     [SerializeField] private float cleanupCooldownDuration = 15f;
 
     [Header("Events")]
-    public UnityEvent<int> onCooldownSecondChagned = new UnityEvent<int>();
+    public UnityEvent<int> onCooldownSecondChanged = new UnityEvent<int>();
 
     private float timeUntilCleanupReady = 15f; //start with ability ready
     private int lastSecondRecorded = -1;
 
     protected override void Update()
     {
-        base.Update();
         // Manage cleanup cooldown
         if (timeUntilCleanupReady < cleanupCooldownDuration)
         {
@@ -32,7 +31,7 @@ public class ResourceMonitorScript : BasicTowerScript
             if (secondsLeft != lastSecondRecorded)
             {
                 lastSecondRecorded = secondsLeft;
-                onCooldownSecondChagned.Invoke(secondsLeft);
+                onCooldownSecondChanged.Invoke(secondsLeft);
             }
         }
         // Upgrade 1
@@ -74,6 +73,11 @@ public class ResourceMonitorScript : BasicTowerScript
             // Delay 1 frame to make sure upgrade menu opens first and no UI overlap
             StartCoroutine(ShowRMPromptWithDelay());
         }
+    }
+
+    protected override void Action()
+    {
+        // Override here to prevent unintended behavior
     }
 
     private IEnumerator ShowRMPromptWithDelay()
