@@ -58,7 +58,10 @@ public class CurrencyManager : MonoBehaviour
         else
         {
             //Do some error prompt
-            UIManager.main?.ShowErrorPrompt("Not enuf money");
+            if (UIManager.main)
+            {
+                UIManager.main.ShowErrorPrompt("Not enuf money");
+            }
             Debug.Log("Not enuf money");
             return false;
         }
