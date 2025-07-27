@@ -11,7 +11,6 @@ public class IDSTowerScript : BasicTowerScript
     protected override void Update()
     {
         // Ransomware handling
-        FindRansomwareScript();
         if (!disabled && EnemyManager.main.waveOngoing)
         {
             if (upgrades[0].purchased)

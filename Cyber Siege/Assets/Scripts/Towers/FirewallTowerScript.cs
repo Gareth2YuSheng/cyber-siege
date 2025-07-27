@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class FirewallTowerScript : BasicPathTowerScript
+public class FirewallTowerScript : BasicTowerScript
 {
     [Header("References")]
     [SerializeField] private Sprite damagedSprite;
@@ -40,7 +40,6 @@ public class FirewallTowerScript : BasicPathTowerScript
 
         // Ransomware handling - Derived from BasicTowerScript
 
-        FindRansomwareScript();
         // Reason for not combining both into 1 action is for more
         // customisable behavior
         if (!disabled)
@@ -102,11 +101,14 @@ public class FirewallTowerScript : BasicPathTowerScript
                 // enemiesInContact.Add(enemy);
                 if (!enemiesInContact.ContainsKey(enemy))
                 {
-                    // Play shield
-                    SoundManager.main.PlaySoundFXClip(effectAudio, 0.5f);
-
                     enemiesInContact.Add(enemy, 0f);
+                    if (effectAudio != null && SoundManager.main != null)
+                    {
+                        // Play shield
+                        SoundManager.main.PlaySoundFXClip(effectAudio, 0.5f);
+                    }
                 }
+
             }
         }
     }

@@ -8,8 +8,6 @@ public class BuildManager : MonoBehaviour
 
     [SerializeField] public Tower[] towers;
 
-    // [NonSerialized] public bool isBuilding = false;
-
     [Header("Events")]
     public UnityEvent onStartGroundBuilding = new UnityEvent();
     public UnityEvent onStopGroundBuilding = new UnityEvent();
@@ -38,7 +36,29 @@ public class BuildManager : MonoBehaviour
 
     private void Awake()
     {
-        main = this;
+        if (main != null && main != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            main = this;
+        }
+    }
+
+    private void Start()
+    {
+        // Add Event Listener
+        // To disable building mode if level ends and player is in building mode
+        EnemyManager.main.onLevelEnd.AddListener(DisableBuilding);
+        HealthManager.main.onServerDeath.AddListener(DisableBuilding);
+    }
+
+    public void SetSelectedTower(int _selectedTower)
+    {
+        if (_selectedTower < 0 || _selectedTower > towers.Length - 1) throw new ArgumentOutOfRangeException("Invalid Tower Index");
+        selectedTower = _selectedTower;
+        onTowerSelectedForBuilding.Invoke();
     }
 
     public Tower GetSelectedTower()
@@ -52,30 +72,15 @@ public class BuildManager : MonoBehaviour
         return towers[selectedTower].towerSObj.range;
     }
 
-    // public int GetSelectedTowerCost()
-    // {
-    //     return towers[selectedTower].towerSObj.cost;
-    // }
-
     public bool CanAffordSelectedTower()
     {
-        return towers[selectedTower].towerSObj.cost <= LevelManager.main.currency;
+        return towers[selectedTower].towerSObj.cost <= CurrencyManager.main.GetCurrency();
     }
 
     public void BuySelectedTower()
     {
-        LevelManager.main.SpendCurrency(towers[selectedTower].towerSObj.cost);
+        CurrencyManager.main.SpendCurrency(towers[selectedTower].towerSObj.cost);
     }
-
-    public void SetSelectedTower(int _selectedTower)
-    {
-        selectedTower = _selectedTower;
-        onTowerSelectedForBuilding.Invoke();
-    }
-
-    // public void EnableBuilding()
-    // {
-    // }
 
     // Only 1 type of building mode can be enabled at a time
     public void EnableGroundBuilding()
@@ -110,6 +115,7 @@ public class BuildManager : MonoBehaviour
         {
             DisablePathBuilding();
         }
+        ClearSelectedTile();
     }
 
     public void DisableGroundBuilding()
@@ -122,6 +128,11 @@ public class BuildManager : MonoBehaviour
     {
         onStopPathBuilding.Invoke();
         isPathBuilding = false;
+    }
+
+    public bool isBuilding()
+    {
+        return isGroundBuilding || isPathBuilding;
     }
 
     // For Tower Preview
@@ -181,5 +192,19 @@ public class BuildManager : MonoBehaviour
             selectedTile.HideTowerRange();
         }
         selectedTile = tile;
+    }
+
+    public void SellSelectedTower()
+    {
+        // If there is no currently selected tile, do nothing
+        if (selectedTile == null) return;
+        // Calculate how much money spent on the tile/tower in total
+        float refundAmt = selectedTile.CalculateMoneySpentOnTile() * 0.7f;
+        // Remove the Tower
+        selectedTile.DestroyTower();
+        // Refund only 70% of the Money
+        CurrencyManager.main.IncreaseCurrency((int)refundAmt);
+        // Close the tower upgrade menu
+        CloseTowerUpgradeMenu();
     }
 }

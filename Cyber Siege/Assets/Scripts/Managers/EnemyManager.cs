@@ -8,12 +8,15 @@ public class EnemyManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject[] enemyPrefabs;
+    public Transform startPoint;
+    public Transform[] enemyPath;
 
     [Header("Attributes")]
     [SerializeField] private int baseEnemyCount = 8;
     [SerializeField] private float enemiesPerSecond = 2f;
     [SerializeField] private float difficultyScalingFactor = 0.75f;
     [SerializeField] private float enemiesPerSecondCap = 15f;
+    [SerializeField] private bool testingMode = false; // For testing only, comment when building
 
     [Header("Events")]
     public UnityEvent onWaveStart = new UnityEvent();
@@ -32,7 +35,14 @@ public class EnemyManager : MonoBehaviour
 
     private void Awake()
     {
-        main = this;
+        if (main != null && main != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            main = this;
+        }
     }
 
 
@@ -122,11 +132,37 @@ public class EnemyManager : MonoBehaviour
     {
         // GameObject prefabToSpawn = enemyPrefabs[0];
         // Randomise the enemies
-        int index = Random.Range(0, enemyPrefabs.Length);
-        GameObject prefabToSpawn = enemyPrefabs[index];
-
-        Vector3 position = LevelManager.main.startPoint.position;
+        // int index = Random.Range(0, enemyPrefabs.Length);
+        // GameObject prefabToSpawn = enemyPrefabs[index];
+        GameObject prefabToSpawn;
+        Vector3 position = startPoint.position;
         position.z = -1; // Force the z-coord so it spawns above the path
+        int index = 0;
+
+        if (!testingMode)
+        {
+            index = Random.Range(0, enemyPrefabs.Length);
+        }
+        prefabToSpawn = enemyPrefabs[index];
+
+        // Debug.Log(prefabToSpawn.name);
+        /*
+            If the selected prefab is a cryptojacking enemy,
+            we spawn it but it shouldnt be counted under the enemy count, 
+            so we need to spawn another random enemy to replace it
+        */
+
+        if (prefabToSpawn.name == "Cryptojacking")
+        {
+            // Spawn the cryptojacking
+            Instantiate(prefabToSpawn, position, Quaternion.identity);
+            // Set the prefabToSpawn to another enemy that is not cryptojacking
+            while (prefabToSpawn.name == "Cryptojacking")
+            {
+                index = Random.Range(0, enemyPrefabs.Length);
+                prefabToSpawn = enemyPrefabs[index];
+            }
+        }
 
         Instantiate(prefabToSpawn, position, Quaternion.identity);
     }

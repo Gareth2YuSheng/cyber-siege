@@ -4,31 +4,50 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager main;
 
     [Header("References")]
+    // For Game Over Menu
     [SerializeField] private GameObject gameOverMenu;
+    // For Pause Menu
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private Button pauseButton;
+    // For Tower Menu
     [SerializeField] private GameObject towerMenu;
     [SerializeField] private Button startButton;
+    // For Error Prompt
     [SerializeField] private GameObject errorPrompt;
     [SerializeField] private TextMeshProUGUI errorPromptLabel;
+    // For Tower Upgrade Menu
     [SerializeField] private GameObject towerUpgradeMenu;
-    [SerializeField] private RectTransform towerUpgradeMenuTransform;
+    private RectTransform towerUpgradeMenuTransform;
+    // For Level End Menu
     [SerializeField] private GameObject levelEndMenu;
+    // For Level Prompt
     [SerializeField] private GameObject levelPrompt;
+    [SerializeField] private TextMeshProUGUI levelPromptTitle;
+    [SerializeField] private TextMeshProUGUI levelPromptBody;
+    [SerializeField] private Image levelPromptImage;
+    // For Health HUD
     [SerializeField] private GameObject healthHUD;
     // For Scam Message
     [SerializeField] private GameObject susMessageAlertPrefab;
     // For Ransomare
     [SerializeField] private GameObject ransomwarePrompt;
+    // For Resource Monitor Prompt
+    [SerializeField] private GameObject resourceMonitorPrompt;
+    private RectTransform resourceMonitorPromptTransform;
+    private ResourceMonitorPromptScript resourceMonitorPromptScript;
 
-
-    // private TowerUpgradeMenuScript upgradeMenuScript;
+    // For blocking clicks from passing through the UI Elements
+    private GraphicRaycaster rc;
+    private EventSystem es;
+    private PointerEventData pointerEventData;
 
     private void Awake()
     {
@@ -39,7 +58,7 @@ public class UIManager : MonoBehaviour
     {
         // upgradeMenuScript = towerUpgradeMenu.GetComponent<TowerUpgradeMenuScript>();
         // Add Event Listeners
-        LevelManager.main.onServerDeath.AddListener(GameOver);
+        HealthManager.main.onServerDeath.AddListener(GameOver);
         EnemyManager.main.onWaveEnd.AddListener(WaveEnded);
         // For tower upgrade menu
         BuildManager.main.onTowerSelectedForUpgrading.AddListener(ShowTowerUpgradeMenu);
@@ -50,13 +69,19 @@ public class UIManager : MonoBehaviour
         // For RansomarePrompt
         EnemyManager.main.onRansomwareClick.AddListener(ShowRansomwarePrompt);
 
-        // Hide Tower Upgrade Menu
-        // HideTowerUpgradeMenu();
+        es = EventSystem.current;
+        rc = gameObject.GetComponent<GraphicRaycaster>();
+
+        towerUpgradeMenuTransform = towerUpgradeMenu.GetComponent<RectTransform>();
+        resourceMonitorPromptTransform = resourceMonitorPrompt.GetComponent<RectTransform>();
+        resourceMonitorPromptScript = resourceMonitorPrompt.GetComponent<ResourceMonitorPromptScript>();
     }
 
     public void UpdateHUDLabels()
     {
-        towerMenu.GetComponent<TowerMenuScript>().UpdateCurrencyLabel();
+        TowerMenuScript menuScript = towerMenu.GetComponent<TowerMenuScript>();
+        menuScript.UpdateCurrencyLabel();
+        // menuScript.UpdateWaveLabel();
         healthHUD.GetComponent<HealthHUDScript>().UpdateHealthLabel();
     }
 
@@ -112,6 +137,18 @@ public class UIManager : MonoBehaviour
     public void HideLevelPrompt()
     {
         levelPrompt.SetActive(false);
+    }
+
+    public Button GetLevelPromptButton()
+    {
+        return levelPrompt.GetComponentInChildren<Button>();
+    }
+
+    public void SetLevelPromptContent(string title, string body, Sprite image)
+    {
+        levelPromptTitle.text = title;
+        levelPromptBody.text = body;
+        levelPromptImage.sprite = image;
     }
 
     IEnumerator SetPromptTimeout(float timeoutDuration)
@@ -173,7 +210,7 @@ public class UIManager : MonoBehaviour
 
     private void HideTowerUpgradeMenu()
     {
-        MoveTowerUpgradeMenu(-1222f, 0.4f, () =>
+        MoveTowerUpgradeMenu(-1800f, 0.4f, () =>
         {
             towerUpgradeMenu.SetActive(false);
         });
@@ -182,6 +219,31 @@ public class UIManager : MonoBehaviour
     private void MoveTowerUpgradeMenu(float endVal, float duration, TweenCallback onEnd)
     {
         towerUpgradeMenuTransform.DOAnchorPosX(endVal, duration).onComplete += onEnd;
+    }
+
+    // For Resource Monitor Prompt
+    public void ShowResourceMonitorPrompt(ResourceMonitorScript _script)
+    {
+        // Set the selected Resouce Monitor Script
+        resourceMonitorPromptScript.SetResourceMonitorScript(_script);
+        resourceMonitorPrompt.SetActive(true);
+        MoveResourceMonitorPrompt(404f, 0.4f, () =>
+        {
+
+        });
+    }
+
+    public void HideResourceMonitorPrompt()
+    {
+        MoveResourceMonitorPrompt(950f, 0.4f, () =>
+        {
+            resourceMonitorPrompt.SetActive(false);
+        });
+    }
+
+    private void MoveResourceMonitorPrompt(float endVal, float duration, TweenCallback onEnd)
+    {
+        resourceMonitorPromptTransform.DOAnchorPosY(endVal, duration).onComplete += onEnd;
     }
 
     // For Ransomware
@@ -202,6 +264,47 @@ public class UIManager : MonoBehaviour
         levelEndMenu.SetActive(true);
     }
 
+    private bool IsPointerOver(GameObject _object)
+    {
+        pointerEventData = new PointerEventData(es)
+        {
+            position = Input.mousePosition
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        rc.Raycast(pointerEventData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject == _object || result.gameObject.transform.IsChildOf(_object.transform))
+            {
+                return true; // Pointer is over upgrade menu
+            }
+        }
+
+        return false;
+    }
+
+    public bool IsPointerOverUpgradeMenu()
+    {
+        return IsPointerOver(towerUpgradeMenu);
+    }
+
+    public bool IsPointerOverPauseButton()
+    {
+        return IsPointerOver(pauseButton.gameObject);
+    }
+
+    public bool IsPointerOverRMPrompt()
+    {
+        return IsPointerOver(resourceMonitorPrompt);
+    }
+
+    public bool IsPointerOverStartButton()
+    {
+        return IsPointerOver(startButton.gameObject);
+    }
+
     // ON CLICK METHODS
 
     public void StartButtonOnClick()
@@ -213,19 +316,19 @@ public class UIManager : MonoBehaviour
 
     public void PauseButtonOnClick()
     {
-        pauseMenu.gameObject.SetActive(true);
-
+        pauseMenu.SetActive(true);
         Time.timeScale = 0;
-        //Disable Tower Menu
-        SetAllSelectableChildrenFromTowerMenu(false);
+        // If player was building a tower, cancel it
+        if (BuildManager.main.isBuilding())
+        {
+            BuildManager.main.DisableBuilding();
+        }
     }
 
     public void PauseMenuContinueButtonOnClick()
     {
-        pauseMenu.gameObject.SetActive(false);
+        pauseMenu.SetActive(false);
         Time.timeScale = 1;
-        //Enable Tower Menu
-        SetAllSelectableChildrenFromTowerMenu(true);
     }
 
     public void PauseMenuExitLevelButtonOnClick()
@@ -234,10 +337,4 @@ public class UIManager : MonoBehaviour
         // Unpause the game after exiting
         Time.timeScale = 1;
     }
-
-    public void GameOverMenuExitOnClick()
-    {
-        Application.Quit();
-    }
-
 }

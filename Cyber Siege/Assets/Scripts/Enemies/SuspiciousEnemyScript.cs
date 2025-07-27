@@ -6,11 +6,8 @@ public class SuspiciousEnemyScript : BasicEnemyScript
     {
         base.Start();
         // Hide phishing enemies first
+        // Set opacity to 20%
+        changeOpacity(0.2f);
         Hide();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
     }
 }

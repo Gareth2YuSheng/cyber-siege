@@ -8,7 +8,10 @@ public class TowerMenuScript : MonoBehaviour
     [SerializeField] private Button cancelButton;
     [SerializeField] private SpriteRenderer towerPreviewSR;
     [SerializeField] private TextMeshProUGUI moneyLabel;
+    [SerializeField] private GameObject currencyPopup;
     [SerializeField] private TextMeshProUGUI waveLabel;
+
+    private bool initCurrency = false;
 
     private void Start()
     {
@@ -18,7 +21,7 @@ public class TowerMenuScript : MonoBehaviour
         //outside of the scene
 
         // Add Event Listeners
-        LevelManager.main.onCurrencyChange.AddListener(UpdateCurrencyLabel);
+        CurrencyManager.main.onCurrencyChange.AddListener(UpdateCurrency);
         EnemyManager.main.onWaveStart.AddListener(UpdateWaveLabel);
 
         BuildManager.main.onStartGroundBuilding.AddListener(StartBuilding);
@@ -27,7 +30,7 @@ public class TowerMenuScript : MonoBehaviour
         BuildManager.main.onStopPathBuilding.AddListener(StopBuilding);
     }
 
-    private void UpdateWaveLabel()
+    public void UpdateWaveLabel()
     {
         string labelText = $"Wave: {EnemyManager.main.GetCurrentWave()}";
         if (EnemyManager.main.GetMaxWaveCount() > 0)
@@ -37,10 +40,26 @@ public class TowerMenuScript : MonoBehaviour
         waveLabel.text = labelText;
     }
 
+    private void UpdateCurrency(int amt)
+    {
+        if (initCurrency) SpawnCurrencyPopup(amt);
+        UpdateCurrencyLabel();
+
+        if (!initCurrency) initCurrency = true;
+    }
 
     public void UpdateCurrencyLabel()
     {
-        moneyLabel.text = $"{LevelManager.main.currency}";
+        moneyLabel.text = $"${CurrencyManager.main.GetCurrency()}";
+    }
+
+    private void SpawnCurrencyPopup(int amt)
+    {
+        GameObject popup = Instantiate(currencyPopup,
+            new Vector3(moneyLabel.transform.position.x - 18f, moneyLabel.transform.position.y, moneyLabel.transform.position.z - 10f),
+            Quaternion.identity,
+            gameObject.transform);
+        popup.GetComponent<CurrencyPopupScirpt>().SetLabel(amt);
     }
 
     private void StartBuilding()
@@ -59,7 +78,6 @@ public class TowerMenuScript : MonoBehaviour
 
     public void TowerMenuBuildCancelButtonOnClick()
     {
-        Debug.Log("Cancel Build Mode");
         BuildManager.main.DisableBuilding();
         // Hide Tower Preview
         towerPreviewSR.enabled = false;

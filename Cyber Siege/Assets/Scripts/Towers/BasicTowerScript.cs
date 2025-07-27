@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BasicTowerScript : MonoBehaviour
 {
@@ -10,12 +11,18 @@ public class BasicTowerScript : MonoBehaviour
     [SerializeField] protected LayerMask enemyMask;
     [SerializeField] protected Transform turretRotationPart;
     [SerializeField] public TowerUpgrade[] upgrades;
-    [SerializeField] public AudioClip effectAudio;
+    [SerializeField] protected AudioClip effectAudio;
+    [SerializeField] protected GameObject protectedEffect;
+    [SerializeField] protected GameObject disabledEffect;
+    [SerializeField] protected GameObject upgradeLayer1;
+    [SerializeField] protected GameObject upgradeLayer2;
 
+    [Header("Base Events")]
+    public UnityEvent<BasicTowerScript> onTowerDestroyed = new UnityEvent<BasicTowerScript>();
 
     //Attributes
     [NonSerialized] public string towerName;
-    // private int cost;
+    protected int cost;
     protected float range; // Radius
     protected int towerDamage;
     protected float rotationSpeed;
@@ -33,12 +40,18 @@ public class BasicTowerScript : MonoBehaviour
     protected float timeUntilFire;
 
     // For Ransomware
-    public RansomwareScript ransomwareScript; // Reference to RansomwareScript
-    protected RansomwareScript ransomware; // For caching
-    public bool disabled = false;
+    protected bool disabled = false;
+    protected bool safeFromRansomware = false; // To prevent disabling when using Encryption Node
+    protected EncryptionNodeScript encryptionNodeProtecting;
+    protected float towerDisabledDuration = 5f;
+
+    // For Upgrade Menu
+    protected Tile myTile;
 
     public virtual void InitialiseTower()
     {
+        if (tower == null) return;
+
         towerName = tower.towerName;
         // cost = tower.cost;
         range = tower.range;
@@ -47,6 +60,7 @@ public class BasicTowerScript : MonoBehaviour
         baseUpgradeCost = tower.baseUpgradeCost;
         isRotatable = tower.isRotatable;
         towerDamage = tower.damage;
+        cost = tower.cost;
 
         baseBPS = bps;
         baseRange = range;
@@ -70,12 +84,24 @@ public class BasicTowerScript : MonoBehaviour
                 };
             }
         }
+
+        // Hide Upgrade Layers if provided
+        if (upgradeLayer1 != null)
+        {
+            upgradeLayer1.SetActive(false);
+        }
+        if (upgradeLayer2 != null)
+        {
+            upgradeLayer2.SetActive(false);
+        }
+        // Hide Effects
+        protectedEffect.SetActive(false);
+        disabledEffect.SetActive(false);
     }
 
     protected virtual void Update()
     {
         // Ransomware handling
-        FindRansomwareScript();
         // If tower is not disabled and wave is ongoing
         if (!disabled && EnemyManager.main.waveOngoing) //not fully sanity tested
         {
@@ -96,12 +122,15 @@ public class BasicTowerScript : MonoBehaviour
                 //If tower is rotatable, rotate towards target
                 if (isRotatable) RotateTowardsTarget();
                 //Shoot
+                float adjustedBps = bps * Mathf.Pow(0.7f, ServerManager.main.GetCryptojackingCount()); // 30% reduction per stack
                 timeUntilFire += Time.deltaTime;
-                if (timeUntilFire >= (1f / bps))
+                if (timeUntilFire >= (1f / adjustedBps))
                 {
-                    // Sound Effect
-                    SoundManager.main.PlaySoundFXClip(effectAudio, 1f);
-
+                    if (effectAudio != null && SoundManager.main != null)
+                    {
+                        // Sound Effect
+                        SoundManager.main.PlaySoundFXClip(effectAudio, 1f);
+                    }
                     Action();
                     timeUntilFire = 0f;
                 }
@@ -109,10 +138,9 @@ public class BasicTowerScript : MonoBehaviour
         }
     }
 
-    // Change for each Tower
+    // Change for each Tower - Not decalred abstract as I dont want the class to be abstract
     protected virtual void Action() { }
 
-    // Change for each Tower
     protected virtual void FindEnemyTarget()
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, range, (Vector2)transform.position, 0f, enemyMask);
@@ -128,11 +156,6 @@ public class BasicTowerScript : MonoBehaviour
                 BasicEnemyScript enemyScript = hit.transform.GetComponentInParent<BasicEnemyScript>();
                 if (enemyScript != null && !enemyScript.isHidden)
                 {
-                    // Invoke to un-disguise Trojans. (For select towers)
-                    // Move logic to specific towers
-                    // Debug.Log("HIDDEN FOUND!");
-                    // enemyScript.Reveal();
-
                     enemyTarget = hit.transform;
                     return; // Return so only assignes the first one
                 }
@@ -156,48 +179,60 @@ public class BasicTowerScript : MonoBehaviour
         turretRotationPart.rotation = Quaternion.RotateTowards(turretRotationPart.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    // For stat upgrades
+    public virtual void DestroySelf()
+    {
+        onTowerDestroyed.Invoke(this);
+        Destroy(gameObject);
+    }
 
-    // public int CalculateUpgradeCost()
-    // {
-    //     return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
-    // }
+    // For Tower's Tile
+    public void SetMyTile(Tile tile)
+    {
+        myTile = tile;
+    }
 
-    // public float CalculateBPS()
-    // {
-    //     return baseBPS * Mathf.Pow(level, 0.6f);
-    // }
+    protected virtual void OnMouseDown()
+    {
+        Debug.Log("You Clicked On: " + name);
+        if (myTile != null)
+        {
+            myTile.OnTileClickedExternally();
+        }
+    }
 
-    // public float CalculateTargetingRange()
-    // {
-    //     return range * Mathf.Pow(level, 0.4f);
-    // }
+    protected virtual void OnMouseEnter()
+    {
+        if (myTile != null)
+        {
+            myTile.OnTileEnteredExternally();
+        }
+    }
 
-    // public void UpgradeStats()
-    // {
-    //     if (CalculateUpgradeCost() > LevelManager.main.currency) return;
+    protected virtual void OnMouseExit()
+    {
+        if (myTile != null)
+        {
+            myTile.OnTileExitedExternally();
+        }
+    }
 
-    //     LevelManager.main.SpendCurrency(CalculateUpgradeCost());
-
-    //     level++;
-    //     bps = CalculateBPS();
-    //     range = CalculateTargetingRange();
-
-    //     // CloseUpgradeUI();
-    //     Debug.Log("New BPS: " + bps);
-    //     Debug.Log("New Range: " + range);
-    //     Debug.Log("New Cost: " + CalculateUpgradeCost());
-    // }
-
-    // For Behavioral Upgrades
+    // For Upgrades
     public virtual void Upgrade1()
     {
         PurchaseUpgrade(upgrades[0]);
+        if (upgradeLayer1 != null)
+        {
+            upgradeLayer1.SetActive(true);
+        }
     }
 
     public virtual void Upgrade2()
     {
         PurchaseUpgrade(upgrades[1]);
+        if (upgradeLayer2 != null)
+        {
+            upgradeLayer2.SetActive(true);
+        }
     }
 
     protected void PurchaseUpgrade(TowerUpgrade _upgrade)
@@ -206,7 +241,15 @@ public class BasicTowerScript : MonoBehaviour
         // Mark Upgrade as purchased
         _upgrade.purchased = true;
         // Assume we checked that we can afford the upgrade
-        LevelManager.main.SpendCurrency(_upgrade.cost);
+        CurrencyManager.main.SpendCurrency(_upgrade.cost);
+    }
+
+    public int GetTotalMoneySpentOnTower()
+    {
+        int amt = cost;
+        if (upgrades[0].purchased) amt += upgrades[0].cost;
+        if (upgrades[1].purchased) amt += upgrades[1].cost;
+        return amt;
     }
 
     // For Tower Range
@@ -269,61 +312,66 @@ public class BasicTowerScript : MonoBehaviour
         bps = baseBPS;
     }
 
-    // Ransomware related functions
-    public virtual void FindRansomwareScript()
+    // For Ransomware
+    public void DisableTower(BasicEnemyScript enemy)
     {
-        // Debug.Log("Running");
-        // Dynamically find and update the reference to the RansomwareScript each frame
-        ransomwareScript = FindFirstObjectByType<RansomwareScript>();
-
-        if (ransomwareScript != null && ransomware == null)
+        // If tower is being protected by an Encryption Node, and it is enabled
+        if (encryptionNodeProtecting != null && !encryptionNodeProtecting.IsTowerDisabled())
         {
-            ransomware = ransomwareScript;
-            // Subscribe to an event or start logic based on ransomwareScript
-            ransomwareScript.onDisable.AddListener(DisableTower); // Example of adding a listener
+            // Disable the encryption Node Instead
+            encryptionNodeProtecting.DisableEncryptionNode(this, enemy);
+            // Let the Encryption Node handle the rest of the logic required
         }
+
+        // Else if encryption node is already disabled, and we are not being protected 
+        // OR we have no encryption node protecting us, AND tower is not already disabled
+        else if ((encryptionNodeProtecting == null ||
+        (encryptionNodeProtecting.IsTowerDisabled() && !safeFromRansomware))
+        && !disabled)
+        {
+            // Disable the Tower
+            StartCoroutine(Disable());
+        }
+
+        // Else, If the encryption Node is already disabled, but we are being protected,
+        // Dont do anything
     }
 
-    protected void DisableTower()
+    protected virtual IEnumerator Disable()
     {
-        if (!disabled)
-        {
-            Debug.Log("DISABLE TOWER!");
-            disabled = true;
-            // Start couroutine to enable after fixed amount of time
-            StartCoroutine(EnableTower());
-        }
-    }
-
-    protected IEnumerator DisableTower(float duration)
-    {
-        // If currently already disabled, dont do anything
-        if (!disabled)
-        {
-            disabled = true;
-            // Wait for duration
-            yield return new WaitForSeconds(duration);
-            // You can place any logic you want to perform after the X seconds here
-            // Example:
-            // PerformAction();
-            disabled = false;
-        }
-    }
-
-    protected IEnumerator EnableTower()
-    {
-        // Wait for 5 seconds
-        yield return new WaitForSeconds(5f);
-
-        // Code to execute after 5 seconds
-        Debug.Log("5 seconds have passed! Enabling tower...");
-
-        // You can place any logic you want to perform after the 5 seconds here
-        // Example:
-        // PerformAction();
+        disabled = true;
+        disabledEffect.SetActive(true);
+        yield return new WaitForSeconds(towerDisabledDuration);
         disabled = false;
+        disabledEffect.SetActive(false);
     }
 
+    // EncryptionNode - Protect the tower
+    public void ProtectTower()
+    {
+        protectedEffect.SetActive(true);
+        safeFromRansomware = true;
+    }
 
+    // EncryptionNode - Unprotect the tower
+    public void UnProtectTower()
+    {
+        protectedEffect.SetActive(false);
+        safeFromRansomware = false;
+    }
 
+    public void SetEncryptionNode(EncryptionNodeScript script)
+    {
+        encryptionNodeProtecting = script;
+    }
+
+    public void ResetEncryptionNode()
+    {
+        encryptionNodeProtecting = null;
+    }
+
+    public bool IsTowerDisabled()
+    {
+        return disabled;
+    }
 }

@@ -22,7 +22,7 @@ public class TowerUpgradeMenuScript : MonoBehaviour
     {
         // Add Event Listeners
         BuildManager.main.onTowerSelectedForUpgrading.AddListener(UpdateTowerDetails);
-        LevelManager.main.onCurrencyChange.AddListener(CheckUpgradesAffordable);
+        CurrencyManager.main.onCurrencyChange.AddListener(CheckUpgradesAffordable);
 
         initialDisabledColor = upgradeButton1.colors.disabledColor;
     }
@@ -63,7 +63,7 @@ public class TowerUpgradeMenuScript : MonoBehaviour
         upgradeButton1.onClick.AddListener(() =>
         {
             // only upgrade if enough currency
-            if (tower.upgrades[0].cost <= LevelManager.main.currency)
+            if (tower.upgrades[0].cost <= CurrencyManager.main.GetCurrency())
             {
                 tower.Upgrade1();
             }
@@ -71,14 +71,14 @@ public class TowerUpgradeMenuScript : MonoBehaviour
         upgradeButton2.onClick.RemoveAllListeners();
         upgradeButton2.onClick.AddListener(() =>
         {
-            if (tower.upgrades[1].cost <= LevelManager.main.currency)
+            if (tower.upgrades[1].cost <= CurrencyManager.main.GetCurrency())
             {
                 tower.Upgrade2();
             }
         });
 
         // If not enough currency for upgrade, make button red
-        CheckUpgradesAffordable();
+        CheckUpgradesAffordable(0);
     }
 
     private void UpdateUpgradeButtonLabels(BasicTowerScript tower)
@@ -107,7 +107,7 @@ public class TowerUpgradeMenuScript : MonoBehaviour
             tower.upgrades[1].purchased);
     }
 
-    private void CheckUpgradesAffordable()
+    private void CheckUpgradesAffordable(int amt)
     {
         BasicTowerScript tower = BuildManager.main.GetSelectedTowerToUpgrade();
         // If no tower has been selected, return
@@ -120,26 +120,24 @@ public class TowerUpgradeMenuScript : MonoBehaviour
         UpdateUpgradeButton(
             upgradeButton1,
             tower.upgrades[0].purchased,
-            tower.upgrades[0].cost,
-            LevelManager.main.currency
+            tower.upgrades[0].cost
         );
 
         // Check second upgrade 
         UpdateUpgradeButton(
             upgradeButton2,
             tower.upgrades[1].purchased,
-            tower.upgrades[1].cost,
-            LevelManager.main.currency
+            tower.upgrades[1].cost
         );
 
         // Force Rebuild Upgrade Button Section
         LayoutRebuilder.ForceRebuildLayoutImmediate(towerUpgradeButtonSection.GetComponent<RectTransform>());
     }
 
-    private void UpdateUpgradeButton(Button button, bool purchased, int cost, int currency)
+    private void UpdateUpgradeButton(Button button, bool purchased, int cost)
     {
         // If upgrade has not been purchased and we CAN afford it
-        if (!purchased && cost <= currency)
+        if (!purchased && cost <= CurrencyManager.main.GetCurrency())
         {
             // Enable button
             button.interactable = true;
@@ -156,6 +154,11 @@ public class TowerUpgradeMenuScript : MonoBehaviour
     }
 
     // On Click Functions
+    public void SellTowerMenuButtonOnClick()
+    {
+        BuildManager.main.SellSelectedTower();
+    }
+
     public void CloseTowerUpgradeMenuButtonOnClick()
     {
         BuildManager.main.CloseTowerUpgradeMenu();

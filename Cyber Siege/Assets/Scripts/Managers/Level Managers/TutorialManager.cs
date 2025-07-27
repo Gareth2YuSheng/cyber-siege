@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TutorialManager : MonoBehaviour
+public class TutorialManager : LevelManager
 {
     public static TutorialManager main;
 
@@ -18,7 +18,6 @@ public class TutorialManager : MonoBehaviour
     private TextMeshProUGUI promptWithButtonMessage;
     private Button promptButton;
 
-    private bool hasPlayerContinued;
     private bool hasSelectedTower;
     private bool hasPlacedTower;
     private bool waveStarted;
@@ -32,13 +31,8 @@ public class TutorialManager : MonoBehaviour
         main = this;
     }
 
-    private void Start()
+    protected override IEnumerator StartLevel()
     {
-        // Make sure to hide the prompts
-        // welcomePrompt.SetActive(false);
-        // prompt.SetActive(false);
-        // promptWithButton.SetActive(false);
-
         // Get Components
         welcomePromptButton = welcomePrompt.GetComponentInChildren<Button>();
         promptMessage = prompt.GetComponentInChildren<TextMeshProUGUI>();
@@ -46,20 +40,10 @@ public class TutorialManager : MonoBehaviour
         promptButton = promptWithButton.GetComponentInChildren<Button>();
 
         // Set Health and Currency
-        LevelManager.main.IncreaseCurrency(50);
-        LevelManager.main.HealServer(1);
-        UIManager.main.UpdateHUDLabels();
-        // Set Max Wave Count
-        EnemyManager.main.SetMaxWaveCount(3);
+        // Waves: 3, Health: 1, Currency: 50
 
-        StartCoroutine(StartTutorial());
-    }
-
-    private IEnumerator StartTutorial()
-    {
         // Disable Tower Menu until wave started
-        UIManager.main.DisableTowerMenu();
-        UIManager.main.DisableStartWaveButton();
+        DisableUIs();
         // Welcome Message
         yield return WelcomeMessage();
         UIManager.main.EnableStartWaveButton();
@@ -138,9 +122,9 @@ public class TutorialManager : MonoBehaviour
     private IEnumerator EarnCurrencyExplanation()
     {
         hasEarnedCurrency = false;
-        LevelManager.main.onCurrencyChange.AddListener(OnEarnCurrency);
+        CurrencyManager.main.onCurrencyChange.AddListener(OnEarnCurrency);
         yield return new WaitUntil(() => hasEarnedCurrency);
-        LevelManager.main.onCurrencyChange.RemoveListener(OnEarnCurrency);
+        CurrencyManager.main.onCurrencyChange.RemoveListener(OnEarnCurrency);
         hasPlayerContinued = false;
         ShowPromptWithButtonWithArrow("Towers cost money to build. We can earn more money by eliminating threats, and using that money to build more towers.", NextArrow());
         yield return new WaitUntil(() => hasPlayerContinued);
@@ -227,7 +211,7 @@ public class TutorialManager : MonoBehaviour
         hasSelectedTower = true;
     }
 
-    private void OnEarnCurrency()
+    private void OnEarnCurrency(int amt)
     {
         hasEarnedCurrency = true;
     }

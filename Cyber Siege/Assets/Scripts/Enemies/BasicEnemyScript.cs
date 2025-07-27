@@ -7,14 +7,15 @@ public class BasicEnemyScript : MonoBehaviour
 {
     [Header("Base References")]
     [SerializeField] protected ScriptableEnemy enemy;
+    [SerializeField] protected AudioClip audioClipDestroy;
+    [SerializeField] protected Sprite stunnedSprite;
+    [SerializeField] protected GameObject stunEffect;
+    [SerializeField] protected GameObject slowEffect;
 
     [Header("Base Attributes")]
     public bool isHidden = false;
-    [SerializeField] public AudioClip audioClipDestroy;
-
 
     [Header("Base Events")]
-
     public UnityEvent onTakeDamage = new UnityEvent();
     public UnityEvent<BasicEnemyScript> onEnemyDeath = new UnityEvent<BasicEnemyScript>();
     public UnityEvent onEnemyReveal = new UnityEvent();
@@ -26,11 +27,16 @@ public class BasicEnemyScript : MonoBehaviour
     protected int damageDealtToServer;
     protected bool isDestroyed = false;
 
+    // For Sprite Changes
+    protected Sprite baseSprite;
+    protected SpriteRenderer sr;
+
     // For Pathing
     protected int pathIndex = 0;
     protected Transform movementTarget;
     protected Rigidbody2D rb;
     public bool isBlocked = false;
+    public bool hasReachedServer = false;
 
     // For Modifiers
     protected float baseMoveSpeed;
@@ -38,9 +44,13 @@ public class BasicEnemyScript : MonoBehaviour
 
     // For Debuffs
     protected float damageTakenMultiplier = 1f;
+    protected bool isSlowed;
+    protected int slowStackCounter;
 
-    protected virtual void Start()
+    public virtual void InitialiseEnemy()
     {
+        if (enemy == null) return;
+
         health = enemy.health;
         moveSpeed = enemy.moveSpeed;
         currencyValue = enemy.currencyValue;
@@ -49,43 +59,34 @@ public class BasicEnemyScript : MonoBehaviour
         baseMoveSpeed = moveSpeed;
         baseHealth = health;
 
+        sr = gameObject.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody2D>();
+
+        baseSprite = sr.sprite;
+
+        // Hide Effects
+        slowEffect.SetActive(false);
+        stunEffect.SetActive(false);
 
         //Start moving
         UpdateMovementTarget();
     }
 
+    protected virtual void Start()
+    {
+        InitialiseEnemy();
+    }
+
     // Allow Update to be overridable by children to add logic and behavior
     protected virtual void Update()
     {
-        //For Basic Movement
-        //Check if enemy is close to target
-        // Debug.Log(Vector2.Distance(movementTarget.position, transform.position));
-        // if (Vector2.Distance(movementTarget.position, transform.position) <= 0.1f)
-        // {
-        //     //Incement pathIndex
-        //     pathIndex++;
-        //     Debug.Log($"New Path Index: {pathIndex}");
-        //     //If no more points / reached the end of the path
-        //     if (pathIndex >= LevelManager.main.enemyPath.Length)
-        //     {
-        //         //Damange the server
-        //         LevelManager.main.DamageServer(damageDealtToServer);
-        //         DestroySelf();
-        //         return;
-        //     }
-        //     //Else if the path as not ended, update the target to the next point
-        //     else
-        //     {
-        //         UpdateMovementTarget();
-        //     }
-        // }
+
     }
 
     private void FixedUpdate()
     {
-        // If Enemy is currently blocked, stop moving
-        if (isBlocked)
+        // If Enemy is currently blocked OR has alr reached the server, stop moving
+        if (isBlocked || hasReachedServer)
         {
             // Reset linearVelocity if havent
             if (rb.linearVelocity.sqrMagnitude > 0.001f)
@@ -111,10 +112,9 @@ public class BasicEnemyScript : MonoBehaviour
         if (distToTarget.sqrMagnitude < 0.1f * 0.1f) // Adjust threshold as needed
         {
             pathIndex++;
-            if (pathIndex >= LevelManager.main.enemyPath.Length)
+            if (pathIndex >= EnemyManager.main.enemyPath.Length)
             {
-                LevelManager.main.DamageServer(damageDealtToServer);
-                DestroySelf();
+                ReachedServer();
                 return;
             }
 
@@ -125,13 +125,31 @@ public class BasicEnemyScript : MonoBehaviour
         rb.linearVelocity = distToTarget.normalized * moveSpeed;
     }
 
+    public virtual string GetEnemyName()
+    {
+        return enemy.name;
+    }
+
+    // For Unit Testing
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    protected virtual void ReachedServer()
+    {
+        hasReachedServer = true;
+        HealthManager.main.DamageServer(damageDealtToServer);
+        DestroySelf();
+    }
+
     // Stopping when collide with obstacle behavior
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Path Obstacle"))
         {
             BasicTowerScript towerScript = collision.gameObject.GetComponent<BasicTowerScript>();
-            if (!towerScript.disabled)
+            if (!towerScript.IsTowerDisabled())
             {
                 isBlocked = true;
             }
@@ -147,9 +165,9 @@ public class BasicEnemyScript : MonoBehaviour
     }
 
     //Movement Related Functions
-    protected void UpdateMovementTarget()
+    protected virtual void UpdateMovementTarget()
     {
-        movementTarget = LevelManager.main.enemyPath[pathIndex];
+        movementTarget = EnemyManager.main?.enemyPath[pathIndex];
     }
 
     public void UpdatePathIndex(int _pathIndex)
@@ -169,6 +187,16 @@ public class BasicEnemyScript : MonoBehaviour
 
     public void UpdateMovementSpeed(float amt)
     {
+        if (amt < 0) throw new ArgumentOutOfRangeException("Cannot Update to Negative Speed");
+        // If we are going to be slowed, show the slow effect
+        if (amt < 1f)
+        {
+            isSlowed = true;
+            slowEffect.SetActive(true);
+            // Add 1 to the slow stack, this is used 
+            // to track how many of the slow effects is currently being applied to the enemy
+            slowStackCounter++;
+        }
         moveSpeed = baseMoveSpeed * amt;
     }
 
@@ -181,7 +209,16 @@ public class BasicEnemyScript : MonoBehaviour
 
     public void ResetMovementSpeed()
     {
-        moveSpeed = baseMoveSpeed;
+        if (slowStackCounter > 0) slowStackCounter--;
+        // if the number of slow stacks is still > 0, 
+        // means we are still in a debuff zone, 
+        // dont reset the speed
+        if (slowStackCounter < 1)
+        {
+            isSlowed = false;
+            slowEffect.SetActive(false);
+            moveSpeed = baseMoveSpeed;
+        }
     }
 
     public Vector3 GetMovementDirection()
@@ -189,14 +226,14 @@ public class BasicEnemyScript : MonoBehaviour
         // If pathIndex is 0, meaning we shld take enemyPath[0] - startPoint
         if (pathIndex == 0)
         {
-            Vector3 firstTarget = LevelManager.main.enemyPath[0].position;
-            Vector3 startPoint = LevelManager.main.startPoint.position;
+            Vector3 firstTarget = EnemyManager.main.enemyPath[0].position;
+            Vector3 startPoint = EnemyManager.main.startPoint.position;
             return (firstTarget - startPoint).normalized;
         }
 
         // Else, Calculate direction moving based on current and previous pathIndex points
-        Vector3 currentMovementTarget = LevelManager.main.enemyPath[pathIndex].position;
-        Vector3 prevMovementTarget = LevelManager.main.enemyPath[pathIndex - 1].position;
+        Vector3 currentMovementTarget = EnemyManager.main.enemyPath[pathIndex].position;
+        Vector3 prevMovementTarget = EnemyManager.main.enemyPath[pathIndex - 1].position;
 
         return (currentMovementTarget - prevMovementTarget).normalized;
     }
@@ -211,10 +248,30 @@ public class BasicEnemyScript : MonoBehaviour
     //     isBlocked = false;
     // }
 
+    // Sprite Related Functions
+
+    protected virtual void ToggleStunnedSprite(bool stun)
+    {
+        if (stunnedSprite != null)
+        {
+            // if slow effect is currently turned on, turn off temporarily
+            if (isSlowed && slowEffect != null) slowEffect.SetActive(!stun);
+            // toggle stunned sprite and stun effect
+            sr.sprite = stun ? stunnedSprite : baseSprite;
+            stunEffect.SetActive(stun);
+            // Turn slow back on
+            // if (isSlowed && slowEffect != null && stun) slowEffect.SetActive(true);
+        }
+    }
+
     public IEnumerator Stun(float duration)
     {
         isBlocked = true;
+        // Switch to stunned sprite (if available)
+        ToggleStunnedSprite(true);
         yield return new WaitForSeconds(duration);
+        // Switch back to original sprite
+        ToggleStunnedSprite(false);
         isBlocked = false;
     }
 
@@ -223,7 +280,7 @@ public class BasicEnemyScript : MonoBehaviour
     {
         // If damage multiplier applied, include in damage calculation
         health -= (int)(dmg * damageTakenMultiplier);
-        Debug.Log($"Damage taken {dmg * damageTakenMultiplier}");
+        // Debug.Log($"Damage taken {dmg * damageTakenMultiplier}");
         onTakeDamage.Invoke();
 
         if (health <= 0 && !isDestroyed)
@@ -231,21 +288,28 @@ public class BasicEnemyScript : MonoBehaviour
             // Invoke the Event
             onEnemyDeath.Invoke(this);
             // Increase player money
-            LevelManager.main.IncreaseCurrency(currencyValue);
+            if (CurrencyManager.main != null)
+            {
+                CurrencyManager.main.GainCurrencyFromKillingEnemy(currencyValue);
+            }
+            else
+            {
+                Debug.Log("CurrencyManager cannot be found");
+            }
             // Destroy Game Object
             DestroySelf();
         }
     }
 
-    public void DestroySelf()
+    public virtual void DestroySelf()
     {
         isDestroyed = true;
         Destroy(gameObject);
-        EnemyManager.main.EnemyDestroyed();
+        EnemyManager.main?.EnemyDestroyed();
         // Play Enemy Death Sound Effect
         if (audioClipDestroy != null)
         {
-            SoundManager.main.PlaySoundFXClip(audioClipDestroy, 1f);
+            SoundManager.main?.PlaySoundFXClip(audioClipDestroy, 1f);
         }
     }
 
@@ -253,12 +317,24 @@ public class BasicEnemyScript : MonoBehaviour
     public void Reveal()
     {
         isHidden = false;
+        // Increase opacity
+        changeOpacity(1f);
         onEnemyReveal.Invoke();
     }
 
     public void Hide()
     {
         isHidden = true;
+    }
+
+    protected void Vanish()
+    {
+        sr.enabled = false;
+    }
+
+    protected void UnVanish()
+    {
+        sr.enabled = true;
     }
 
     public int GetDamageDealtToServer()
@@ -282,5 +358,13 @@ public class BasicEnemyScript : MonoBehaviour
     public void ResetTakenDamageMultiplier()
     {
         damageTakenMultiplier = 1f;
+    }
+
+    // Change opacity -> 1f = 100%
+    public void changeOpacity(float amount)
+    {
+        Color color = sr.color;
+        color.a = amount;
+        sr.color = color;
     }
 }

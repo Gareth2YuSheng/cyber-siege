@@ -4,15 +4,13 @@ public class TrojanScript : BasicEnemyScript
 {
     [Header("References")]
     [SerializeField] private Sprite revealedSprite;
+    [SerializeField] private Sprite stunnedRevealedSprite;
     [SerializeField] private AudioClip audioClipRevealed;
-
-    private SpriteRenderer spriteRenderer;
 
     protected override void Start()
     {
         base.Start();
         Hide();
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         onEnemyReveal.AddListener(RevealSelf);
     }
 
@@ -20,7 +18,28 @@ public class TrojanScript : BasicEnemyScript
     private void RevealSelf()
     {
         // On first hit, change sprite.
-        spriteRenderer.sprite = revealedSprite;
-        SoundManager.main.PlaySoundFXClip(audioClipRevealed, 1f);
+        sr.sprite = revealedSprite;
+        if (audioClipRevealed != null && SoundManager.main != null)
+        {
+            SoundManager.main.PlaySoundFXClip(audioClipRevealed, 1f);
+        }
+    }
+
+    protected override void ToggleStunnedSprite(bool stun)
+    {
+        if (stunnedSprite != null)
+        {
+            if (isSlowed && slowEffect != null) slowEffect.SetActive(!stun);
+            if (isHidden)
+            {
+                sr.sprite = stun ? stunnedSprite : baseSprite;
+                stunEffect.SetActive(stun);
+            }
+            else
+            {
+                sr.sprite = stun ? stunnedRevealedSprite : revealedSprite;
+                stunEffect.SetActive(stun);
+            }
+        }
     }
 }

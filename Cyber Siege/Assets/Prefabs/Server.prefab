@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1498394925831482817}
   - component: {fileID: 6023542050156029021}
+  - component: {fileID: 3899550408969496883}
   m_Layer: 0
   m_Name: Server
   m_TagString: Untagged
@@ -26,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 9022173585430045066}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.38, y: 4.62, z: -0.13390198}
-  m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
+  m_LocalPosition: {x: 0, y: 0, z: -0.13390198}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: -1145639467
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7678206005093214758, guid: 3d885a45303859b448bbe4f7066ae3ec, type: 3}
+  m_Sprite: {fileID: 4606157284126940538, guid: 1714ada47018ef347b5624d1d087c566, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -87,3 +88,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3899550408969496883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9022173585430045066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd772fa00b11330448eab2bbf4be84db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damagedServerSprite: {fileID: 252814787846042962, guid: ce274d98ae2d8f14fa88d27c625f4397, type: 3}

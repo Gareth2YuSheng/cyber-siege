@@ -26,11 +26,11 @@ public class RansomwarePromptScript : MonoBehaviour
         // Purchase on a 50%
         int choice = Random.Range(0, 2);  // Random.Range(min, max) where max is exclusive
 
-        LevelManager.main.SpendCurrency(100);
+        CurrencyManager.main.SpendCurrency(100);
         RansomwareScript ransomware = EnemyManager.main.GetRansomwareScript();
 
         // Disable prompting
-        ransomware.onPurchase();
+        ransomware.PromptPurchased();
 
         if (choice == 1) // true
         {

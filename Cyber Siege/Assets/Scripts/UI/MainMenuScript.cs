@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
+    public void GlossaryButtonOnClick()
+    {
+        SceneManager.LoadSceneAsync("CyberThreatGlossary");
+    }
     public void PlayButtonOnClick()
     {
         SceneManager.LoadSceneAsync("LevelSelectMenu");

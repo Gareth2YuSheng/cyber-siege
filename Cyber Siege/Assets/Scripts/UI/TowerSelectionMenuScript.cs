@@ -33,11 +33,6 @@ public class TowerSelectionMenuScript : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-
-    }
-
     public void TowerSelectButtonOnClick(int towerIndex)
     {
         Debug.Log($"Selected Tower {towerIndex}");

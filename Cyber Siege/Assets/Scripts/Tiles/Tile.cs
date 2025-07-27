@@ -9,7 +9,6 @@ public class Tile : MonoBehaviour
     protected Color initialColor;
     protected GameObject currentTower;
     protected BasicTowerScript currentTowerScript;
-
     protected bool isBuilding = false;
     protected Vector3 centerPosition;
 
@@ -19,6 +18,10 @@ public class Tile : MonoBehaviour
         initialColor = sr.color;
         sr.enabled = false;
         centerPosition = sr.bounds.center;
+
+        // If player cancels building, make sure to reset tile colour
+        BuildManager.main.onStopGroundBuilding.AddListener(ResetSelectedTileColour);
+        BuildManager.main.onStopPathBuilding.AddListener(ResetSelectedTileColour);
     }
 
     protected void OnMouseEnter()
@@ -61,6 +64,17 @@ public class Tile : MonoBehaviour
 
     protected virtual void OnMouseDown()
     {
+        // Do nothing if player is clicking on specific UI elements
+        if (UIManager.main.IsPointerOverUpgradeMenu()) return;
+        if (UIManager.main.IsPointerOverPauseButton()) return;
+        if (UIManager.main.IsPointerOverRMPrompt()) return;
+        if (UIManager.main.IsPointerOverStartButton()) return;
+        // these checks just prevent a tower from being built when in building mode 
+        // and player clicks on UI elements, it DOES NOT prevent the player from
+        // clicking on the UI elements themselves
+
+        Debug.Log("Clicked on tile: " + gameObject.name);
+
         // If not in building mode dont do anything
         // if (!isBuilding) return;
 
@@ -100,20 +114,37 @@ public class Tile : MonoBehaviour
         currentTower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
         currentTowerScript = currentTower.GetComponent<BasicTowerScript>();
         currentTowerScript.InitialiseTower();
+        // Set Tower's Tile
+        currentTowerScript.SetMyTile(this);
         //Disable building mode
         BuildManager.main.DisableBuilding();
         //Set tile colour back to initialColour
-        sr.color = initialColor;
-        // Clear selected tile
-        BuildManager.main.ClearSelectedTile();
+        ResetSelectedTileColour();
+        // Clear selected tile - in BuildManager        
         // Invoke event
         BuildManager.main.onTowerBuilt.Invoke();
+    }
+
+    private void ResetSelectedTileColour()
+    {
+        //Set tile colour back to initialColour
+        sr.color = initialColor;
     }
 
     // For BuildManager to call tile clicking logic
     public void OnTileClickedExternally()
     {
         OnMouseDown();
+    }
+
+    public void OnTileEnteredExternally()
+    {
+        OnMouseEnter();
+    }
+
+    public void OnTileExitedExternally()
+    {
+        OnMouseExit();
     }
 
     protected void StartBuilding()
@@ -136,5 +167,21 @@ public class Tile : MonoBehaviour
         {
             currentTowerScript.HideTowerRange();
         }
+    }
+
+    // For Tower Selling Functionality
+    public virtual int CalculateMoneySpentOnTile()
+    {
+        // Total Money Spent = Tower base cost + upgrades purchased costs
+        return currentTowerScript.GetTotalMoneySpentOnTower();
+    }
+
+    public virtual void DestroyTower()
+    {
+        if (currentTowerScript == null) return;
+
+        currentTowerScript.DestroySelf();
+        currentTower = null;
+        currentTowerScript = null;
     }
 }
