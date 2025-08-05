@@ -48,11 +48,13 @@ public class ThreatIntelligenceTowerScript : BasicTowerScript
 
     private void Shoot()
     {
+        if (enemyTarget == null) return;
+
         // Grab Bullet From Object Pool
         GameObject bulletObj = ObjectManager.main.SpawnFromPool(bulletPoolTag, firingPoint.position, Quaternion.identity);
         BulletScript bulletScript = bulletObj.GetComponent<BulletScript>();
         bulletScript.SetBulletDamage(towerDamage);
-        bulletScript.SetTarget(enemyTarget);
+        bulletScript.SetTarget(enemyTarget.gameObject);
     }
 
     /* Upgrades

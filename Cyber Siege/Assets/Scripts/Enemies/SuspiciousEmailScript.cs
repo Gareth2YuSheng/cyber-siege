@@ -3,7 +3,7 @@ using UnityEngine;
 public class SuspiciousEmailScript : SuspiciousEnemyScript
 {
     [Header("References")]
-    [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private ScriptableEnemy enemyToSpawnSO;
 
     [Header("Attributes")]
     [SerializeField] private int onDeathSpawnCount;
@@ -20,13 +20,17 @@ public class SuspiciousEmailScript : SuspiciousEnemyScript
     // Logic moved to EnemyManager
     private void SpawnEnemiesOnDeath(BasicEnemyScript enemy)
     {
-        GameObject prefabToSpawn = enemyPrefabs[0];
-        // int index = Random.Range(0, enemyPrefabs.Length);
-        // GameObject prefabToSpawn = enemyPrefabs[index];
         EnemyManager.main.SpawnEnemies(
             onDeathSpawnCount,
             transform.position,
             GetCurrentPathIndex(),
-            prefabToSpawn);
+            enemyToSpawnSO.objectPoolTag);
+    }
+
+    public override void DestroySelf()
+    {
+        // Cleanup Event Listener
+        onEnemyDeath.RemoveListener(SpawnEnemiesOnDeath);
+        base.DestroySelf();
     }
 }

@@ -156,7 +156,7 @@ public class FirewallTowerScript : BasicTowerScript
             if (enemy != null) // In case the enemy was destroyed
             {
                 // Unblock Enemy
-                enemy.UnblockEnemy();
+                enemy.Unblock();
             }
         }
     }

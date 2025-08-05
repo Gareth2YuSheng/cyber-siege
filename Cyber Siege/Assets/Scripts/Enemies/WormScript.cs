@@ -3,11 +3,11 @@ using UnityEngine;
 public class WormScript : BasicEnemyScript
 {
     [Header("References")]
-    [SerializeField] private GameObject WormPrefab;
+    [SerializeField] private ScriptableEnemy wormSO;
 
     [Header("Attributes")]
-    [SerializeField] private int WormSpawnCount;
-    [SerializeField] private float WormSpawnRate;
+    [SerializeField] private int wormSpawnCount;
+    [SerializeField] private float wormSpawnRate;
     //Spawns {botnetSpawnCount} bots every {botnetSpawnRate} seconds
 
     private float timeSinceLastSpawn = 0f;
@@ -19,9 +19,10 @@ public class WormScript : BasicEnemyScript
         // Worm Specific behavior
         timeSinceLastSpawn += Time.deltaTime;
 
-        if (timeSinceLastSpawn >= WormSpawnRate)
+        if (timeSinceLastSpawn >= wormSpawnRate)
         {
             Duplicate();
+            Debug.Log("Duplicating");
             timeSinceLastSpawn = 0f;
         }
     }
@@ -45,10 +46,10 @@ public class WormScript : BasicEnemyScript
         }
         Vector3 spawnPosition = transform.position + offset;
         EnemyManager.main.SpawnEnemies(
-            WormSpawnCount,
+            wormSpawnCount,
             spawnPosition,
             GetCurrentPathIndex(),
-            WormPrefab,
+            wormSO.objectPoolTag,
             0.5f
         );
     }

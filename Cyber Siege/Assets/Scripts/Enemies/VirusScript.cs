@@ -3,11 +3,10 @@ using UnityEngine;
 public class VirusScript : BasicEnemyScript
 {
     [Header("References")]
-    [SerializeField] private GameObject spawnEnemyPrefab;
+    [SerializeField] private ScriptableEnemy virusSO;
 
     [Header("Attributes")]
     [SerializeField] private int VirusSpawnCount;
-    // [SerializeField] private float VirusSpawnRate;
     //Spawns {botnetSpawnCount} bots every {botnetSpawnRate} seconds
 
     // This function will be called by normal towers and will trigger virus spawns
@@ -44,7 +43,7 @@ public class VirusScript : BasicEnemyScript
             VirusSpawnCount,
             spawnPosition,
             GetCurrentPathIndex(),
-            spawnEnemyPrefab,
+            virusSO.objectPoolTag,
             0.5f
         );
     }

@@ -16,3 +16,4 @@ MonoBehaviour:
   moveSpeed: 1.5
   currencyValue: 20
   damageDealtToServer: 10
+  objectPoolTag: Ransomware

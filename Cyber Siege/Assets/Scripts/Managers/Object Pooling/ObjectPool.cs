@@ -41,18 +41,13 @@ public class ObjectPool
         return pool.Count;
     }
 
-    public GameObject GetObject()
-    {
-        GameObject obj = pool.Dequeue();
-        obj.SetActive(true);
-        return obj;
-    }
-
     public GameObject GetObject(Vector3 position, Quaternion rotation)
     {
-        GameObject obj = GetObject();
+        GameObject obj = pool.Dequeue();
         obj.transform.position = position;
         obj.transform.rotation = rotation;
+        // Only set active after updating the position
+        obj.SetActive(true);
 
         // Initialise pooled object script
         IPooledObject pooledObj = obj.GetComponent<IPooledObject>();

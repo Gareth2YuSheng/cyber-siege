@@ -16,3 +16,4 @@ MonoBehaviour:
   moveSpeed: 4
   currencyValue: 0
   damageDealtToServer: 0
+  objectPoolTag: Cryptojacking

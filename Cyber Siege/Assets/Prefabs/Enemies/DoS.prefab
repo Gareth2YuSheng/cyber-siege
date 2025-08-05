@@ -120,7 +120,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isBlocked: 0
-  DDoSBotPrefab: {fileID: 5710481652798878408, guid: 33a09d18ddfb33341b6fc7500a8bdff2, type: 3}
+  hasReachedServer: 0
+  DDoSBotSO: {fileID: 11400000, guid: c32dd86cd96c8c2418750b4f582417de, type: 2}
   botnetSpawnCount: 5
   botnetSpawnRate: 3
 --- !u!50 &4798159098121115316

@@ -7,10 +7,16 @@ public class TrojanScript : BasicEnemyScript
     [SerializeField] private Sprite stunnedRevealedSprite;
     [SerializeField] private AudioClip audioClipRevealed;
 
+    public override void InitialiseEnemy()
+    {
+        base.InitialiseEnemy();
+        Hide();
+    }
+
     protected override void Start()
     {
         base.Start();
-        Hide();
+        // Hide();
         onEnemyReveal.AddListener(RevealSelf);
     }
 
@@ -41,5 +47,12 @@ public class TrojanScript : BasicEnemyScript
                 stunEffect.SetActive(stun);
             }
         }
+    }
+
+    public override void DestroySelf()
+    {
+        // Cleanup Event Listener
+        onEnemyReveal.RemoveListener(RevealSelf);
+        base.DestroySelf();
     }
 }

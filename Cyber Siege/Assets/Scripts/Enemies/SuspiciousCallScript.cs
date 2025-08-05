@@ -11,26 +11,28 @@ public class SuspiciousCallScript : SuspiciousEnemyScript
 
     private HashSet<BasicEnemyScript> buffedEnemies = new HashSet<BasicEnemyScript>();
 
-    protected override void Start()
+    public override void InitialiseEnemy()
     {
-        base.Start();
+        base.InitialiseEnemy();
         // Set the circle collider radius
         buffRangeCollider = gameObject.GetComponent<CircleCollider2D>();
         buffRangeCollider.radius = buffRange * 10;
     }
 
-    private void OnDestroy()
+    protected override void ResetEnemy()
     {
-        // Reset all buffs if this buffer dies
-        foreach (BasicEnemyScript enemy in buffedEnemies)
-        {
-            if (enemy != null)
-            {
-                enemy.ResetMovementSpeed();
-                enemy.onEnemyDeath.RemoveListener(HandleBuffedEnemyDeath);
-            }
-        }
+        base.ResetEnemy();
+        // Reset Circle Collider Radius
+        buffRangeCollider.radius = buffRange * 10;
     }
+
+    // protected override void Start()
+    // {
+    //     base.Start();
+    //     // Set the circle collider radius
+    //     // buffRangeCollider = gameObject.GetComponent<CircleCollider2D>();
+    //     // buffRangeCollider.radius = buffRange * 10;
+    // }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -66,5 +68,19 @@ public class SuspiciousCallScript : SuspiciousEnemyScript
     {
         buffedEnemies.Remove(enemy);
         enemy.onEnemyDeath.RemoveListener(HandleBuffedEnemyDeath);
+    }
+
+    public override void DestroySelf()
+    {
+        // Reset all buffs if this buffer dies
+        foreach (BasicEnemyScript enemy in buffedEnemies)
+        {
+            if (enemy != null)
+            {
+                enemy.ResetMovementSpeed();
+                enemy.onEnemyDeath.RemoveListener(HandleBuffedEnemyDeath);
+            }
+        }
+        base.DestroySelf();
     }
 }

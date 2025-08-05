@@ -55,12 +55,11 @@ public class ObjectManager : MonoBehaviour
         // Expand pool if empty
         if (pool.GetCurrentPoolSize() == 0)
         {
-            ExpandPool(tag, pool.GetPoolSize());
-            pool.SetPoolSize(pool.GetPoolSize() * 2);
+            ExpandPool(tag, Math.Max(pool.GetPoolSize(), 1));
+            pool.SetPoolSize(Math.Max(pool.GetPoolSize(), 1) * 2);
         }
 
-        GameObject obj = pool.GetObject(position, rotation);
-        return obj;
+        return pool.GetObject(position, rotation);
     }
 
     public void ReturnToPool(string tag, GameObject obj)

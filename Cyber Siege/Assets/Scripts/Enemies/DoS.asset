@@ -16,3 +16,4 @@ MonoBehaviour:
   moveSpeed: 0.5
   currencyValue: 50
   damageDealtToServer: 3
+  objectPoolTag: DoS

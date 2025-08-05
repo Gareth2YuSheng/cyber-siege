@@ -7,6 +7,7 @@ public class BulletScript : MonoBehaviour, IPooledObject
 
     protected Rigidbody2D rb;
     protected Transform target;
+    protected BasicEnemyScript targetScript;
     protected float speed;
     protected int damage = 0;
     protected bool hasCollided = false;
@@ -33,10 +34,10 @@ public class BulletScript : MonoBehaviour, IPooledObject
         if (mode == "TARGET")
         {
             // If target dies, destroy self as cleanup
-            if (target == null)
+            if (target == null || (targetScript != null && targetScript.IsDestroyed()))
             {
                 // Destroy(gameObject);
-                ReturnPooledObject();
+                DestroySelf();
                 return;
             }
 
@@ -53,7 +54,7 @@ public class BulletScript : MonoBehaviour, IPooledObject
             if (distanceTravelled > maxRange)
             {
                 // Destroy(gameObject);
-                ReturnPooledObject();
+                DestroySelf();
                 return;
             }
         }
@@ -61,6 +62,7 @@ public class BulletScript : MonoBehaviour, IPooledObject
         rb.linearVelocity = direction * speed;
     }
 
+    // Object Pooling Functions
     public virtual void OnObjectSpawn()
     {
         hasCollided = false;
@@ -75,7 +77,6 @@ public class BulletScript : MonoBehaviour, IPooledObject
             Debug.LogWarning("Object Pool is not in the scene");
             return;
         }
-        // Debug.Log("Returning Bullet To <" + objectPoolTag + "> Pool");
         ObjectManager.main.ReturnToPool(objectPoolTag, gameObject);
     }
 
@@ -85,10 +86,32 @@ public class BulletScript : MonoBehaviour, IPooledObject
         transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
     }
 
-    public void SetTarget(Transform _target)
+    public void SetTarget(GameObject _target)
     {
-        target = _target;
+        target = _target.transform;
         mode = "TARGET";
+        // Add listener for target, if target dies, destroy bullet
+        // If target is a enemy
+        targetScript = _target.GetComponent<BasicEnemyScript>();
+        if (targetScript != null)
+        {
+            targetScript.onEnemyDeath.AddListener(HandleEnemyTargetDeath);
+        }
+    }
+
+    private void HandleEnemyTargetDeath(BasicEnemyScript _script)
+    {
+        DestroySelf();
+    }
+
+    protected void DestroySelf()
+    {
+        // Remove Enemy Listeners
+        if (targetScript != null)
+        {
+            targetScript.onEnemyDeath.RemoveListener(HandleEnemyTargetDeath);
+        }
+        ReturnPooledObject();
     }
 
     public void SetDirection(Vector2 _direction, float range)
@@ -125,7 +148,7 @@ public class BulletScript : MonoBehaviour, IPooledObject
             BasicEnemyScript enemy = collision.gameObject.GetComponent<BasicEnemyScript>();
             enemy.TakeDamage(damage);
             // Destroy(gameObject);
-            ReturnPooledObject();
+            DestroySelf();
         }
     }
 }

@@ -120,7 +120,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isBlocked: 0
-  spawnEnemyPrefab: {fileID: 1699728895133875648}
+  hasReachedServer: 0
+  virusSO: {fileID: 11400000, guid: 116d57db0aa0446aab5a86708241479f, type: 2}
   VirusSpawnCount: 1
 --- !u!50 &4661326746327342660
 Rigidbody2D:

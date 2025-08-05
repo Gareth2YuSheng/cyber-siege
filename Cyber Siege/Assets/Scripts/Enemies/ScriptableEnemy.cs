@@ -7,4 +7,5 @@ public class ScriptableEnemy : ScriptableObject
     public float moveSpeed;
     public int currencyValue;
     public int damageDealtToServer;
+    public string objectPoolTag;
 }

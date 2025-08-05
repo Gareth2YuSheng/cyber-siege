@@ -7,7 +7,7 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager main;
 
     [Header("References")]
-    [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private ScriptableEnemy[] enemies;
     public Transform startPoint;
     public Transform[] enemyPath;
 
@@ -16,7 +16,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float enemiesPerSecond = 2f;
     [SerializeField] private float difficultyScalingFactor = 0.75f;
     [SerializeField] private float enemiesPerSecondCap = 15f;
-    [SerializeField] private bool testingMode = false; // For testing only, comment when building
+    public bool testingMode = false; // For testing only, comment when building
 
     [Header("Events")]
     public UnityEvent onWaveStart = new UnityEvent();
@@ -59,7 +59,6 @@ public class EnemyManager : MonoBehaviour
             SpawnEnemy();
             timeSinceLastSpawn = 0f;
             enemiesLeftToSpawn--;
-            enemiesAlive++;
         }
 
         //If there are no more enemies alive, to spawn 
@@ -130,54 +129,83 @@ public class EnemyManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        // GameObject prefabToSpawn = enemyPrefabs[0];
-        // Randomise the enemies
-        // int index = Random.Range(0, enemyPrefabs.Length);
-        // GameObject prefabToSpawn = enemyPrefabs[index];
-        GameObject prefabToSpawn;
+        // GameObject prefabToSpawn;
+        ScriptableEnemy enemyToSpawn;
         Vector3 position = startPoint.position;
         position.z = -1; // Force the z-coord so it spawns above the path
         int index = 0;
 
         if (!testingMode)
         {
-            index = Random.Range(0, enemyPrefabs.Length);
+            // index = Random.Range(0, enemyPrefabs.Length);
+            index = Random.Range(0, enemies.Length);
         }
-        prefabToSpawn = enemyPrefabs[index];
+        // prefabToSpawn = enemyPrefabs[index];
+        enemyToSpawn = enemies[index];
 
-        // Debug.Log(prefabToSpawn.name);
         /*
             If the selected prefab is a cryptojacking enemy,
             we spawn it but it shouldnt be counted under the enemy count, 
             so we need to spawn another random enemy to replace it
         */
 
-        if (prefabToSpawn.name == "Cryptojacking")
+        if (enemyToSpawn.objectPoolTag == "Cryptojacking")
         {
             // Spawn the cryptojacking
-            Instantiate(prefabToSpawn, position, Quaternion.identity);
-            // Set the prefabToSpawn to another enemy that is not cryptojacking
-            while (prefabToSpawn.name == "Cryptojacking")
+            Spawn(enemyToSpawn.objectPoolTag, position, Quaternion.identity);
+            // Set the enemyToSpawn to another enemy that is not cryptojacking
+            while (enemyToSpawn.objectPoolTag == "Cryptojacking")
             {
-                index = Random.Range(0, enemyPrefabs.Length);
-                prefabToSpawn = enemyPrefabs[index];
+                index = Random.Range(0, enemies.Length);
+                enemyToSpawn = enemies[index];
             }
         }
 
-        Instantiate(prefabToSpawn, position, Quaternion.identity);
+        Spawn(enemyToSpawn.objectPoolTag, position, Quaternion.identity);
+        enemiesAlive++;
     }
 
-    public void SpawnEnemies(int count, Vector3 position, int pathIndex, GameObject prefab)
+    // public void SpawnEnemies(int count, Vector3 position, int pathIndex, GameObject prefab)
+    // {
+    //     StartCoroutine(SpawnCoroutine(count, position, pathIndex, prefab, 0f));
+    // }
+
+    // public void SpawnEnemies(int count, Vector3 position, int pathIndex, GameObject prefab, float delay)
+    // {
+    //     StartCoroutine(SpawnCoroutine(count, position, pathIndex, prefab, delay));
+    // }
+
+    public void SpawnEnemies(int count, Vector3 position, int pathIndex, string tag)
     {
-        StartCoroutine(SpawnCoroutine(count, position, pathIndex, prefab, 0f));
+        StartCoroutine(SpawnCoroutine(count, position, pathIndex, tag, 0f));
     }
 
-    public void SpawnEnemies(int count, Vector3 position, int pathIndex, GameObject prefab, float delay)
+    public void SpawnEnemies(int count, Vector3 position, int pathIndex, string tag, float delay)
     {
-        StartCoroutine(SpawnCoroutine(count, position, pathIndex, prefab, delay));
+        StartCoroutine(SpawnCoroutine(count, position, pathIndex, tag, delay));
     }
 
-    private IEnumerator SpawnCoroutine(int count, Vector3 position, int pathIndex, GameObject prefab, float initialSpawnDelay)
+    // private IEnumerator SpawnCoroutine(int count, Vector3 position, int pathIndex, GameObject prefab, float initialSpawnDelay)
+    // {
+    //     if (initialSpawnDelay > 0f)
+    //     {
+    //         yield return new WaitForSeconds(initialSpawnDelay);
+    //     }
+
+    //     for (int i = 0; i < count; i++)
+    //     {
+    //         GameObject enemy = Instantiate(prefab, position, Quaternion.identity);
+    //         enemy.SetActive(false);
+    //         // What if enemy spawns and immeidately dies before this point
+    //         BasicEnemyScript script = enemy.GetComponent<BasicEnemyScript>();
+    //         script.UpdatePathIndex(pathIndex);
+    //         enemiesAlive++;
+    //         enemy.SetActive(true);
+    //         yield return new WaitForSeconds(0.1f);
+    //     }
+    // }
+
+    private IEnumerator SpawnCoroutine(int count, Vector3 position, int pathIndex, string tag, float initialSpawnDelay)
     {
         if (initialSpawnDelay > 0f)
         {
@@ -186,15 +214,24 @@ public class EnemyManager : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            GameObject enemy = Instantiate(prefab, position, Quaternion.identity);
-            enemy.SetActive(false);
+            GameObject enemy = Spawn(tag, position, Quaternion.identity);
             // What if enemy spawns and immeidately dies before this point
             BasicEnemyScript script = enemy.GetComponent<BasicEnemyScript>();
-            script.UpdatePathIndex(pathIndex);
+            script.UpdatePathIndexForSpawn(pathIndex);
             enemiesAlive++;
-            enemy.SetActive(true);
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    private GameObject Spawn(string tag, Vector3 position, Quaternion rotation)
+    {
+        if (ObjectManager.main == null)
+        {
+            Debug.LogWarning("Object Pool is not in the scene");
+            return null;
+        }
+
+        return ObjectManager.main.SpawnFromPool(tag, position, Quaternion.identity);
     }
 
     private int EnemiesPerWave()

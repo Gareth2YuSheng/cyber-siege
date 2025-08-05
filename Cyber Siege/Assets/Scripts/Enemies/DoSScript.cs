@@ -3,7 +3,7 @@ using UnityEngine;
 public class DoSScript : BasicEnemyScript
 {
     [Header("References")]
-    [SerializeField] private GameObject DDoSBotPrefab;
+    [SerializeField] private ScriptableEnemy DDoSBotSO;
 
     [Header("Attributes")]
     [SerializeField] private int botnetSpawnCount;
@@ -25,7 +25,7 @@ public class DoSScript : BasicEnemyScript
                 botnetSpawnCount,
                 transform.position,
                 GetCurrentPathIndex(),
-                DDoSBotPrefab);
+                DDoSBotSO.objectPoolTag);
             timeSinceLastSpawn = 0f;
         }
     }
