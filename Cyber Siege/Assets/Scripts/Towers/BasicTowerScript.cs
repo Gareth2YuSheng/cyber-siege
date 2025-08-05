@@ -16,6 +16,7 @@ public class BasicTowerScript : MonoBehaviour
     [SerializeField] protected GameObject disabledEffect;
     [SerializeField] protected GameObject upgradeLayer1;
     [SerializeField] protected GameObject upgradeLayer2;
+    [SerializeField] protected ScriptableBullet bulletSO;
 
     [Header("Base Events")]
     public UnityEvent<BasicTowerScript> onTowerDestroyed = new UnityEvent<BasicTowerScript>();
@@ -27,7 +28,6 @@ public class BasicTowerScript : MonoBehaviour
     protected int towerDamage;
     protected float rotationSpeed;
     protected float bps;
-    // protected int level = 1;
     protected bool isRotatable;
 
     //For Modification (Upgrades)
@@ -38,6 +38,7 @@ public class BasicTowerScript : MonoBehaviour
     //For Shooting
     protected Transform enemyTarget;
     protected float timeUntilFire;
+    protected string bulletPoolTag;
 
     // For Ransomware
     protected bool disabled = false;
@@ -64,6 +65,12 @@ public class BasicTowerScript : MonoBehaviour
 
         baseBPS = bps;
         baseRange = range;
+
+        // Only set bullet if provided, some towers do not shoot
+        if (bulletSO != null)
+        {
+            bulletPoolTag = bulletSO.objectPoolTag;
+        }
 
         UpdateTowerRangeTransform();
         // Hide Tower Range

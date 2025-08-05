@@ -187,9 +187,12 @@ public class EnemyManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             GameObject enemy = Instantiate(prefab, position, Quaternion.identity);
+            enemy.SetActive(false);
+            // What if enemy spawns and immeidately dies before this point
             BasicEnemyScript script = enemy.GetComponent<BasicEnemyScript>();
             script.UpdatePathIndex(pathIndex);
             enemiesAlive++;
+            enemy.SetActive(true);
             yield return new WaitForSeconds(0.1f);
         }
     }

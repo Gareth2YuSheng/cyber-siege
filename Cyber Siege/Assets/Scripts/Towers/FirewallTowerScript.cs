@@ -147,6 +147,20 @@ public class FirewallTowerScript : BasicTowerScript
     //     }
     // }
 
+    protected void OnDestroy()
+    {
+        // Unblock all enemies in contact
+        foreach (var enemyWithTime in enemiesInContact.ToList())
+        {
+            BasicEnemyScript enemy = enemyWithTime.Key;
+            if (enemy != null) // In case the enemy was destroyed
+            {
+                // Unblock Enemy
+                enemy.UnblockEnemy();
+            }
+        }
+    }
+
     protected override void Action()
     {
         // Dont run if no enemies

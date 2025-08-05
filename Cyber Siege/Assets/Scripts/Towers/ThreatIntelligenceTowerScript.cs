@@ -3,7 +3,6 @@ using UnityEngine;
 public class ThreatIntelligenceTowerScript : BasicTowerScript
 {
     [Header("References")]
-    // [SerializeField] private GameObject buffArea;
     [SerializeField] private LayerMask towerMask;
 
     [Header("Attributes")]
@@ -12,13 +11,9 @@ public class ThreatIntelligenceTowerScript : BasicTowerScript
     [SerializeField] private float rangeBuffFactor = 1.25f;
     [SerializeField] private float fireRateBuffFactor = 1.25f;
 
-    // private CircleCollider2D buffAreaCollider;
-    // private BasicTowerScript myScript;
-
     public override void InitialiseTower()
     {
         base.InitialiseTower();
-        // myScript = gameObject.GetComponent<BasicTowerScript>();
         // Add Event Listener
         BuildManager.main.onTowerBuilt.AddListener(ScanForTowersInRange);
     }
@@ -53,7 +48,8 @@ public class ThreatIntelligenceTowerScript : BasicTowerScript
 
     private void Shoot()
     {
-        GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
+        // Grab Bullet From Object Pool
+        GameObject bulletObj = ObjectManager.main.SpawnFromPool(bulletPoolTag, firingPoint.position, Quaternion.identity);
         BulletScript bulletScript = bulletObj.GetComponent<BulletScript>();
         bulletScript.SetBulletDamage(towerDamage);
         bulletScript.SetTarget(enemyTarget);

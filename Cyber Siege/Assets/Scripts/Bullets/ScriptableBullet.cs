@@ -4,4 +4,5 @@ using UnityEngine;
 public class ScriptableBullet : ScriptableObject
 {
     public float bulletSpeed = 5f;
+    public string objectPoolTag = "GenericBullet";
 }

@@ -164,6 +164,11 @@ public class BasicEnemyScript : MonoBehaviour
         }
     }
 
+    public void UnblockEnemy()
+    {
+        isBlocked = false;
+    }
+
     //Movement Related Functions
     protected virtual void UpdateMovementTarget()
     {

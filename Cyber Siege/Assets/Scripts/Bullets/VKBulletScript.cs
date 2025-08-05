@@ -10,7 +10,8 @@ public class VKBulletScript : BulletScript
             hasCollided = true;
             VirusScript virus = collision.gameObject.GetComponent<VirusScript>();
             SpecialEffect(virus);
-            Destroy(gameObject);
+            // Destroy(gameObject);
+            ReturnPooledObject();
         }
         // Else If enemy is normal enemy do normal damage
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && !hasCollided)
