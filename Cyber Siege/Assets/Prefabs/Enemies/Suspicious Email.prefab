@@ -121,8 +121,7 @@ MonoBehaviour:
       m_Calls: []
   isBlocked: 0
   hasReachedServer: 0
-  enemyPrefabs:
-  - {fileID: 1699728895133875648, guid: 9e406c743c28f5645a6784257906860c, type: 3}
+  enemyToSpawnSO: {fileID: 11400000, guid: eaae6eaf9859b9341b1b0e0aae72c316, type: 2}
   onDeathSpawnCount: 3
 --- !u!50 &4798159098121115316
 Rigidbody2D:

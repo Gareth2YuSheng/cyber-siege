@@ -18,11 +18,11 @@ public class RansomwareScript : BasicEnemyScript
     public bool hasAttemptedRemoval = false;
     private float timeUntilDisableTowers;
 
-    protected override void Start()
-    {
-        base.Start();
-        // UpdateEnemyRangeTransform();
-    }
+    // protected override void Start()
+    // {
+    //     base.Start();
+    //     // UpdateEnemyRangeTransform();
+    // }
 
     protected override void Update()
     {
@@ -31,7 +31,6 @@ public class RansomwareScript : BasicEnemyScript
         timeUntilDisableTowers += Time.deltaTime;
         if (timeUntilDisableTowers >= cooldown)
         {
-            // ScanAndDisableTowersInRange();
             Attack();
             timeUntilDisableTowers = 0f;
         }
@@ -55,25 +54,6 @@ public class RansomwareScript : BasicEnemyScript
     {
         hasAttemptedRemoval = true;
     }
-
-    // Replaced with Attack
-    // private void ScanAndDisableTowersInRange()
-    // {
-    //     Debug.Log("Ransomware Scanning For Towers");
-
-    //     Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range, towerMask);
-    //     foreach (Collider2D hit in hits)
-    //     {
-    //         // Hits will be objects with colliders, which are currently the tower Bases
-    //         // Script is in parent object
-    //         BasicTowerScript tower = hit.GetComponentInParent<BasicTowerScript>();
-    //         if (tower != null && tower.towerName != "Encryption Node")
-    //         {
-    //             Debug.Log($"Found tower: {tower.towerName}");
-    //             tower.DisableTower(this);
-    //         }
-    //     }
-    // }
 
     private void Attack()
     {

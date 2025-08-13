@@ -5,7 +5,6 @@ public class NetworkScrubberScript : BasicTowerScript
     [Header("References")]
     [SerializeField] private Transform[] firingPoints;
     [SerializeField] private Transform[] upgradedFiringPoints;
-    [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameObject normalBarrels;
     [SerializeField] private GameObject upgradedBarrels;
 
@@ -27,7 +26,8 @@ public class NetworkScrubberScript : BasicTowerScript
             // Direction calculated based on firing point transform relative to tower transform
             Vector2 direction = (point.position - transform.position).normalized;
 
-            GameObject bulletObj = Instantiate(bulletPrefab, point.position, Quaternion.identity);
+            // Grab Bullet From Object Pool
+            GameObject bulletObj = ObjectManager.main.SpawnFromPool(bulletPoolTag, point.position, Quaternion.identity);
             BulletScript bulletScript = bulletObj.GetComponent<BulletScript>();
             bulletScript.SetBulletDamage(towerDamage);
             // Take into account the distance of the firing point from the center

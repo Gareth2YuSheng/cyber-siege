@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class SuspiciousEnemyScript : BasicEnemyScript
 {
-    protected override void Start()
+    protected override void ResetEnemy()
     {
-        base.Start();
+        base.ResetEnemy();
         // Hide phishing enemies first
         // Set opacity to 20%
         changeOpacity(0.2f);

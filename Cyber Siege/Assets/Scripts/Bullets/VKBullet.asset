@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: VKBullet
   m_EditorClassIdentifier: 
   bulletSpeed: 9
+  objectPoolTag: VKBullet

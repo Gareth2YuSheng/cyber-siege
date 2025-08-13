@@ -16,3 +16,4 @@ MonoBehaviour:
   moveSpeed: 2
   currencyValue: 20
   damageDealtToServer: 3
+  objectPoolTag: SusEmail

@@ -1,25 +1,28 @@
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class BulletScript : MonoBehaviour, IPooledObject
 {
     [Header("References")]
     [SerializeField] protected ScriptableBullet bullet;
 
     protected Rigidbody2D rb;
     protected Transform target;
+    protected BasicEnemyScript targetScript;
     protected float speed;
     protected int damage = 0;
     protected bool hasCollided = false;
     protected Vector2 direction;
     protected Vector3 spawnPosition;
     protected float maxRange;
-    protected int pierceCount;
+    protected int pierceCount = 0;
     protected int maxPierce = 1;
     protected string mode = "";
+    protected string objectPoolTag;
 
-    private void Start()
+    private void Awake()
     {
         speed = bullet.bulletSpeed;
+        objectPoolTag = bullet.objectPoolTag;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -31,9 +34,10 @@ public class BulletScript : MonoBehaviour
         if (mode == "TARGET")
         {
             // If target dies, destroy self as cleanup
-            if (target == null)
+            if (target == null || (targetScript != null && targetScript.IsDestroyed()))
             {
-                Destroy(gameObject);
+                // Destroy(gameObject);
+                DestroySelf();
                 return;
             }
 
@@ -49,12 +53,31 @@ public class BulletScript : MonoBehaviour
             float distanceTravelled = Vector3.Distance(transform.position, spawnPosition);
             if (distanceTravelled > maxRange)
             {
-                Destroy(gameObject);
+                // Destroy(gameObject);
+                DestroySelf();
                 return;
             }
         }
 
         rb.linearVelocity = direction * speed;
+    }
+
+    // Object Pooling Functions
+    public virtual void OnObjectSpawn()
+    {
+        hasCollided = false;
+        mode = "";
+        pierceCount = 0;
+    }
+
+    public virtual void ReturnPooledObject()
+    {
+        if (ObjectManager.main == null)
+        {
+            Debug.LogWarning("Object Pool is not in the scene");
+            return;
+        }
+        ObjectManager.main.ReturnToPool(objectPoolTag, gameObject);
     }
 
     public void RotateBullet(Vector2 _direction)
@@ -63,10 +86,32 @@ public class BulletScript : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
     }
 
-    public void SetTarget(Transform _target)
+    public void SetTarget(GameObject _target)
     {
-        target = _target;
+        target = _target.transform;
         mode = "TARGET";
+        // Add listener for target, if target dies, destroy bullet
+        // If target is a enemy
+        targetScript = _target.GetComponent<BasicEnemyScript>();
+        if (targetScript != null)
+        {
+            targetScript.onEnemyDeath.AddListener(HandleEnemyTargetDeath);
+        }
+    }
+
+    private void HandleEnemyTargetDeath(BasicEnemyScript _script)
+    {
+        DestroySelf();
+    }
+
+    protected void DestroySelf()
+    {
+        // Remove Enemy Listeners
+        if (targetScript != null)
+        {
+            targetScript.onEnemyDeath.RemoveListener(HandleEnemyTargetDeath);
+        }
+        ReturnPooledObject();
     }
 
     public void SetDirection(Vector2 _direction, float range)
@@ -102,7 +147,8 @@ public class BulletScript : MonoBehaviour
             pierceCount++;
             BasicEnemyScript enemy = collision.gameObject.GetComponent<BasicEnemyScript>();
             enemy.TakeDamage(damage);
-            Destroy(gameObject);
+            // Destroy(gameObject);
+            DestroySelf();
         }
     }
 }

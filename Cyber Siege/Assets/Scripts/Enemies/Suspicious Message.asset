@@ -16,3 +16,4 @@ MonoBehaviour:
   moveSpeed: 3.2
   currencyValue: 30
   damageDealtToServer: 1
+  objectPoolTag: SusMsg

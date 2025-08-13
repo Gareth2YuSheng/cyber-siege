@@ -4,9 +4,8 @@ using UnityEngine;
 public class AntivirusTowerScript : BasicTowerScript
 {
     [Header("References")]
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private GameObject upgradedBulletPrefab;
     [SerializeField] private Transform firingPoint;
+    [SerializeField] private ScriptableBullet upgradedBulletSO;
 
     [Header("Attributes")]
     [SerializeField] private int burstCount = 3;
@@ -14,7 +13,13 @@ public class AntivirusTowerScript : BasicTowerScript
     [SerializeField] private float slowingFactor = 0.4f;
     [SerializeField] private float slowingDuration = 2.0f;
 
-    // private bool burstMode = false;
+    private string upgradedBulletPoolTag;
+
+    public override void InitialiseTower()
+    {
+        base.InitialiseTower();
+        upgradedBulletPoolTag = upgradedBulletSO.objectPoolTag;
+    }
 
     protected override void Action()
     {
@@ -38,14 +43,30 @@ public class AntivirusTowerScript : BasicTowerScript
 
     private void Shoot()
     {
+        // If target dies then do nothing
+        if (enemyTarget == null) return;
+
         Vector2 firingDirection = (firingPoint.position - transform.position).normalized;
         // If quarantine protocol enabled
         if (upgrades[0].purchased)
         {
-            GameObject bulletObj = Instantiate(upgradedBulletPrefab, firingPoint.position, Quaternion.identity);
+            if (ObjectManager.main == null)
+            {
+                Debug.LogWarning("Object Pool is not in the scene");
+                return;
+            }
+
+            // Grab Bullet From Object Pool
+            GameObject bulletObj = ObjectManager.main.SpawnFromPool(upgradedBulletPoolTag, firingPoint.position, Quaternion.identity);
             VKSlowBulletScript bulletScript = bulletObj.GetComponent<VKSlowBulletScript>();
             bulletScript.SetBulletDamage(towerDamage);
-            bulletScript.SetTarget(enemyTarget);
+            bulletScript.SetTarget(enemyTarget.gameObject);
+            // If target has died after bullet has been created but before we can assign the bullet a target
+            if (enemyTarget.gameObject == null)
+            {
+                ObjectManager.main.ReturnToPool(bulletPoolTag, bulletObj);
+                return;
+            }
             bulletScript.SetSlowingDuration(slowingDuration);
             bulletScript.SetSlowingFactor(slowingFactor);
             // Rotate Bullet
@@ -54,10 +75,23 @@ public class AntivirusTowerScript : BasicTowerScript
         // else use the normal bullet
         else
         {
-            GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
+            if (ObjectManager.main == null)
+            {
+                Debug.LogWarning("Object Pool is not in the scene");
+                return;
+            }
+
+            // Grab Bullet From Object Pool
+            GameObject bulletObj = ObjectManager.main.SpawnFromPool(bulletPoolTag, firingPoint.position, Quaternion.identity);
             BulletScript bulletScript = bulletObj.GetComponent<BulletScript>();
             bulletScript.SetBulletDamage(towerDamage);
-            bulletScript.SetTarget(enemyTarget);
+            // If target has died after bullet has been created but before we can assign the bullet a target
+            if (enemyTarget.gameObject == null)
+            {
+                ObjectManager.main.ReturnToPool(bulletPoolTag, bulletObj);
+                return;
+            }
+            bulletScript.SetTarget(enemyTarget.gameObject);
             // Rotate Bullet
             bulletScript.RotateBullet(firingDirection);
         }
@@ -68,6 +102,7 @@ public class AntivirusTowerScript : BasicTowerScript
     {
         for (int i = 0; i < burstCount; i++)
         {
+            if (enemyTarget == null) break;
             Shoot();
             yield return new WaitForSeconds(burstCoolDown);
         }

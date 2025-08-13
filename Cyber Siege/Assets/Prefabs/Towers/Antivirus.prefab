@@ -342,6 +342,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 9067777257794173421, guid: 6a4ca83943bb09a44b12e2a9a1d43893, type: 3}
   upgradedBulletPrefab: {fileID: 9067777257794173421, guid: b7a328f0c9be5054b8925d379eba3ef0, type: 3}
   firingPoint: {fileID: 2706843766656116215}
+  bulletSO: {fileID: 11400000, guid: 082a19ff6bb00cb4bb91a945aef61eda, type: 2}
+  upgradedBulletSO: {fileID: 11400000, guid: 9c236513ae6578746b9fe2b2cfffe1fa, type: 2}
   burstCount: 3
   burstCoolDown: 0.1
   slowingFactor: 0.4

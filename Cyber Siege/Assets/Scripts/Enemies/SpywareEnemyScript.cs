@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class SpywareEnemyScript : BasicEnemyScript
 {
-    protected override void Start()
+    protected override void ResetEnemy()
     {
-        base.Start();
+        base.ResetEnemy();
         Hide();
-        Vanish();
+        if (EnemyManager.main != null && !EnemyManager.main.testingMode) Vanish();
     }
 }

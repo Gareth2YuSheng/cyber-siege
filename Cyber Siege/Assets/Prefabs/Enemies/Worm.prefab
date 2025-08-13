@@ -121,9 +121,9 @@ MonoBehaviour:
       m_Calls: []
   isBlocked: 0
   hasReachedServer: 0
-  WormPrefab: {fileID: 1699728895133875648}
-  WormSpawnCount: 1
-  WormSpawnRate: 6
+  wormSO: {fileID: 11400000, guid: f2376b34bca604f51be6a734dd1df872, type: 2}
+  wormSpawnCount: 1
+  wormSpawnRate: 4
 --- !u!50 &4661326746327342660
 Rigidbody2D:
   serializedVersion: 5

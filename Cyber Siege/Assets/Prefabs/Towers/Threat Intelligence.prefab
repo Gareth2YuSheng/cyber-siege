@@ -336,6 +336,7 @@ MonoBehaviour:
   disabledEffect: {fileID: 4501112169755800463}
   upgradeLayer1: {fileID: 4813905297807032649}
   upgradeLayer2: {fileID: 6106959804465217469}
+  bulletSO: {fileID: 11400000, guid: 52749148fdeeed64881e2848ab4004ad, type: 2}
   onTowerDestroyed:
     m_PersistentCalls:
       m_Calls: []

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class BasicEnemyScript : MonoBehaviour
+public class BasicEnemyScript : MonoBehaviour, IPooledObject
 {
     [Header("Base References")]
     [SerializeField] protected ScriptableEnemy enemy;
@@ -44,8 +44,11 @@ public class BasicEnemyScript : MonoBehaviour
 
     // For Debuffs
     protected float damageTakenMultiplier = 1f;
-    protected bool isSlowed;
-    protected int slowStackCounter;
+    protected bool isSlowed = false;
+    protected int slowStackCounter = 0;
+
+    // For Object Pooling
+    protected string objectPoolTag;
 
     public virtual void InitialiseEnemy()
     {
@@ -59,6 +62,8 @@ public class BasicEnemyScript : MonoBehaviour
         baseMoveSpeed = moveSpeed;
         baseHealth = health;
 
+        objectPoolTag = enemy.objectPoolTag;
+
         sr = gameObject.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody2D>();
 
@@ -67,14 +72,46 @@ public class BasicEnemyScript : MonoBehaviour
         // Hide Effects
         slowEffect.SetActive(false);
         stunEffect.SetActive(false);
+    }
 
-        //Start moving
+    protected virtual void ResetEnemy()
+    {
+        // Reset Attributes
+        health = enemy.health;
+        moveSpeed = enemy.moveSpeed;
+        currencyValue = enemy.currencyValue;
+        damageDealtToServer = enemy.damageDealtToServer;
+        isDestroyed = false;
+        isHidden = false;
+        // Reset Sprite
+        sr.sprite = baseSprite;
+        // Hide Effects
+        slowEffect.SetActive(false);
+        stunEffect.SetActive(false);
+        // Reset Debuffs
+        damageTakenMultiplier = 1f;
+        isSlowed = false;
+        slowStackCounter = 0;
+        // Reset Enemy Movement
+        isBlocked = false;
+        hasReachedServer = false;
+        pathIndex = 0;
+        // pathIndex = 0;
+        movementTarget = null;
+        // Start Moving
         UpdateMovementTarget();
+    }
+
+    protected virtual void Awake()
+    {
+        // Placed here instead of start as with Object Pooling now, 
+        // Start only runs after enemy spawns
+        InitialiseEnemy();
     }
 
     protected virtual void Start()
     {
-        InitialiseEnemy();
+        // Debug.Log("---------Running Enemy Start");
     }
 
     // Allow Update to be overridable by children to add logic and behavior
@@ -85,6 +122,9 @@ public class BasicEnemyScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // If no movement target, dont move
+        if (movementTarget == null) return;
+
         // If Enemy is currently blocked OR has alr reached the server, stop moving
         if (isBlocked || hasReachedServer)
         {
@@ -125,23 +165,7 @@ public class BasicEnemyScript : MonoBehaviour
         rb.linearVelocity = distToTarget.normalized * moveSpeed;
     }
 
-    public virtual string GetEnemyName()
-    {
-        return enemy.name;
-    }
 
-    // For Unit Testing
-    public int GetHealth()
-    {
-        return health;
-    }
-
-    protected virtual void ReachedServer()
-    {
-        hasReachedServer = true;
-        HealthManager.main.DamageServer(damageDealtToServer);
-        DestroySelf();
-    }
 
     // Stopping when collide with obstacle behavior
     private void OnCollisionEnter2D(Collision2D collision)
@@ -164,15 +188,61 @@ public class BasicEnemyScript : MonoBehaviour
         }
     }
 
+    // Object Pooling Functions
+    public virtual void OnObjectSpawn()
+    {
+        ResetEnemy();
+    }
+
+    public virtual void ReturnPooledObject()
+    {
+        if (ObjectManager.main == null)
+        {
+            Debug.LogWarning("Object Pool is not in the scene");
+            return;
+        }
+        // Debug.Log("Returning Enemy To <" + objectPoolTag + "> Pool");
+
+        // Reset Enemy's position to start point
+        // Or else towers will detect enemies where they last died
+        gameObject.transform.position = EnemyManager.main.startPoint.position;
+
+        ObjectManager.main.ReturnToPool(objectPoolTag, gameObject);
+    }
+
+    public virtual string GetEnemyName()
+    {
+        return enemy.name;
+    }
+
+    // For Unit Testing
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    protected virtual void ReachedServer()
+    {
+        hasReachedServer = true;
+        HealthManager.main.DamageServer(damageDealtToServer);
+        DestroySelf();
+    }
+
     //Movement Related Functions
     protected virtual void UpdateMovementTarget()
     {
-        movementTarget = EnemyManager.main?.enemyPath[pathIndex];
+        if (EnemyManager.main == null)
+        {
+            Debug.LogWarning("Missing Enemy Manager");
+            return;
+        }
+        movementTarget = EnemyManager.main.enemyPath[pathIndex];
     }
 
-    public void UpdatePathIndex(int _pathIndex)
+    public void UpdatePathIndexForSpawn(int _pathIndex)
     {
         pathIndex = _pathIndex;
+        UpdateMovementTarget();
     }
 
     public int GetCurrentPathIndex()
@@ -238,15 +308,15 @@ public class BasicEnemyScript : MonoBehaviour
         return (currentMovementTarget - prevMovementTarget).normalized;
     }
 
-    // public void Blocked()
-    // {
-    //     isBlocked = true;
-    // }
+    public void Block()
+    {
+        isBlocked = true;
+    }
 
-    // public void Unblocked()
-    // {
-    //     isBlocked = false;
-    // }
+    public void Unblock()
+    {
+        isBlocked = false;
+    }
 
     // Sprite Related Functions
 
@@ -304,13 +374,19 @@ public class BasicEnemyScript : MonoBehaviour
     public virtual void DestroySelf()
     {
         isDestroyed = true;
-        Destroy(gameObject);
+        // Destroy(gameObject);
+        ReturnPooledObject();
         EnemyManager.main?.EnemyDestroyed();
         // Play Enemy Death Sound Effect
         if (audioClipDestroy != null)
         {
             SoundManager.main?.PlaySoundFXClip(audioClipDestroy, 1f);
         }
+    }
+
+    public bool IsDestroyed()
+    {
+        return isDestroyed;
     }
 
     // Hidden Enemy Related Functions
